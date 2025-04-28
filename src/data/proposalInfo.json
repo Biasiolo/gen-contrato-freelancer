@@ -1,0 +1,31 @@
+{
+    "company": {
+      "name": "Voia Agency",
+      "cnpj": "18.319.139/0001-68",
+      "email": "atendimentovoia@gmail.com",
+      "phone": "(12) 98107-9000",
+      "address": {
+        "cep": "12216530",
+        "street": "Rua Síria",
+        "number": "71, sala 44 ou 45",
+        "neighborhood": "Jardim Oswaldo Cruz",
+        "city": "São José dos Campos",
+        "state": "SP"
+      }
+    },
+    "importantInfo": [
+      "Solicitações além desta proposta serão cobradas à parte. Por solicitação",
+      "Nas artes finais do Planejamento Estratégico (Design), poderá haver até 3 alterações.",
+      "Alterações acima do permitido mensalmente serão cobradas à parte seguindo a tabela de valores da Agência.",
+      "Artes que demandam informações técnicas, precisam ser enviadas antes do desenvolvimento do material."
+    ],
+    "introduction": "A Voia Agency apresenta esta proposta comercial com o objetivo de fornecer uma solução completa de marketing e comunicação para a sua empresa. Nossa abordagem é personalizada, focando na organização das redes sociais, criação de conteúdo, desenvolvimento de landing pages e muito mais, sempre com o intuito de aumentar a visibilidade e fortalecer a sua presença digital. Com estratégias direcionadas e uma execução de alta qualidade, buscamos garantir que suas metas sejam atingidas, maximizando o potencial da sua marca no mercado. A seguir, detalhamos cada um dos serviços propostos e como podemos colaborar para o crescimento da sua empresa.",
+    "proposalHeader": {
+      "title": "PROPOSTA UNITÁRIOS",
+      "project": "Geral",
+      "validity": "30 dias",
+      "date": "2025-04-26",
+      "location": "São José dos Campos – SP"
+    }
+  }
+  

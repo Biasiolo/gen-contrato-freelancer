@@ -1,0 +1,146 @@
+{
+    "serviceTypes": [
+      {
+        "id": "dna_mkt",
+        "name": "DNA MKT",
+        "paymentOptions": [],
+        "services": [
+          {
+            "id": "dna_analise_concorrencia",
+            "title": "Análise de Concorrência",
+            "description": "Mapeamento de concorrentes para identificar oportunidades de mercado.",
+            "isMonthly": false,
+            "defaultUnitValue": 2000
+          },
+          {
+            "id": "dna_persona",
+            "title": "Definição de Persona",
+            "description": "Criação de perfis detalhados de público-alvo.",
+            "isMonthly": false,
+            "defaultUnitValue": 1500
+          },
+          {
+            "id": "dna_planejamento_conteudo",
+            "title": "Planejamento de Conteúdo",
+            "description": "Calendário editorial e estratégia de conteúdo.",
+            "isMonthly": true,
+            "defaultUnitValue": 1200
+          }
+        ]
+      },
+      {
+        "id": "web",
+        "name": "Web",
+        "paymentOptions": [],
+        "services": [
+          {
+            "id": "web_site_blog",
+            "title": "Site com Blog",
+            "description": "Site completo com blog integrado e SEO básico.",
+            "isMonthly": false,
+            "defaultUnitValue": 5300
+          },
+          {
+            "id": "web_landing",
+            "title": "Landing Page de Conversão",
+            "description": "Página única otimizada para conversão com formulário.",
+            "isMonthly": false,
+            "defaultUnitValue": 1200
+          },
+          {
+            "id": "web_manutencao",
+            "title": "Manutenção de Site",
+            "description": "Atualizações, backups e suporte técnico mensal.",
+            "isMonthly": true,
+            "defaultUnitValue": 400
+          }
+        ]
+      },
+      {
+        "id": "trafego_pago",
+        "name": "Tráfego Pago",
+        "paymentOptions": [],
+        "services": [
+          {
+            "id": "trafego_planejamento",
+            "title": "Planejamento de Campanhas",
+            "description": "Estratégia de alocação de verba e canais de mídia.",
+            "isMonthly": false,
+            "defaultUnitValue": 1800
+          },
+          {
+            "id": "trafego_gestao_ads",
+            "title": "Gestão de Ads",
+            "description": "Configuração e monitoramento diário de anúncios.",
+            "isMonthly": true,
+            "defaultUnitValue": 1500
+          },
+          {
+            "id": "trafego_otimizacao",
+            "title": "Otimização de Conversão",
+            "description": "Testes A/B e ajustes para melhorar ROI.",
+            "isMonthly": true,
+            "defaultUnitValue": 1200
+          }
+        ]
+      },
+      {
+        "id": "mkt_estrategico",
+        "name": "Mkt Estratégico",
+        "paymentOptions": [],
+        "services": [
+          {
+            "id": "estrategia_plano_mkt",
+            "title": "Plano de Marketing",
+            "description": "Documento estratégico com metas, ações e cronograma.",
+            "isMonthly": false,
+            "defaultUnitValue": 3000
+          },
+          {
+            "id": "estrategia_relatorio",
+            "title": "Relatórios Mensais",
+            "description": "Análise de performance e recomendações para cada mês.",
+            "isMonthly": true,
+            "defaultUnitValue": 800
+          },
+          {
+            "id": "estrategia_workshop",
+            "title": "Workshop de Inovação",
+            "description": "Sessão presencial para geração de ideias e alinhamento.",
+            "isMonthly": false,
+            "defaultUnitValue": 2500
+          }
+        ]
+      },
+      {
+        "id": "branding",
+        "name": "Branding",
+        "paymentOptions": [],
+        "services": [
+          {
+            "id": "branding_logo",
+            "title": "Criação de Logo",
+            "description": "Desenvolvimento de identidade visual exclusiva.",
+            "isMonthly": false,
+            "defaultUnitValue": 1800
+          },
+          {
+            "id": "branding_manual",
+            "title": "Manual de Marca",
+            "description": "Guia de uso de cores, tipografia e elementos visuais.",
+            "isMonthly": false,
+            "defaultUnitValue": 2200
+          },
+          {
+            "id": "branding_rebranding",
+            "title": "Rebranding",
+            "description": "Reposicionamento completo da marca no mercado.",
+            "isMonthly": false,
+            "defaultUnitValue": 5000
+          }
+        ]
+      }
+    ]
+  }
+  
+  
