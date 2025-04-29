@@ -23,9 +23,12 @@ function App() {
   return (
     <Provider store={store}>
       <PersistGate loading={null} persistor={persistor}>
-      <ProgressBar currentStep={step} />
         <div className="min-h-screen bg-black">
-          {/* ProgressBar could go here */}
+
+          {/* hide ProgressBar when printing */}
+          <div className="no-print">
+            <ProgressBar currentStep={step} />
+          </div>
 
           {step === 1 && (
             <StepCliente
@@ -34,42 +37,36 @@ function App() {
               onNext={() => setStep(2)}
             />
           )}
-
           {step === 2 && (
             <StepServicos
               onBack={() => setStep(1)}
               onNext={() => setStep(3)}
             />
           )}
-
           {step === 3 && (
             <StepPrazo
               onBack={() => setStep(2)}
               onNext={() => setStep(4)}
             />
           )}
-
           {step === 4 && (
             <StepCondicoes
               onBack={() => setStep(3)}
               onNext={() => setStep(5)}
             />
           )}
-
           {step === 5 && (
             <StepDetalhes
               onBack={() => setStep(4)}
               onNext={() => setStep(6)}
             />
           )}
-
           {step === 6 && (
             <StepPreview
               onBack={() => setStep(5)}
               onNext={() => setStep(7)}
             />
           )}
-
           {step === 7 && (
             <PrintView
               onBack={() => setStep(6)}

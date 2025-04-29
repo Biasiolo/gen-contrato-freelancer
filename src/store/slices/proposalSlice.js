@@ -23,16 +23,19 @@ const proposalSlice = createSlice({
   name: 'proposal',
   initialState,
   reducers: {
+    // Atualiza um único campo do client
     setClientField(state, action) {
       const { field, value } = action.payload;
       state.client[field] = value;
     },
+    // Atribui o objeto client inteiro (útil ao avançar na tela de cadastro)
+    setClient(state, action) {
+      state.client = action.payload;
+    },
     addService(state, action) {
-      // action.payload = { id, title, description, isMonthly, qty, unitValue }
       state.services.push(action.payload);
     },
     updateService(state, action) {
-      // action.payload = { id, changes: { qty?, unitValue? } }
       const { id, changes } = action.payload;
       const i = state.services.findIndex(s => s.id === id);
       if (i !== -1) {
@@ -40,8 +43,7 @@ const proposalSlice = createSlice({
       }
     },
     removeService(state, action) {
-      const id = action.payload;
-      state.services = state.services.filter(s => s.id !== id);
+      state.services = state.services.filter(s => s.id !== action.payload);
     },
     setTerm(state, action) {
       state.term = action.payload;
@@ -60,6 +62,7 @@ const proposalSlice = createSlice({
 
 export const {
   setClientField,
+  setClient,
   addService,
   updateService,
   removeService,

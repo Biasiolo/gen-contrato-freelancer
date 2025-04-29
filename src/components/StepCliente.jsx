@@ -1,23 +1,34 @@
 // src/components/StepCliente.jsx
 import React from 'react';
+import { useDispatch } from 'react-redux';
+import { setClientField } from '../store/slices/proposalSlice';
 import { User, Building2, Mail, Phone, ChevronRight } from 'lucide-react';
 
 const fields = [
-  { key: 'name', label: 'Nome do Contato', placeholder: 'Nome completo', type: 'text', icon: User },
-  { key: 'company', label: 'Empresa', placeholder: 'Nome da empresa', type: 'text', icon: Building2 },
-  { key: 'email', label: 'Email', placeholder: 'email@exemplo.com', type: 'email', icon: Mail },
-  { key: 'phone', label: 'Telefone', placeholder: '(00) 00000-0000', type: 'tel', icon: Phone },
+  { key: 'name',    label: 'Nome do Contato', placeholder: 'Nome completo',      type: 'text',  icon: User      },
+  { key: 'company', label: 'Empresa',         placeholder: 'Nome da empresa',     type: 'text',  icon: Building2 },
+  { key: 'email',   label: 'Email',           placeholder: 'email@exemplo.com',  type: 'email', icon: Mail      },
+  { key: 'phone',   label: 'Telefone',        placeholder: '(00) 00000-0000',    type: 'tel',   icon: Phone     },
 ];
 
 const StepCliente = ({ data = {}, onChange, onNext }) => {
+  const dispatch = useDispatch();
   const clientData = { name: '', company: '', email: '', phone: '', ...data };
 
   const handleChange = (key, value) => {
-    if (typeof onChange === 'function') onChange(key, value);
+    if (typeof onChange === 'function') {
+      onChange(key, value);
+    }
   };
 
   const handleNext = () => {
-    if (typeof onNext === 'function') onNext();
+    // Persiste cada campo no Redux
+    Object.entries(clientData).forEach(([field, value]) => {
+      dispatch(setClientField({ field, value }));
+    });
+    if (typeof onNext === 'function') {
+      onNext();
+    }
   };
 
   return (
@@ -39,14 +50,14 @@ const StepCliente = ({ data = {}, onChange, onNext }) => {
               return (
                 <div key={field.key} className="group">
                   <label className="flex items-center text-neutral-800 font-medium mb-3">
-                    <div className="flex items-center justify-center w-8 h-8 bg-teal-600 bg-opacity-50 rounded-lg mr-3 border-none group-hover:bg-orange-500 transition-colors">
-                      <Icon size={16} className="text-neutral-200 group-hover:text-white transition-colors" />
+                    <div className="flex items-center justify-center w-8 h-8 bg-teal-600 bg-opacity-50 rounded-lg mr-3 transition-colors group-hover:bg-orange-500">
+                      <Icon size={16} className="text-neutral-200 transition-colors group-hover:text-white" />
                     </div>
                     {field.label}
                   </label>
                   <input
                     type={field.type}
-                    className="w-full px-5 py-4 bg-neutral-100 bg-opacity-20 border-none rounded-xl text-neutral-900 placeholder-gray-300 placeholder-opacity-50 focus:outline-none focus:ring-2 focus:ring-neutral-500 focus:border-transparent transition-all"
+                    className="w-full px-5 py-4 bg-neutral-100 bg-opacity-20 rounded-xl text-neutral-900 placeholder-gray-300 placeholder-opacity-50 focus:outline-none focus:ring-2 focus:ring-teal-600 transition-all"
                     placeholder={field.placeholder}
                     value={clientData[field.key]}
                     onChange={e => handleChange(field.key, e.target.value)}
@@ -62,7 +73,7 @@ const StepCliente = ({ data = {}, onChange, onNext }) => {
             </div>
             <button
               onClick={handleNext}
-              className="group relative cursor-pointer flex items-center overflow-hidden w-40 rounded-3xl bg-gradient-to-r from-teal-600 to-teal-600 px-8 py-2 text-white shadow-lg transition-all hover:shadow-teal-500/25"
+              className="group relative flex items-center justify-center w-40 overflow-hidden rounded-3xl bg-gradient-to-r from-teal-600 to-teal-600 px-8 py-2 text-white shadow-lg transition-all hover:shadow-orange-400/25 cursor-pointer"
             >
               <span className="relative z-10 mr-2 font-medium">Continuar</span>
               <ChevronRight size={18} className="relative z-10" />

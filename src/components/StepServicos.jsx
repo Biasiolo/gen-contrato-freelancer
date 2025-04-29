@@ -58,14 +58,14 @@ const StepServicos = ({ onBack, onNext }) => {
     <div className="flex items-center justify-center min-h-screen bg-gradient-to-br from-black via-stone-950 to-black pt-20">
       <div className="relative max-w-4xl w-full mx-auto p-6">
         <div className="relative backdrop-blur-sm bg-neutral-200 bg-opacity-10 rounded-2xl shadow-2xl border border-white border-opacity-20 p-10 overflow-auto">
-          <h2 className="text-3xl font-extrabold text-gray-900 text-center mb-2">
+          <h2 className="text-3xl text-center items-center font-semibold text-white mb-2 bg-teal-600 rounded-t-3xl p-2">
             {currentType.name}
           </h2>
           <p className="text-neutral-500 text-center mb-6">
             {typeIndex + 1}/{totalTypes}
           </p>
 
-          <div className="space-y-4">
+          <div className="space-y-4 px-2 pb-2">
             {services.map(svc => (
               <div
                 key={svc.id}

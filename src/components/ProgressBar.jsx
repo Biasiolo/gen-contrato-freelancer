@@ -29,7 +29,7 @@ export default function ProgressBar({ currentStep }) {
                   }
                 >
                   <span className={`font-semibold \
-                    ${isCompleted ? 'text-white' : isActive ? 'text-teal-600' : 'text-neutral-400'}`
+                    ${isCompleted ? 'text-white' : isActive ? 'text-gray-900' : 'text-neutral-400'}`
                   }>
                     {step.key}
                   </span>
