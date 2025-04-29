@@ -8,6 +8,7 @@ const StepPreview = ({ onBack, onNext }) => {
   const previewRef = useRef();
   const client = useSelector(s => s.proposal.client);
   const services = useSelector(s => s.proposal.services);
+  const payment = useSelector(s => s.proposal.paymentConditions);
   const details = useSelector(s => s.proposal.details);
 
   // Short 8-digit proposal ID
@@ -15,7 +16,7 @@ const StepPreview = ({ onBack, onNext }) => {
   // Current date in Brazilian format
   const today = useMemo(() => new Date().toLocaleDateString('pt-BR'), []);
 
-  // Calculate items with subtotal
+  // Compute items with subtotal
   const items = useMemo(
     () => services.map(svc => {
       const term = svc.isMonthly ? svc.term || 1 : 1;
@@ -64,7 +65,7 @@ const StepPreview = ({ onBack, onNext }) => {
           <p className="text-justify text-gray-700">{proposalInfo.introduction}</p>
         </section>
 
-        {/* Services by Type */}
+        {/* Services & Conditions by Type */}
         {servicesCatalog.serviceTypes.map(type => {
           const list = grouped[type.id] || [];
           if (list.length === 0) return null;
@@ -110,6 +111,14 @@ const StepPreview = ({ onBack, onNext }) => {
                   ))}
                 </tbody>
               </table>
+              {/* Payment Conditions for this type */}
+              <div className="bg-gray-50 p-4 rounded-lg">
+                <h3 className="text-lg font-medium mb-2">Condições de Pagamento</h3>
+                <p><strong>Método:</strong> {payment[type.id]?.method || '-'}</p>
+                <p><strong>Entrada:</strong> {payment[type.id]?.entry || '-'}</p>
+                <p><strong>Parcelas:</strong> {payment[type.id]?.installments || '-'}</p>
+                {payment[type.id]?.notes && <p><strong>Observações:</strong> {payment[type.id].notes}</p>}
+              </div>
             </section>
           );
         })}

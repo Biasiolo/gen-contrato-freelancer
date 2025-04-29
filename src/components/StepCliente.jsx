@@ -1,63 +1,75 @@
+// src/components/StepCliente.jsx
 import React from 'react';
+import { User, Building2, Mail, Phone, ChevronRight } from 'lucide-react';
 
-const StepCliente = ({ data, onChange, onNext }) => {
+const fields = [
+  { key: 'name', label: 'Nome do Contato', placeholder: 'Nome completo', type: 'text', icon: User },
+  { key: 'company', label: 'Empresa', placeholder: 'Nome da empresa', type: 'text', icon: Building2 },
+  { key: 'email', label: 'Email', placeholder: 'email@exemplo.com', type: 'email', icon: Mail },
+  { key: 'phone', label: 'Telefone', placeholder: '(00) 00000-0000', type: 'tel', icon: Phone },
+];
+
+const StepCliente = ({ data = {}, onChange, onNext }) => {
+  const clientData = { name: '', company: '', email: '', phone: '', ...data };
+
+  const handleChange = (key, value) => {
+    if (typeof onChange === 'function') onChange(key, value);
+  };
+
+  const handleNext = () => {
+    if (typeof onNext === 'function') onNext();
+  };
+
   return (
-    <div className="max-w-3xl mx-auto p-6 bg-white rounded-2xl shadow-md">
-      <h2 className="text-2xl font-bold mb-6">Informações do Cliente</h2>
+    <div className="flex items-center justify-center min-h-screen bg-gradient-to-br from-black via-stone-950 to-black">
+      <div className="relative max-w-4xl w-full mx-auto p-6">
+        <div className="relative backdrop-blur-sm bg-neutral-200 bg-opacity-10 rounded-2xl shadow-2xl border border-white border-opacity-20 p-10 overflow-hidden">
+          <div className="absolute top-0 left-0 w-full h-1 bg-gradient-to-r from-teal-200 via-teal-600 to-teal-200" />
 
-      <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-        <div>
-          <label className="block text-gray-700 mb-1">Nome do Contato</label>
-          <input
-            type="text"
-            className="w-full px-3 py-2 border rounded-lg focus:outline-none focus:ring"
-            placeholder="Nome completo"
-            value={data.name}
-            onChange={e => onChange('name', e.target.value)}
-          />
+          <div className="mb-10">
+            <h2 className="text-4xl font-extrabold text-black mb-2">Boas-Vindas</h2>
+            <p className="text-neutral-500">
+              Preencha os dados para começarmos a criar sua proposta personalizada
+            </p>
+          </div>
+
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
+            {fields.map(field => {
+              const Icon = field.icon;
+              return (
+                <div key={field.key} className="group">
+                  <label className="flex items-center text-neutral-800 font-medium mb-3">
+                    <div className="flex items-center justify-center w-8 h-8 bg-teal-600 bg-opacity-50 rounded-lg mr-3 border-none group-hover:bg-orange-500 transition-colors">
+                      <Icon size={16} className="text-neutral-200 group-hover:text-white transition-colors" />
+                    </div>
+                    {field.label}
+                  </label>
+                  <input
+                    type={field.type}
+                    className="w-full px-5 py-4 bg-neutral-100 bg-opacity-20 border-none rounded-xl text-neutral-900 placeholder-gray-300 placeholder-opacity-50 focus:outline-none focus:ring-2 focus:ring-neutral-500 focus:border-transparent transition-all"
+                    placeholder={field.placeholder}
+                    value={clientData[field.key]}
+                    onChange={e => handleChange(field.key, e.target.value)}
+                  />
+                </div>
+              );
+            })}
+          </div>
+
+          <div className="mt-12 flex justify-between items-center">
+            <div className="text-sm text-neutral-400 italic">
+              Todos os dados são tratados com confidencialidade
+            </div>
+            <button
+              onClick={handleNext}
+              className="group relative cursor-pointer flex items-center overflow-hidden w-40 rounded-3xl bg-gradient-to-r from-teal-600 to-teal-600 px-8 py-2 text-white shadow-lg transition-all hover:shadow-teal-500/25"
+            >
+              <span className="relative z-10 mr-2 font-medium">Continuar</span>
+              <ChevronRight size={18} className="relative z-10" />
+              <span className="absolute inset-0 h-full w-0 bg-gradient-to-r from-orange-500 to-orange-600 transition-all duration-300 ease-out group-hover:w-full" />
+            </button>
+          </div>
         </div>
-
-        <div>
-          <label className="block text-gray-700 mb-1">Empresa</label>
-          <input
-            type="text"
-            className="w-full px-3 py-2 border rounded-lg focus:outline-none focus:ring"
-            placeholder="Nome da empresa"
-            value={data.company}
-            onChange={e => onChange('company', e.target.value)}
-          />
-        </div>
-
-        <div>
-          <label className="block text-gray-700 mb-1">Email</label>
-          <input
-            type="email"
-            className="w-full px-3 py-2 border rounded-lg focus:outline-none focus:ring"
-            placeholder="email@exemplo.com"
-            value={data.email}
-            onChange={e => onChange('email', e.target.value)}
-          />
-        </div>
-
-        <div>
-          <label className="block text-gray-700 mb-1">Telefone</label>
-          <input
-            type="tel"
-            className="w-full px-3 py-2 border rounded-lg focus:outline-none focus:ring"
-            placeholder="(00) 00000-0000"
-            value={data.phone}
-            onChange={e => onChange('phone', e.target.value)}
-          />
-        </div>
-      </div>
-
-      <div className="mt-6 text-right">
-        <button
-          onClick={onNext}
-          className="px-6 py-2 bg-black text-white rounded-full hover:bg-gray-800 transition"
-        >
-          Continuar &rarr;
-        </button>
       </div>
     </div>
   );

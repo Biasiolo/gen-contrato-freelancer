@@ -2,6 +2,7 @@
 import React, { useRef, useMemo } from 'react';
 import html2pdf from 'html2pdf.js';
 import { useSelector } from 'react-redux';
+import servicesCatalog from '../data/services.json';
 import proposalInfo from '../data/proposalInfo.json';
 
 const PrintView = ({ onBack }) => {
@@ -11,10 +12,11 @@ const PrintView = ({ onBack }) => {
   const payment = useSelector(state => state.proposal.paymentConditions);
   const details = useSelector(state => state.proposal.details);
 
-  // Short 8-digit ID and Brazilian date
+  // Short ID and date
   const proposalId = useMemo(() => crypto.randomUUID().split('-')[0], []);
   const today = useMemo(() => new Date().toLocaleDateString('pt-BR'), []);
 
+  // Compute items with subtotal
   const items = useMemo(
     () => services.map(svc => {
       const term = svc.isMonthly ? svc.term || 1 : 1;
@@ -26,11 +28,26 @@ const PrintView = ({ onBack }) => {
     [services]
   );
 
-  const total = useMemo(
-    () => items.reduce((sum, item) => sum + item.subtotal, 0),
-    [items]
-  );
+  // Group items by type
+  const grouped = useMemo(() => {
+    return items.reduce((acc, item) => {
+      if (!acc[item.type]) acc[item.type] = [];
+      acc[item.type].push(item);
+      return acc;
+    }, {});
+  }, [items]);
 
+  // Totals per type and overall
+  const typeTotals = useMemo(() => {
+    const totals = {};
+    Object.entries(grouped).forEach(([typeId, list]) => {
+      totals[typeId] = list.reduce((sum, itm) => sum + itm.subtotal, 0);
+    });
+    totals.overall = Object.values(totals).reduce((sum, val) => sum + val, 0);
+    return totals;
+  }, [grouped]);
+
+  // Download PDF
   const handleDownloadPDF = () => {
     const element = printRef.current;
     const opt = {
@@ -44,7 +61,6 @@ const PrintView = ({ onBack }) => {
   };
 
   const handlePrint = () => window.print();
-
   const handleShareFile = async () => {
     try {
       const blob = await html2pdf().from(printRef.current).output('blob');
@@ -59,93 +75,120 @@ const PrintView = ({ onBack }) => {
     handleDownloadPDF();
   };
 
-  // Inline styles
-  const containerStyle = { backgroundColor: '#f5f5f5', padding: '20px', minHeight: '100vh' };
-  const controlsStyle = { display: 'flex', justifyContent: 'center', gap: '10px', marginBottom: '20px' };
-  const buttonStyle = { padding: '10px 20px', border: 'none', cursor: 'pointer' };
+  // Styles
+  const container = { backgroundColor: '#f5f5f5', padding: '20px', minHeight: '100vh' };
+  const controls = { display: 'flex', justifyContent: 'center', gap: '10px', marginBottom: '20px' };
+  const btn = { padding: '10px 20px', border: 'none', cursor: 'pointer' };
   const docStyle = { backgroundColor: '#fff', padding: '40px', margin: '0 auto', width: '19cm', minHeight: '27.7cm', boxSizing: 'border-box' };
   const headerStyle = { textAlign: 'center', marginBottom: '20px' };
-  const h1Style = { fontSize: '24px', margin: '0 0 10px 0' };
-  const tableStyle = { width: '100%', borderCollapse: 'collapse', marginBottom: '20px' };
-  const thTdStyle = { border: '1px solid #000', padding: '8px', fontSize: '12px' };
-  const footerStyle = { borderTop: '1px solid #000', paddingTop: '10px', fontSize: '12px', marginTop: '20px' };
+  const h1 = { fontSize: '24px', margin: '0 0 10px 0' };
+  const table = { width: '100%', borderCollapse: 'collapse', marginBottom: '20px' };
+  const cell = { border: '1px solid #000', padding: '8px', fontSize: '12px' };
+  const paymentBox = { backgroundColor: '#007672', padding: '10px', borderRadius: '6px', marginBottom: '20px' };
+  const footer = { borderTop: '1px solid #000', paddingTop: '10px', fontSize: '12px', marginTop: '20px' };
 
   return (
     <>
       <style>{`@media print { .no-print { display: none !important; } }`}</style>
-      <div style={containerStyle}>
-        <div style={controlsStyle} className="no-print">
-          <button onClick={onBack} style={{ ...buttonStyle, backgroundColor: '#ccc' }}>Voltar</button>
-          <button onClick={handlePrint} style={{ ...buttonStyle, backgroundColor: '#f90', color: '#000' }}>Imprimir</button>
-          <button onClick={handleDownloadPDF} style={{ ...buttonStyle, backgroundColor: '#0a7', color: '#fff' }}>Baixar PDF</button>
-          <button onClick={handleShareFile} style={{ ...buttonStyle, backgroundColor: '#06c', color: '#fff' }}>Compartilhar arquivo</button>
+      <div style={container}>
+        <div style={controls} className="no-print">
+          <button onClick={onBack} style={{ ...btn, backgroundColor: '#ccc' }}>Voltar</button>
+          <button onClick={handlePrint} style={{ ...btn, backgroundColor: '#f90', color: '#000' }}>Imprimir</button>
+          <button onClick={handleDownloadPDF} style={{ ...btn, backgroundColor: '#0a7', color: '#fff' }}>Baixar PDF</button>
+          <button onClick={handleShareFile} style={{ ...btn, backgroundColor: '#06c', color: '#fff' }}>Compartilhar</button>
         </div>
         <div ref={printRef} style={docStyle}>
+          {/* Header */}
           <div style={headerStyle}>
-            <h1 style={h1Style}>{proposalInfo.proposalHeader.title}</h1>
+            <h1 style={h1}>{proposalInfo.proposalHeader.title}</h1>
             <p><strong>ID:</strong> {proposalId}</p>
             <p><strong>Cliente:</strong> {client.name}</p>
             <p><strong>Projeto:</strong> {proposalInfo.proposalHeader.project}</p>
             <p><strong>Validade:</strong> {proposalInfo.proposalHeader.validity}</p>
             <p><strong>Data:</strong> {today}</p>
           </div>
+
+          {/* Introduction */}
           <p style={{ textAlign: 'justify', fontSize: '12px', marginBottom: '20px' }}>{proposalInfo.introduction}</p>
-          <table style={tableStyle}>
-            <thead>
-              <tr>
-                <th style={thTdStyle}>Serviço</th>
-                <th style={{ ...thTdStyle, textAlign: 'center' }}>Qtd</th>
-                <th style={{ ...thTdStyle, textAlign: 'center' }}>Prazo</th>
-                <th style={{ ...thTdStyle, textAlign: 'right' }}>Valor Unit.</th>
-                <th style={{ ...thTdStyle, textAlign: 'right' }}>Subtotal</th>
-              </tr>
-            </thead>
-            <tbody>
-              {items.map(item => (
-                <React.Fragment key={item.id}>
-                  <tr>
-                    <td style={thTdStyle}>{item.title}</td>
-                    <td style={{ ...thTdStyle, textAlign: 'center' }}>{item.qty}</td>
-                    <td style={{ ...thTdStyle, textAlign: 'center' }}>{item.isMonthly ? `${item.term} meses` : 'Único'}</td>
-                    <td style={{ ...thTdStyle, textAlign: 'right' }}>R$ {item.unitValue.toLocaleString('pt-BR', { minimumFractionDigits: 2 })}</td>
-                    <td style={{ ...thTdStyle, textAlign: 'right' }}>R$ {item.subtotal.toLocaleString('pt-BR', { minimumFractionDigits: 2 })}</td>
-                  </tr>
-                  {item.description && (
+
+          {/* For each type */}
+          {servicesCatalog.serviceTypes.map(type => {
+            const list = grouped[type.id] || [];
+            if (!list.length) return null;
+            return (
+              <div key={type.id} style={{ marginBottom: '30px' }}>
+                <h2 style={{ fontSize: '18px', marginBottom: '10px' }}>
+                  {type.name} - Pacote: R$ {typeTotals[type.id].toLocaleString('pt-BR', { minimumFractionDigits: 2 })}
+                </h2>
+                <table style={table}>
+                  <thead>
                     <tr>
-                      <td colSpan="5" style={{ border: '1px solid #000', padding: '8px', fontSize: '12px', color: '#444' }}>
-                        {item.description}
-                      </td>
+                      <th style={cell}>Serviço</th>
+                      <th style={{ ...cell, textAlign: 'center' }}>Qtd</th>
+                      <th style={{ ...cell, textAlign: 'center' }}>Prazo</th>
+                      <th style={{ ...cell, textAlign: 'right' }}>Valor Unit.</th>
+                      <th style={{ ...cell, textAlign: 'right' }}>Subtotal</th>
                     </tr>
-                  )}
-                </React.Fragment>
-              ))}
-              <tr>
-                <td colSpan="4" style={{ ...thTdStyle, textAlign: 'right', fontWeight: 'bold' }}>Total</td>
-                <td style={{ ...thTdStyle, textAlign: 'right', fontWeight: 'bold' }}>R$ {total.toLocaleString('pt-BR', { minimumFractionDigits: 2 })}</td>
-              </tr>
-            </tbody>
-          </table>
-          <div style={{ fontSize: '12px', marginBottom: '20px' }}>
-            <strong>Condições de Pagamento:</strong><br />
-            Método: {payment.method}<br />
-            Entrada: {payment.entry}<br />
-            Parcelas: {payment.installments}<br />
-            {payment.notes && <>Observações: {payment.notes}</>}
+                  </thead>
+                  <tbody>
+                    {list.map(item => (
+                      <React.Fragment key={item.id}>
+                        <tr>
+                          <td style={cell}>{item.title}</td>
+                          <td style={{ ...cell, textAlign: 'center' }}>{item.qty}</td>
+                          <td style={{ ...cell, textAlign: 'center' }}>{item.isMonthly ? `${item.term} meses` : 'Único'}</td>
+                          <td style={{ ...cell, textAlign: 'right' }}>R$ {item.unitValue.toLocaleString('pt-BR',{minimumFractionDigits:2})}</td>
+                          <td style={{ ...cell, textAlign: 'right' }}>R$ {item.subtotal.toLocaleString('pt-BR',{minimumFractionDigits:2})}</td>
+                        </tr>
+                        {item.description && (
+                          <tr>
+                            <td colSpan="5" style={{ ...cell, fontSize: '11px', color: '#555' }}>
+                              {item.description}
+                            </td>
+                          </tr>
+                        )}
+                      </React.Fragment>
+                    ))}
+                  </tbody>
+                </table>
+                {/* Payment Conditions */}
+                <div style={paymentBox}>
+                  <h3 style={{ margin: '0 0 6px' }}>Condições de Pagamento</h3>
+                  <div style={{ fontSize: '12px' }}>
+                    <p><strong>Método:</strong> {payment[type.id]?.method || '-'}</p>
+                    <p><strong>Entrada:</strong> {payment[type.id]?.entry || '-'}</p>
+                    <p><strong>Parcelas:</strong> {payment[type.id]?.installments || '-'}</p>
+                    {payment[type.id]?.notes && <p><strong>Observações:</strong> {payment[type.id].notes}</p>}
+                  </div>
+                </div>
+              </div>
+            );
+          })}
+
+          {/* Overall Total */}
+          <div style={{ textAlign: 'right', fontSize: '16px', fontWeight: 'bold', marginBottom: '20px' }}>
+            Total Geral: R$ {typeTotals.overall.toLocaleString('pt-BR', { minimumFractionDigits: 2 })}
           </div>
+
+          {/* Additional Details */}
           <div style={{ fontSize: '12px', marginBottom: '20px' }}>
             <strong>Detalhes Adicionais:</strong><br />{details}
           </div>
-          <div style={{ fontSize: '12px', marginBottom: '20px' }}>
+
+          {/* Important Info */}
+          <div style={{ fontSize: '12px' }}>
             <strong>Informações Importantes:</strong>
-            <ul style={{ paddingLeft: '20px' }}>
+            <ul style={{ paddingLeft: '20px', marginTop: '6px' }}>
               {proposalInfo.importantInfo.map((info, i) => <li key={i}>{info}</li>)}
             </ul>
           </div>
-          <footer style={footerStyle}>
+
+          {/* Footer */}
+          <div style={footer}>
             <div><strong>{proposalInfo.company.name}</strong> - CNPJ {proposalInfo.company.cnpj}</div>
             <div>Email: {proposalInfo.company.email} | Tel: {proposalInfo.company.phone}</div>
             <div>{proposalInfo.company.address.street}, {proposalInfo.company.address.number} - {proposalInfo.company.address.neighborhood}, {proposalInfo.company.address.city} - {proposalInfo.company.address.state}, CEP {proposalInfo.company.address.cep}</div>
-          </footer>
+          </div>
         </div>
       </div>
     </>

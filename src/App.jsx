@@ -3,6 +3,7 @@ import React, { useState } from 'react';
 import { Provider } from 'react-redux';
 import { PersistGate } from 'redux-persist/integration/react';
 import { store, persistor } from './store';
+import ProgressBar from './components/ProgressBar';
 import StepCliente from './components/StepCliente';
 import StepServicos from './components/StepServicos';
 import StepPrazo from './components/StepPrazo';
@@ -22,7 +23,8 @@ function App() {
   return (
     <Provider store={store}>
       <PersistGate loading={null} persistor={persistor}>
-        <div className="min-h-screen bg-gray-100 py-10">
+      <ProgressBar currentStep={step} />
+        <div className="min-h-screen bg-black">
           {/* ProgressBar could go here */}
 
           {step === 1 && (
