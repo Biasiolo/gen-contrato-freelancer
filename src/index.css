@@ -1,5 +1,10 @@
 @import "tailwindcss";
 
+body {
+  background-color: black;
+  font-family: "Poppins", sans-serif !important;
+}
+
 /* para qualquer impressão */
 @media print {
     .progress-bar {

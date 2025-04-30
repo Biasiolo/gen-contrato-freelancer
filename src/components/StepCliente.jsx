@@ -32,15 +32,16 @@ const StepCliente = ({ data = {}, onChange, onNext }) => {
   };
 
   return (
-    <div className="flex items-center justify-center min-h-screen bg-gradient-to-br from-black via-stone-950 to-black">
-      <div className="relative max-w-4xl w-full mx-auto p-6">
+    <div className="flex items-center justify-center pt-0 sm:pt-24 bg-gradient-to-br from-black via-stone-950 to-black">
+
+      <div className="relative max-w-4xl w-full mx-auto ">
         <div className="relative backdrop-blur-sm bg-neutral-200 bg-opacity-10 rounded-2xl shadow-2xl border border-white border-opacity-20 p-10 overflow-hidden">
           <div className="absolute top-0 left-0 w-full h-1 bg-gradient-to-r from-teal-200 via-teal-600 to-teal-200" />
 
           <div className="mb-10">
-            <h2 className="text-4xl font-extrabold text-black mb-2">Boas-Vindas</h2>
-            <p className="text-neutral-500">
-              Preencha os dados para começarmos a criar sua proposta personalizada
+            <h2 className="text-4xl text-center items-center font-semibold text-white mb-2 bg-teal-600 rounded-t-3xl p-2">Boas-Vindas</h2>
+            <p className="text-neutral-500 text-center">
+              Preencha os dados para começar uma proposta personalizada
             </p>
           </div>
 
@@ -68,15 +69,15 @@ const StepCliente = ({ data = {}, onChange, onNext }) => {
           </div>
 
           <div className="mt-12 flex justify-between items-center">
-            <div className="text-sm text-neutral-400 italic">
-              Todos os dados são tratados com confidencialidade
+            <div className="text-xs text-neutral-400 italic">
+              Todos os dados são tratados com confidencialidade.
             </div>
             <button
               onClick={handleNext}
-              className="group relative flex items-center justify-center w-40 overflow-hidden rounded-3xl bg-gradient-to-r from-teal-600 to-teal-600 px-8 py-2 text-white shadow-lg transition-all hover:shadow-orange-400/25 cursor-pointer"
+              className="group relative flex items-center justify-center w-44 overflow-hidden rounded-3xl bg-gradient-to-r from-teal-600 to-teal-600 px-8 py-2 text-white shadow-lg transition-all hover:shadow-orange-400/25 cursor-pointer"
             >
-              <span className="relative z-10 mr-2 font-medium">Continuar</span>
-              <ChevronRight size={18} className="relative z-10" />
+              <span className="relative z-10 font-medium">Continuar ►</span>
+
               <span className="absolute inset-0 h-full w-0 bg-gradient-to-r from-orange-500 to-orange-600 transition-all duration-300 ease-out group-hover:w-full" />
             </button>
           </div>

@@ -137,18 +137,7 @@ export default function PrintView({ onBack }) {
     borderRadius: '1.5rem',
     boxShadow: '0 10px 15px -3px rgba(0,0,0,0.1),0 4px 6px -2px rgba(0,0,0,0.05)'
   };
-  const overlayStyle = (dir) => ({
-    position: 'absolute',
-    insetY: 0,
-    [dir === 'rtl' ? 'right' : 'left']: 0,
-    height: '100%',
-    width: 0,
-    color: '#0e0d0d',
-    background: dir === 'rtl'
-      ? 'linear-gradient(to left, #f97316, #ea580c)'
-      : 'linear-gradient(to right, #f97316, #ea580c)',
-    transition: 'width .3s ease-out'
-  });
+
   const headerStyle = { width: '100%', textAlign: 'center', marginBottom: '2rem' };
   const titleStyle = { fontSize: '1.875rem', fontWeight: 700, color: '#111827', marginBottom: '1rem' };
   const infoBarStyle = {
@@ -167,8 +156,9 @@ export default function PrintView({ onBack }) {
   };
   const infoBar2Style = {
     ...infoBarStyle,
-    justifyContent: 'space-around',
-    marginBottom: 0
+    justifyContent: 'center',
+    marginBottom: 0,
+
   };
   const sectionStyle = { marginBottom: '1.5rem' };
   const textJustify = { textAlign: 'justify', color: '#374151' };
@@ -235,52 +225,47 @@ export default function PrintView({ onBack }) {
       <div style={rootStyle}>
         <div style={wrapperStyle}>
           <div style={controlsStyle} className="no-print">
-            
+
             <button
               onClick={onBack}
               style={{ ...btnCommon, backgroundColor: '#27272A' }}
-              onMouseEnter={e => e.currentTarget.querySelector('.overlay').style.width = '100%'}
-              onMouseLeave={e => e.currentTarget.querySelector('.overlay').style.width = '0'}
+
             >
               Voltar
               <ChevronLeft size={18} style={{ marginLeft: '0.5rem', zIndex: 1 }} />
-              <span className="overlay" style={overlayStyle('rtl')} />
+              <span className="overlay" />
             </button>
             <button
               onClick={handlePrint}
               style={{ ...btnCommon, backgroundColor: '#14B8A6' }}
-              onMouseEnter={e => e.currentTarget.querySelector('.overlay').style.width = '100%'}
-              onMouseLeave={e => e.currentTarget.querySelector('.overlay').style.width = '0'}
+
             >
               Imprimir
-              <span className="overlay" style={overlayStyle('ltr')} />
+              <span className="overlay" />
             </button>
             <button
               onClick={handleDownloadPDF}
               style={{ ...btnCommon, backgroundColor: '#14B8A6' }}
-              onMouseEnter={e => e.currentTarget.querySelector('.overlay').style.width = '100%'}
-              onMouseLeave={e => e.currentTarget.querySelector('.overlay').style.width = '0'}
+
             >
               Baixar PDF
-              <span className="overlay" style={overlayStyle('ltr')} />
+              <span className="overlay" />
             </button>
             <button
               onClick={handleShare}
               style={{ ...btnCommon, backgroundColor: '#14B8A6' }}
-              onMouseEnter={e => e.currentTarget.querySelector('.overlay').style.width = '100%'}
-              onMouseLeave={e => e.currentTarget.querySelector('.overlay').style.width = '0'}
+
             >
               Compartilhar
-              <span className="overlay" style={overlayStyle('ltr')} />
+              <span className="overlay" />
             </button>
             <button
               onClick={handleNew}
               style={{ ...btnCommon, backgroundColor: '#f97316' }}
-              onMouseEnter={e => e.currentTarget.querySelector('.overlay').style.width = '100%'}
-              onMouseLeave={e => e.currentTarget.querySelector('.overlay').style.width = '0'}
+
             >
               Nova Proposta
-              <span className="overlay" style={overlayStyle('rtl')} />
+              <span className="overlay" />
             </button>
           </div>
 
@@ -289,13 +274,16 @@ export default function PrintView({ onBack }) {
             <div style={headerStyle}>
               <h1 style={titleStyle}>{proposalInfo.proposalHeader.title}</h1>
               <div style={infoBarStyle}>
-                <span><strong>Cliente:</strong> {client.company}</span>
+              <span><strong>Cliente:</strong> {client.name}</span>
+                <span><strong>Empresa:</strong> {client.company}</span>
                 <span><strong>Email:</strong> {client.email}</span>
               </div>
               <div style={infoBar2Style}>
-                <span><strong>ID:</strong> {proposalId}</span>
-                <span><strong>Validade:</strong> {proposalInfo.proposalHeader.validity}</span>
-                <span><strong>Data:</strong> {today}</span>
+                <span style={{ borderRight: '1px solid #000', paddingRight: '8px' }}>
+                  <strong>ID:</strong> {proposalId}
+                </span>
+                <span style={{ borderLeft: '1px solid #000', borderRight: '1px solid #000', paddingInline: '8px', marginInline: '8px' }}><strong>Validade:</strong> {proposalInfo.proposalHeader.validity}</span>
+                <span style={{ borderLeft: '1px solid #000', paddingLeft: '8px' }}><strong>Data:</strong> {today}</span>
               </div>
             </div>
 
@@ -317,7 +305,7 @@ export default function PrintView({ onBack }) {
                   <table style={tableStyle}>
                     <thead>
                       <tr style={{ backgroundColor: '#F3F4F6' }}>
-                        {['Serviço','Qtd','Prazo','Valor Unit.','Subtotal'].map((th,i) => (
+                        {['Serviço', 'Qtd', 'Prazo', 'Valor Unit.', 'Subtotal'].map((th, i) => (
                           <th key={i} style={thTdStyle}>{th}</th>
                         ))}
                       </tr>
@@ -381,7 +369,7 @@ export default function PrintView({ onBack }) {
             <div style={sectionStyle}>
               <h2 style={detailsTitle}>Informações Importantes</h2>
               <ul style={listStyle}>
-                {proposalInfo.importantInfo.map((info,i) => <li key={i}>{info}</li>)}
+                {proposalInfo.importantInfo.map((info, i) => <li key={i}>{info}</li>)}
               </ul>
             </div>
 
@@ -390,7 +378,8 @@ export default function PrintView({ onBack }) {
               borderTop: '1px solid #000',
               paddingTop: '1rem',
               fontSize: '0.75rem',
-              marginTop: '2rem'
+              marginTop: '2rem',
+              textAlign: 'center'
             }}>
               <div><strong>{proposalInfo.company.name}</strong> – CNPJ {proposalInfo.company.cnpj}</div>
               <div>Email: {proposalInfo.company.email} | Tel: {proposalInfo.company.phone}</div>

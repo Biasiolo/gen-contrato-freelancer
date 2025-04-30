@@ -25,6 +25,34 @@
             "description": "Calendário editorial e estratégia de conteúdo.",
             "isMonthly": true,
             "defaultUnitValue": 1200
+          },
+          {
+            "id": "dna_planejamento_conteudo3",
+            "title": "Planejamento de Conteúdo3",
+            "description": "Calendário editorial e estratégia de conteúdo.",
+            "isMonthly": true,
+            "defaultUnitValue": 1200
+          },
+          {
+            "id": "dna_planejamento_conteudo2",
+            "title": "Planejamento de Conteúdo2",
+            "description": "Calendário editorial e estratégia de conteúdo.",
+            "isMonthly": true,
+            "defaultUnitValue": 1200
+          },
+          {
+            "id": "dna_planejamento_conteudo2",
+            "title": "Planejamento de Conteúdo2",
+            "description": "Calendário editorial e estratégia de conteúdo.",
+            "isMonthly": true,
+            "defaultUnitValue": 1200
+          },
+          {
+            "id": "dna_planejamento_conteudo2",
+            "title": "Planejamento de Conteúdo2",
+            "description": "Calendário editorial e estratégia de conteúdo.",
+            "isMonthly": true,
+            "defaultUnitValue": 1200
           }
         ]
       },

@@ -3,7 +3,7 @@ import React, { useEffect, useState } from 'react';
 import servicesCatalog from '../data/services.json';
 import { useDispatch, useSelector } from 'react-redux';
 import { addService, updateService, removeService } from '../store/slices/proposalSlice';
-import { ChevronLeft, ChevronRight } from 'lucide-react';
+
 
 const StepServicos = ({ onBack, onNext }) => {
   const dispatch = useDispatch();
@@ -44,6 +44,14 @@ const StepServicos = ({ onBack, onNext }) => {
   const changeQty = (id, qty) => dispatch(updateService({ id, changes: { qty } }));
   const changeUnitValue = (id, val) => dispatch(updateService({ id, changes: { unitValue: val } }));
 
+  const formatCurrency = value =>
+    new Intl.NumberFormat('pt-BR', { style: 'currency', currency: 'BRL' }).format(value);
+
+  const parseCurrency = value => {
+    const cleaned = value.replace(/[^\d,]/g, '').replace(',', '.');
+    return parseFloat(cleaned) || 0;
+  };
+
   const handlePrev = () => {
     if (typeIndex > 0) setTypeIndex(typeIndex - 1);
     else onBack();
@@ -55,49 +63,60 @@ const StepServicos = ({ onBack, onNext }) => {
   };
 
   return (
-    <div className="flex items-center justify-center min-h-screen bg-gradient-to-br from-black via-stone-950 to-black pt-20">
-      <div className="relative max-w-4xl w-full mx-auto p-6">
-        <div className="relative backdrop-blur-sm bg-neutral-200 bg-opacity-10 rounded-2xl shadow-2xl border border-white border-opacity-20 p-10 overflow-auto">
-          <h2 className="text-3xl text-center items-center font-semibold text-white mb-2 bg-teal-600 rounded-t-3xl p-2">
+    <div className="flex items-center justify-center bg-gradient-to-br from-black via-stone-950 to-black pt-0 sm:py-10 px-4">
+      <div className="relative w-full max-w-4xl mx-auto p-4">
+        <div className="relative backdrop-blur-sm bg-neutral-200 bg-opacity-10 rounded-2xl shadow-2xl border border-white border-opacity-20 p-6 sm:p-10 overflow-auto">
+          <h2 className="text-2xl sm:text-3xl text-center font-semibold text-white mb-2 bg-teal-600 rounded-t-3xl p-2">
             {currentType.name}
           </h2>
           <p className="text-neutral-500 text-center mb-6">
             {typeIndex + 1}/{totalTypes}
           </p>
 
-          <div className="space-y-4 px-2 pb-2">
+          <div className="space-y-4">
             {services.map(svc => (
               <div
                 key={svc.id}
-                className="group flex items-center justify-between bg-white bg-opacity-10 border border-white border-opacity-20 rounded-lg p-4 transition hover:bg-opacity-20"
+                className="group flex flex-col sm:flex-row sm:items-center justify-between gap-4 bg-white bg-opacity-10 border border-white border-opacity-20 rounded-lg p-4 transition hover:bg-opacity-20"
               >
-                <div>
-                  <h3 className="text-xl font-semibold text-gray-600">{svc.title}</h3>
-                  <p className="text-neutral-400 w-80">{svc.description}</p>
+                <div className="flex-1">
+                  <h3 className="text-lg sm:text-xl font-semibold text-gray-600">{svc.title}</h3>
+                  <p className="text-neutral-400 max-w-md text-sm sm:text-base">{svc.description}</p>
                 </div>
-                <div className="flex items-center space-x-3">
-                  <input
-                    type="checkbox"
-                    checked={svc.selected}
-                    onChange={() => toggleSelect(svc)}
-                    className="w-5 h-5 text-teal-600 bg-neutral-800 border-neutral-600 rounded cursor-pointer"
-                  />
+                <div className="flex flex-row sm:flex-row sm:items-center gap-2 sm:gap-4">
+                  <label className="flex items-center gap-1 text-sm text-neutral-300">
+                    <input
+                      type="checkbox"
+                      checked={svc.selected}
+                      onChange={() => toggleSelect(svc)}
+                      className="w-6 h-5 text-teal-600 bg-neutral-800 border-neutral-600 rounded cursor-pointer"
+                    />
+
+                  </label>
+
                   {svc.selected && (
                     <>
-                      <input
-                        type="number"
-                        min="1"
-                        value={svc.qty}
-                        onChange={e => changeQty(svc.id, Number(e.target.value))}
-                        className="w-16 px-2 py-1 bg-neutral-900 text-white rounded-lg focus:ring-2 focus:ring-teal-600 border-none"
-                      />
-                      <input
-                        type="number"
-                        min="0"
-                        value={svc.unitValue}
-                        onChange={e => changeUnitValue(svc.id, Number(e.target.value))}
-                        className="w-24 px-2 py-1 bg-neutral-900 text-white rounded-lg focus:ring-2 focus:ring-teal-600 border-none"
-                      />
+                      <label className="flex flex-col text-xs text-gray-400">
+                        Qtd
+                        <input
+                          type="number"
+                          min="1"
+                          value={svc.qty}
+                          onChange={e => changeQty(svc.id, Number(e.target.value))}
+                          className="w-20 px-2 py-1 bg-neutral-900 text-white rounded-lg focus:ring-2 focus:ring-teal-600 border-none"
+                        />
+                      </label>
+
+                      <label className="flex flex-col text-xs text-neutral-500">
+                        Valor
+                        <input
+                          type="text"
+                          inputMode="decimal"
+                          value={formatCurrency(svc.unitValue)}
+                          onChange={e => changeUnitValue(svc.id, parseCurrency(e.target.value))}
+                          className="w-28 px-2 py-1 bg-neutral-900 text-white rounded-lg focus:ring-2 focus:ring-teal-600 border-none"
+                        />
+                      </label>
                     </>
                   )}
                 </div>
@@ -105,25 +124,26 @@ const StepServicos = ({ onBack, onNext }) => {
             ))}
           </div>
 
-          <div className="mt-6 flex justify-between">
+          <div className="mt-6 flex flex-col md:flex-row justify-between gap-4">
             <button
               onClick={handlePrev}
-              className="group relative flex items-center justify-center overflow-hidden cursor-pointer rounded-3xl bg-neutral-800 w-40 py-2 text-white shadow-lg transition-all hover:shadow-neutral-700/25"
+              className="group relative flex items-center justify-center overflow-hidden cursor-pointer rounded-3xl bg-neutral-800 w-full md:w-40 py-2 text-white shadow-lg transition-all hover:shadow-neutral-700/25"
             >
-              <span className="relative z-10 mr-2 font-medium">
-                {typeIndex > 0 ? 'Anterior' : 'Voltar'}
+              <span className="relative z-10  font-medium">
+                {typeIndex > 0 ? '◄ Anterior' : '◄ Voltar'}
               </span>
-              <ChevronLeft size={18} className="relative z-10" />
-              <span className="absolute inset-0 h-full w-0 bg-gradient-to-r from-teal-600 to-teal-600 transition-all duration-300 ease-out group-hover:w-full" />
+              
+              <span className="absolute inset-y-0 right-0 h-full w-0 bg-gradient-to-r from-orange-600 to-orange-500 transition-all duration-300 ease-out group-hover:w-full" />
             </button>
+
             <button
               onClick={handleNext}
-              className="group relative flex items-center justify-center overflow-hidden cursor-pointer rounded-3xl bg-gradient-to-r from-teal-600 to-teal-600 w-40 py-2 text-white shadow-lg transition-all hover:shadow-teal-500/25"
+              className="group relative flex items-center justify-center overflow-hidden cursor-pointer rounded-3xl bg-gradient-to-r from-teal-600 to-teal-600 w-full md:w-40 py-2 text-white shadow-lg transition-all hover:shadow-orange-500/25"
             >
-              <span className="relative z-10 mr-2 font-medium">
-                {typeIndex < totalTypes - 1 ? 'Próximo' : 'Continuar'}
+              <span className="relative z-10  font-medium">
+                {typeIndex < totalTypes - 1 ? 'Próximo ►' : 'Continuar ►'}
               </span>
-              <ChevronRight size={18} className="relative z-10" />
+
               <span className="absolute inset-0 h-full w-0 bg-gradient-to-r from-orange-500 to-orange-600 transition-all duration-300 ease-out group-hover:w-full" />
             </button>
           </div>
