@@ -58,8 +58,12 @@ const StepServicos = ({ onBack, onNext }) => {
   };
 
   const handleNext = () => {
-    if (typeIndex < totalTypes - 1) setTypeIndex(typeIndex + 1);
-    else onNext();
+    if (typeIndex < totalTypes - 1) {
+      setTypeIndex(typeIndex + 1);
+      window.scrollTo({ top: 0, behavior: 'smooth' }); 
+    } else {
+      onNext();
+    }
   };
 
   return (
@@ -69,8 +73,8 @@ const StepServicos = ({ onBack, onNext }) => {
           <h2 className="text-2xl sm:text-3xl text-center font-semibold text-white mb-2 bg-teal-600 rounded-t-3xl p-2">
             {currentType.name}
           </h2>
-          <p className="text-neutral-500 text-center mb-6">
-            {typeIndex + 1}/{totalTypes}
+          <p className="text-orange-400 text-lg font-bold text-center mb-6">
+            {typeIndex + 1} de {totalTypes}
           </p>
 
           <div className="space-y-4">

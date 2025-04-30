@@ -3,7 +3,7 @@ import React, { useMemo } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import servicesCatalog from '../data/services.json';
 import { setPaymentConditions } from '../store/slices/proposalSlice';
-import { ChevronLeft, ChevronRight } from 'lucide-react';
+
 
 const StepCondicoes = ({ onBack, onNext }) => {
   const dispatch = useDispatch();
@@ -119,16 +119,16 @@ const StepCondicoes = ({ onBack, onNext }) => {
               onClick={onBack}
               className="group relative flex items-center justify-center overflow-hidden cursor-pointer rounded-3xl bg-neutral-800 w-full sm:w-40 py-2 text-white shadow-lg transition-all hover:shadow-orange-500/25"
             >
-              <span className="relative z-10 mr-2 font-medium">Voltar</span>
-              <ChevronLeft size={18} className="relative z-10" />
+              <span className="relative z-10 font-medium">◄ Voltar</span>
+
               <span className="absolute inset-y-0 right-0 h-full w-0 bg-gradient-to-r from-orange-600 to-orange-500 transition-all duration-300 ease-out group-hover:w-full" />
             </button>
             <button
               onClick={onNext}
               className="group relative flex items-center justify-center overflow-hidden cursor-pointer rounded-3xl bg-gradient-to-r from-teal-600 to-teal-600 w-full sm:w-40 py-2 text-white shadow-lg transition-all hover:shadow-orange-500/25"
             >
-              <span className="relative z-10 mr-2 font-medium">Continuar</span>
-              <ChevronRight size={18} className="relative z-10" />
+              <span className="relative z-10 font-medium">Continuar ►</span>
+
               <span className="absolute inset-0 h-full w-0 bg-gradient-to-r from-orange-500 to-orange-600 transition-all duration-300 ease-out group-hover:w-full" />
             </button>
           </div>

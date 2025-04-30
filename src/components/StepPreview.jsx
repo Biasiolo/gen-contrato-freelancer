@@ -46,20 +46,28 @@ const StepPreview = ({ onBack, onNext }) => {
       <div className="relative max-w-4xl w-full mx-auto p-4 sm:p-6">
         <div ref={previewRef} className="relative backdrop-blur-sm bg-neutral-50 bg-opacity-10 rounded-2xl shadow-2xl border border-white border-opacity-20 p-4 sm:p-10 overflow-auto">
 
-          <header className="w-full text-center mb-6 sm:mb-8">
-            <h1 className="text-2xl sm:text-3xl font-bold text-gray-900 mb-4">
-              {proposalInfo.proposalHeader.title}
-            </h1>
-            <div className="w-full flex flex-col sm:flex-row flex-wrap justify-center items-center gap-2 sm:gap-4 text-neutral-700 bg-gray-50 border border-gray-400 rounded-lg px-4 py-2 mb-2">
-              <span className="px-2"><strong>Cliente:</strong> {client.company}</span>
-              <span className="px-2"><strong>Email:</strong> {client.email}</span>
-            </div>
-            <div className="w-full flex flex-col sm:flex-row justify-center items-center gap-2 sm:gap-4 text-neutral-700 bg-gray-50 border border-gray-400 rounded-lg px-4 py-2">
-              <span className="px-2"><strong>ID:</strong> {proposalId}</span>
-              <span className="px-2"><strong>Validade:</strong> {proposalInfo.proposalHeader.validity}</span>
-              <span className="px-2"><strong>Data:</strong> {today}</span>
-            </div>
-          </header>
+        <header className="w-full flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4 mb-6 sm:mb-8">
+  {/* Logo */}
+  <div className="flex justify-center sm:justify-start">
+    <img src="/logo.png" alt="Logo" className="h-32 object-contain" />
+  </div>
+
+  {/* Info */}
+  <div className="flex-1">
+    <h1 className="text-2xl sm:text-3xl font-bold text-gray-900 text-center sm:text-right mb-2">
+      {proposalInfo.proposalHeader.title}
+    </h1>
+    <div className="flex flex-wrap justify-center sm:justify-end gap-2 text-sm text-neutral-700 bg-gray-50 border border-gray-400 rounded-lg px-4 py-2 mb-2">
+      <span><strong>Cliente:</strong> {client.company}</span>
+      <span><strong>Email:</strong> {client.email}</span>
+    </div>
+    <div className="flex flex-wrap justify-center sm:justify-end gap-2 text-sm text-neutral-700 bg-gray-50 border border-gray-400 rounded-lg px-4 py-2">
+      <span><strong>ID:</strong> {proposalId}</span>
+      <span><strong>Validade:</strong> {proposalInfo.proposalHeader.validity}</span>
+      <span><strong>Data:</strong> {today}</span>
+    </div>
+  </div>
+</header>
 
           <section className="mb-6">
             <p className="text-justify text-gray-700 text-sm sm:text-base">{proposalInfo.introduction}</p>
@@ -139,13 +147,13 @@ const StepPreview = ({ onBack, onNext }) => {
 
           <div className="mt-10 flex flex-col sm:flex-row justify-between gap-4">
             <button onClick={onBack} className="group relative flex items-center justify-center overflow-hidden cursor-pointer rounded-3xl bg-neutral-800 w-full sm:w-40 py-2 text-white shadow-lg transition-all hover:shadow-neutral-700/25">
-              <span className="relative z-10 mr-2 font-medium">Voltar</span>
-              <ChevronLeft size={18} className="relative z-10" />
+              <span className="relative z-10 font-medium">◄ Voltar</span>
+
               <span className="absolute inset-y-0 right-0 h-full w-0 bg-gradient-to-l from-orange-500 to-orange-600 transition-all duration-300 ease-out group-hover:w-full" />
             </button>
             <button onClick={onNext} className="group relative flex items-center justify-center overflow-hidden cursor-pointer rounded-3xl bg-gradient-to-r from-teal-600 to-teal-600 w-full sm:w-40 py-2 text-white shadow-lg transition-all hover:shadow-orange-500/25">
-              <span className="relative z-10 mr-2 font-medium">Avançar PDF</span>
-              <ChevronRight size={18} className="relative z-10" />
+              <span className="relative z-10 font-medium">Avançar PDF ►</span>
+
               <span className="absolute inset-0 h-full w-0 bg-gradient-to-r from-orange-500 to-orange-600 transition-all duration-300 ease-out group-hover:w-full" />
             </button>
           </div>

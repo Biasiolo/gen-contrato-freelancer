@@ -2,7 +2,7 @@
     "serviceTypes": [
       {
         "id": "dna_mkt",
-        "name": "DNA MKT",
+        "name": "DNA MARCA",
         "paymentOptions": [],
         "services": [
           {
@@ -53,6 +53,62 @@
             "description": "Calendário editorial e estratégia de conteúdo.",
             "isMonthly": true,
             "defaultUnitValue": 1200
+          }
+        ]
+      },
+      {
+        "id": "mkt_estrategico",
+        "name": "MARKETING ESTRATÉGICO",
+        "paymentOptions": [],
+        "services": [
+          {
+            "id": "estrategia_plano_mkt",
+            "title": "Plano de Marketing",
+            "description": "Documento estratégico com metas, ações e cronograma.",
+            "isMonthly": false,
+            "defaultUnitValue": 3000
+          },
+          {
+            "id": "estrategia_relatorio",
+            "title": "Relatórios Mensais",
+            "description": "Análise de performance e recomendações para cada mês.",
+            "isMonthly": true,
+            "defaultUnitValue": 800
+          },
+          {
+            "id": "estrategia_workshop",
+            "title": "Workshop de Inovação",
+            "description": "Sessão presencial para geração de ideias e alinhamento.",
+            "isMonthly": false,
+            "defaultUnitValue": 2500
+          }
+        ]
+      },
+      {
+        "id": "audiovisual",
+        "name": "AUDIOVISUAL",
+        "paymentOptions": [],
+        "services": [
+          {
+            "id": "audiovisual_logo",
+            "title": "Criação de Logo",
+            "description": "Desenvolvimento de identidade visual exclusiva.",
+            "isMonthly": false,
+            "defaultUnitValue": 1800
+          },
+          {
+            "id": "audiovisual_manual",
+            "title": "Manual de Marca",
+            "description": "Guia de uso de cores, tipografia e elementos visuais.",
+            "isMonthly": false,
+            "defaultUnitValue": 2200
+          },
+          {
+            "id": "audiovisual_recrm",
+            "title": "Recrm",
+            "description": "Reposicionamento completo da marca no mercado.",
+            "isMonthly": false,
+            "defaultUnitValue": 5000
           }
         ]
       },
@@ -112,56 +168,29 @@
           }
         ]
       },
+      
       {
-        "id": "mkt_estrategico",
-        "name": "Mkt Estratégico",
+        "id": "crm",
+        "name": "CRM",
         "paymentOptions": [],
         "services": [
           {
-            "id": "estrategia_plano_mkt",
-            "title": "Plano de Marketing",
-            "description": "Documento estratégico com metas, ações e cronograma.",
-            "isMonthly": false,
-            "defaultUnitValue": 3000
-          },
-          {
-            "id": "estrategia_relatorio",
-            "title": "Relatórios Mensais",
-            "description": "Análise de performance e recomendações para cada mês.",
-            "isMonthly": true,
-            "defaultUnitValue": 800
-          },
-          {
-            "id": "estrategia_workshop",
-            "title": "Workshop de Inovação",
-            "description": "Sessão presencial para geração de ideias e alinhamento.",
-            "isMonthly": false,
-            "defaultUnitValue": 2500
-          }
-        ]
-      },
-      {
-        "id": "branding",
-        "name": "Branding",
-        "paymentOptions": [],
-        "services": [
-          {
-            "id": "branding_logo",
+            "id": "crm_logo",
             "title": "Criação de Logo",
             "description": "Desenvolvimento de identidade visual exclusiva.",
             "isMonthly": false,
             "defaultUnitValue": 1800
           },
           {
-            "id": "branding_manual",
+            "id": "crm_manual",
             "title": "Manual de Marca",
             "description": "Guia de uso de cores, tipografia e elementos visuais.",
             "isMonthly": false,
             "defaultUnitValue": 2200
           },
           {
-            "id": "branding_rebranding",
-            "title": "Rebranding",
+            "id": "crm_recrm",
+            "title": "Recrm",
             "description": "Reposicionamento completo da marca no mercado.",
             "isMonthly": false,
             "defaultUnitValue": 5000
