@@ -282,7 +282,7 @@ export default function PrintView({ onBack }) {
                 <span style={{ borderRight: '1px solid #000', paddingRight: '8px' }}>
                   <strong>ID:</strong> {proposalId}
                 </span>
-                <span style={{ borderLeft: '1px solid #000', borderRight: '1px solid #000', paddingInline: '8px', marginInline: '8px' }}><strong>Validade:</strong> {proposalInfo.proposalHeader.validity}</span>
+                <span style={{ paddingInline: '8px', marginInline: '8px' }}><strong>Validade:</strong> {proposalInfo.proposalHeader.validity}</span>
                 <span style={{ borderLeft: '1px solid #000', paddingLeft: '8px' }}><strong>Data:</strong> {today}</span>
               </div>
             </div>

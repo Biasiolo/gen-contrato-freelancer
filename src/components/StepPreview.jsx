@@ -1,4 +1,3 @@
-// src/components/StepPreview.jsx
 import React, { useRef, useMemo } from 'react';
 import { useSelector } from 'react-redux';
 import servicesCatalog from '../data/services.json';
@@ -12,18 +11,13 @@ const StepPreview = ({ onBack, onNext }) => {
   const payment = useSelector(s => s.proposal.paymentConditions);
   const details = useSelector(s => s.proposal.details);
 
-  // Short 8-digit proposal ID
   const proposalId = useMemo(() => crypto.randomUUID().split('-')[0], []);
-  // Current date in Brazilian format
   const today = useMemo(() => new Date().toLocaleDateString('pt-BR'), []);
 
-  // Compute items with subtotal and group by type
   const items = useMemo(
     () => services.map(svc => {
       const term = svc.isMonthly ? svc.term || 1 : 1;
-      const subtotal = svc.isMonthly
-        ? svc.unitValue * svc.qty * term
-        : svc.unitValue * svc.qty;
+      const subtotal = svc.isMonthly ? svc.unitValue * svc.qty * term : svc.unitValue * svc.qty;
       return { ...svc, term, subtotal };
     }),
     [services]
@@ -48,121 +42,94 @@ const StepPreview = ({ onBack, onNext }) => {
   }, [grouped]);
 
   return (
-    <div className="flex items-center justify-center min-h-screen bg-gradient-to-br from-black via-stone-950 to-black pt-20">
-      <div className="relative max-w-4xl w-full mx-auto p-6">
-        <div ref={previewRef} className="relative backdrop-blur-sm bg-neutral-50 bg-opacity-10 rounded-2xl shadow-2xl border border-white border-opacity-20 p-10 overflow-auto">
+    <div className="flex items-center justify-center min-h-screen bg-gradient-to-br from-black via-stone-950 to-black pt-0 sm:pt-10 px-0">
+      <div className="relative max-w-4xl w-full mx-auto p-4 sm:p-6">
+        <div ref={previewRef} className="relative backdrop-blur-sm bg-neutral-50 bg-opacity-10 rounded-2xl shadow-2xl border border-white border-opacity-20 p-4 sm:p-10 overflow-auto">
 
-          {/* Header */}
-          <header className="w-full text-center mb-8">
-            <h1 className="text-3xl font-bold text-gray-900 mb-4">
+          <header className="w-full text-center mb-6 sm:mb-8">
+            <h1 className="text-2xl sm:text-3xl font-bold text-gray-900 mb-4">
               {proposalInfo.proposalHeader.title}
             </h1>
-            {/* Linha 1: ID, Cliente e Email */}
-            <div className="w-full flex flex-wrap justify-center items-center text-neutral-700 bg-gray-50 border border-gray-400 rounded-lg px-4 py-2 space-x-4 mb-2">
-              
-              <span className="px-2">
-                <strong>Cliente:</strong> {client.company}
-              </span>
-              <span className="px-2">
-                <strong>Email:</strong> {client.email}
-              </span>
+            <div className="w-full flex flex-col sm:flex-row flex-wrap justify-center items-center gap-2 sm:gap-4 text-neutral-700 bg-gray-50 border border-gray-400 rounded-lg px-4 py-2 mb-2">
+              <span className="px-2"><strong>Cliente:</strong> {client.company}</span>
+              <span className="px-2"><strong>Email:</strong> {client.email}</span>
             </div>
-            {/* Linha 2: Validade e Data */}
-            <div className="w-full flex justify-around items-center text-neutral-700 bg-gray-50 border border-gray-400 rounded-lg px-4 py-2 space-x-4">
-            <span className="px-2">
-                <strong>ID:</strong> {proposalId}
-              </span>
-              <span className="px-2">
-                <strong>Validade:</strong> {proposalInfo.proposalHeader.validity}
-              </span>
-              <span className="px-2">
-                <strong>Data:</strong> {today}
-              </span>
+            <div className="w-full flex flex-col sm:flex-row justify-center items-center gap-2 sm:gap-4 text-neutral-700 bg-gray-50 border border-gray-400 rounded-lg px-4 py-2">
+              <span className="px-2"><strong>ID:</strong> {proposalId}</span>
+              <span className="px-2"><strong>Validade:</strong> {proposalInfo.proposalHeader.validity}</span>
+              <span className="px-2"><strong>Data:</strong> {today}</span>
             </div>
           </header>
 
-
-
-          {/* Introduction */}
           <section className="mb-6">
-            <p className="text-justify text-gray-700">{proposalInfo.introduction}</p>
+            <p className="text-justify text-gray-700 text-sm sm:text-base">{proposalInfo.introduction}</p>
           </section>
 
-          {/* Services & Conditions by Type */}
           {servicesCatalog.serviceTypes.map(type => {
             const list = grouped[type.id] || [];
             if (!list.length) return null;
             return (
               <section key={type.id} className="space-y-4 mb-8">
-                <h2 className="text-2xl text-center items-center font-semibold text-white mb-2 bg-teal-600 rounded-t-3xl p-2">
+                <h2 className="text-xl sm:text-2xl text-center font-semibold text-white mb-2 bg-teal-600 rounded-t-3xl p-2">
                   {type.name} – Pacote: R$ {typeTotals[type.id].toLocaleString('pt-BR', { minimumFractionDigits: 2 })}
                 </h2>
-                <table className="w-full table-auto border-collapse mb-2">
-                  <thead>
-                    <tr className="bg-gray-100">
-                      <th className="border px-2 py-1">Serviço</th>
-                      <th className="border px-2 py-1">Qtd</th>
-                      <th className="border px-2 py-1">Prazo</th>
-                      <th className="border px-2 py-1">Valor Unit.</th>
-                      <th className="border px-2 py-1">Subtotal</th>
-                    </tr>
-                  </thead>
-                  <tbody>
-                    {list.map(item => (
-                      <React.Fragment key={item.id}>
-                        <tr>
-                          <td className="border px-2 py-1 text-gray-800">{item.title}</td>
-                          <td className="border px-2 py-1 text-center text-gray-800">{item.qty}</td>
-                          <td className="border px-2 py-1 text-center text-gray-800">
-                            {item.isMonthly ? `${item.term} meses` : 'Único'}
-                          </td>
-                          <td className="border px-2 py-1 text-right text-gray-800">
-                            R$ {item.unitValue.toLocaleString('pt-BR', { minimumFractionDigits: 2 })}
-                          </td>
-                          <td className="border px-2 py-1 text-right text-gray-800">
-                            R$ {item.subtotal.toLocaleString('pt-BR', { minimumFractionDigits: 2 })}
-                          </td>
-                        </tr>
-                        {item.description && (
+                <div className="overflow-x-auto">
+                  <table className="w-full table-auto border-collapse mb-2 text-sm">
+                    <thead>
+                      <tr className="bg-gray-100">
+                        <th className="border px-2 py-1">Serviço</th>
+                        <th className="border px-2 py-1">Qtd</th>
+                        <th className="border px-2 py-1">Prazo</th>
+                        <th className="border px-2 py-1">Valor Unit.</th>
+                        <th className="border px-2 py-1">Subtotal</th>
+                      </tr>
+                    </thead>
+                    <tbody>
+                      {list.map(item => (
+                        <React.Fragment key={item.id}>
                           <tr>
-                            <td colSpan="5" className="border px-4 py-2 text-gray-600 text-sm">
-                              {item.description}
-                            </td>
+                            <td className="border px-2 py-1 text-gray-800">{item.title}</td>
+                            <td className="border px-2 py-1 text-center text-gray-800">{item.qty}</td>
+                            <td className="border px-2 py-1 text-center text-gray-800">{item.isMonthly ? `${item.term} meses` : 'Único'}</td>
+                            <td className="border px-2 py-1 text-right text-gray-800">R$ {item.unitValue.toLocaleString('pt-BR', { minimumFractionDigits: 2 })}</td>
+                            <td className="border px-2 py-1 text-right text-gray-800">R$ {item.subtotal.toLocaleString('pt-BR', { minimumFractionDigits: 2 })}</td>
                           </tr>
-                        )}
-                      </React.Fragment>
-                    ))}
-                  </tbody>
-                </table>
+                          {item.description && (
+                            <tr>
+                              <td colSpan="5" className="border px-4 py-2 text-gray-600 text-sm">{item.description}</td>
+                            </tr>
+                          )}
+                        </React.Fragment>
+                      ))}
+                    </tbody>
+                  </table>
+                </div>
                 <div className="bg-gray-100 p-2 pt-0 rounded-b-3xl">
-                  <h3 className="text-lg font-medium mb-2 text-gray-800 text-center">Condições de Pagamento</h3>
-                  <div className="flex space-x-6 text-gray-700 mb-2 justify-center">
+                  <h3 className="text-base font-medium mb-2 text-gray-800 text-center">Condições de Pagamento</h3>
+                  <div className="flex flex-col sm:flex-row sm:space-x-6 text-gray-700 mb-2 justify-center items-center gap-1">
                     <span><strong>Método:</strong> {payment[type.id]?.method || '-'}</span>
                     <span><strong>Entrada:</strong> {payment[type.id]?.entry || '-'}</span>
                     <span><strong>Parcelas:</strong> {payment[type.id]?.installments || '-'}</span>
                   </div>
                   {payment[type.id]?.notes && (
-                    <p className="text-gray-700 px-2"><strong>Observações:</strong> {payment[type.id].notes}</p>
+                    <p className="text-gray-700 px-2 text-sm"><strong>Observações:</strong> {payment[type.id].notes}</p>
                   )}
                 </div>
               </section>
             );
           })}
 
-          {/* Overall Total */}
-          <div className="text-right text-xl font-bold text-gray-900 mb-6">
+          <div className="text-right text-lg sm:text-xl font-bold text-gray-900 mb-6">
             Total Geral: R$ {typeTotals.overall.toLocaleString('pt-BR', { minimumFractionDigits: 2 })}
           </div>
 
-          {/* Additional Details */}
           <section className="mb-6">
-            <h2 className="text-xl font-semibold text-gray-800 mb-2">Detalhes Adicionais</h2>
-            <p className="text-gray-700">{details}</p>
+            <h2 className="text-lg sm:text-xl font-semibold text-gray-800 mb-2">Detalhes Adicionais</h2>
+            <p className="text-gray-700 text-sm sm:text-base">{details}</p>
           </section>
 
-          {/* Important Info */}
           <section>
-            <h2 className="text-xl font-semibold text-gray-800 mb-2">Informações Importantes</h2>
+            <h2 className="text-lg sm:text-xl font-semibold text-gray-800 mb-2">Informações Importantes</h2>
             <ul className="list-disc list-inside space-y-1 text-sm text-gray-700">
               {proposalInfo.importantInfo.map((info, idx) => (
                 <li key={idx}>{info}</li>
@@ -170,31 +137,18 @@ const StepPreview = ({ onBack, onNext }) => {
             </ul>
           </section>
 
-          {/* Navigation Buttons */}
-          <div className="mt-10 flex justify-between">
-  <button
-    onClick={onBack}
-    className="group relative flex items-center justify-center overflow-hidden cursor-pointer rounded-3xl bg-neutral-800 w-40 py-2 text-white shadow-lg transition-all hover:shadow-neutral-700/25"
-  >
-    <span className="relative z-10 mr-2 font-medium">Voltar</span>
-    <ChevronLeft size={18} className="relative z-10" />
-    {/* expand from right to left */}
-    <span
-      className="absolute inset-y-0 right-0 h-full w-0 bg-gradient-to-l from-orange-500 to-orange-600 transition-all duration-300 ease-out group-hover:w-full"
-    />
-  </button>
-  <button
-    onClick={onNext}
-    className="group relative flex items-center justify-center overflow-hidden cursor-pointer rounded-3xl bg-gradient-to-r from-teal-600 to-teal-600 w-40 py-2 text-white shadow-lg transition-all hover:shadow-orange-500/25"
-  >
-    <span className="relative z-10 mr-2 font-medium">Avançar PDF</span>
-    <ChevronRight size={18} className="relative z-10" />
-    {/* expand from left to right */}
-    <span
-      className="absolute inset-0 h-full w-0 bg-gradient-to-r from-orange-500 to-orange-600 transition-all duration-300 ease-out group-hover:w-full"
-    />
-  </button>
-</div>
+          <div className="mt-10 flex flex-col sm:flex-row justify-between gap-4">
+            <button onClick={onBack} className="group relative flex items-center justify-center overflow-hidden cursor-pointer rounded-3xl bg-neutral-800 w-full sm:w-40 py-2 text-white shadow-lg transition-all hover:shadow-neutral-700/25">
+              <span className="relative z-10 mr-2 font-medium">Voltar</span>
+              <ChevronLeft size={18} className="relative z-10" />
+              <span className="absolute inset-y-0 right-0 h-full w-0 bg-gradient-to-l from-orange-500 to-orange-600 transition-all duration-300 ease-out group-hover:w-full" />
+            </button>
+            <button onClick={onNext} className="group relative flex items-center justify-center overflow-hidden cursor-pointer rounded-3xl bg-gradient-to-r from-teal-600 to-teal-600 w-full sm:w-40 py-2 text-white shadow-lg transition-all hover:shadow-orange-500/25">
+              <span className="relative z-10 mr-2 font-medium">Avançar PDF</span>
+              <ChevronRight size={18} className="relative z-10" />
+              <span className="absolute inset-0 h-full w-0 bg-gradient-to-r from-orange-500 to-orange-600 transition-all duration-300 ease-out group-hover:w-full" />
+            </button>
+          </div>
 
         </div>
       </div>
