@@ -1,203 +1,232 @@
 {
-    "serviceTypes": [
-      {
-        "id": "dna_mkt",
-        "name": "DNA MARCA",
-        "paymentOptions": [],
-        "services": [
-          {
-            "id": "dna_analise_concorrencia",
-            "title": "Análise de Concorrência",
-            "description": "Mapeamento de concorrentes para identificar oportunidades de mercado.",
-            "isMonthly": false,
-            "defaultUnitValue": 2000
-          },
-          {
-            "id": "dna_persona",
-            "title": "Definição de Persona",
-            "description": "Criação de perfis detalhados de público-alvo.",
-            "isMonthly": false,
-            "defaultUnitValue": 1500
-          },
-          {
-            "id": "dna_planejamento_conteudo",
-            "title": "Planejamento de Conteúdo",
-            "description": "Calendário editorial e estratégia de conteúdo.",
-            "isMonthly": true,
-            "defaultUnitValue": 1200
-          },
-          {
-            "id": "dna_planejamento_conteudo3",
-            "title": "Planejamento de Conteúdo3",
-            "description": "Calendário editorial e estratégia de conteúdo.",
-            "isMonthly": true,
-            "defaultUnitValue": 1200
-          },
-          {
-            "id": "dna_planejamento_conteudo2",
-            "title": "Planejamento de Conteúdo2",
-            "description": "Calendário editorial e estratégia de conteúdo.",
-            "isMonthly": true,
-            "defaultUnitValue": 1200
-          },
-          {
-            "id": "dna_planejamento_conteudo2",
-            "title": "Planejamento de Conteúdo2",
-            "description": "Calendário editorial e estratégia de conteúdo.",
-            "isMonthly": true,
-            "defaultUnitValue": 1200
-          },
-          {
-            "id": "dna_planejamento_conteudo2",
-            "title": "Planejamento de Conteúdo2",
-            "description": "Calendário editorial e estratégia de conteúdo.",
-            "isMonthly": true,
-            "defaultUnitValue": 1200
-          }
-        ]
-      },
-      {
-        "id": "mkt_estrategico",
-        "name": "MARKETING ESTRATÉGICO",
-        "paymentOptions": [],
-        "services": [
-          {
-            "id": "estrategia_plano_mkt",
-            "title": "Plano de Marketing",
-            "description": "Documento estratégico com metas, ações e cronograma.",
-            "isMonthly": false,
-            "defaultUnitValue": 3000
-          },
-          {
-            "id": "estrategia_relatorio",
-            "title": "Relatórios Mensais",
-            "description": "Análise de performance e recomendações para cada mês.",
-            "isMonthly": true,
-            "defaultUnitValue": 800
-          },
-          {
-            "id": "estrategia_workshop",
-            "title": "Workshop de Inovação",
-            "description": "Sessão presencial para geração de ideias e alinhamento.",
-            "isMonthly": false,
-            "defaultUnitValue": 2500
-          }
-        ]
-      },
-      {
-        "id": "audiovisual",
-        "name": "AUDIOVISUAL",
-        "paymentOptions": [],
-        "services": [
-          {
-            "id": "audiovisual_logo",
-            "title": "Criação de Logo",
-            "description": "Desenvolvimento de identidade visual exclusiva.",
-            "isMonthly": false,
-            "defaultUnitValue": 1800
-          },
-          {
-            "id": "audiovisual_manual",
-            "title": "Manual de Marca",
-            "description": "Guia de uso de cores, tipografia e elementos visuais.",
-            "isMonthly": false,
-            "defaultUnitValue": 2200
-          },
-          {
-            "id": "audiovisual_recrm",
-            "title": "Recrm",
-            "description": "Reposicionamento completo da marca no mercado.",
-            "isMonthly": false,
-            "defaultUnitValue": 5000
-          }
-        ]
-      },
-      {
-        "id": "web",
-        "name": "Web",
-        "paymentOptions": [],
-        "services": [
-          {
-            "id": "web_site_blog",
-            "title": "Site com Blog",
-            "description": "Site completo com blog integrado e SEO básico.",
-            "isMonthly": false,
-            "defaultUnitValue": 5300
-          },
-          {
-            "id": "web_landing",
-            "title": "Landing Page de Conversão",
-            "description": "Página única otimizada para conversão com formulário.",
-            "isMonthly": false,
-            "defaultUnitValue": 1200
-          },
-          {
-            "id": "web_manutencao",
-            "title": "Manutenção de Site",
-            "description": "Atualizações, backups e suporte técnico mensal.",
-            "isMonthly": true,
-            "defaultUnitValue": 400
-          }
-        ]
-      },
-      {
-        "id": "trafego_pago",
-        "name": "Tráfego Pago",
-        "paymentOptions": [],
-        "services": [
-          {
-            "id": "trafego_planejamento",
-            "title": "Planejamento de Campanhas",
-            "description": "Estratégia de alocação de verba e canais de mídia.",
-            "isMonthly": false,
-            "defaultUnitValue": 1800
-          },
-          {
-            "id": "trafego_gestao_ads",
-            "title": "Gestão de Ads",
-            "description": "Configuração e monitoramento diário de anúncios.",
-            "isMonthly": true,
-            "defaultUnitValue": 1500
-          },
-          {
-            "id": "trafego_otimizacao",
-            "title": "Otimização de Conversão",
-            "description": "Testes A/B e ajustes para melhorar ROI.",
-            "isMonthly": true,
-            "defaultUnitValue": 1200
-          }
-        ]
-      },
-      
-      {
-        "id": "crm",
-        "name": "CRM",
-        "paymentOptions": [],
-        "services": [
-          {
-            "id": "crm_logo",
-            "title": "Criação de Logo",
-            "description": "Desenvolvimento de identidade visual exclusiva.",
-            "isMonthly": false,
-            "defaultUnitValue": 1800
-          },
-          {
-            "id": "crm_manual",
-            "title": "Manual de Marca",
-            "description": "Guia de uso de cores, tipografia e elementos visuais.",
-            "isMonthly": false,
-            "defaultUnitValue": 2200
-          },
-          {
-            "id": "crm_recrm",
-            "title": "Recrm",
-            "description": "Reposicionamento completo da marca no mercado.",
-            "isMonthly": false,
-            "defaultUnitValue": 5000
-          }
-        ]
-      }
-    ]
-  }
-  
-  
+  "serviceTypes": [
+    {
+      "id": "dna_mkt",
+      "name": "DNA MARCA",
+      "paymentOptions": [],
+      "services": [
+        {
+          "id": "dna_analise_concorrencia",
+          "title": "Análise de Concorrência",
+          "description": "Mapeamento detalhado de concorrentes diretos e indiretos, identificando oportunidades e ameaças no mercado.",
+          "isMonthly": false,
+          "defaultUnitValue": 2000
+        },
+        {
+          "id": "dna_persona",
+          "title": "Definição de Persona",
+          "description": "Criação de personas com base em dados e comportamentos reais para direcionar ações estratégicas.",
+          "isMonthly": false,
+          "defaultUnitValue": 1500
+        },
+        {
+          "id": "dna_arquitetura_marca",
+          "title": "Arquitetura de Marca",
+          "description": "Organização de submarcas e extensões dentro de uma lógica estratégica e comunicacional.",
+          "isMonthly": false,
+          "defaultUnitValue": 2200
+        },
+        {
+          "id": "dna_tom_voz",
+          "title": "Definição de Tom de Voz",
+          "description": "Estabelecimento do estilo de comunicação verbal da marca em diferentes canais e contextos.",
+          "isMonthly": false,
+          "defaultUnitValue": 1300
+        },
+        {
+          "id": "dna_territorio_marca",
+          "title": "Território de Marca",
+          "description": "Identificação e posicionamento nos espaços simbólicos e culturais que a marca deve ocupar.",
+          "isMonthly": false,
+          "defaultUnitValue": 1900
+        }
+      ]
+    },
+    
+    {
+      "id": "mkt_estrategico",
+      "name": "MARKETING ESTRATÉGICO",
+      "paymentOptions": [],
+      "services": [
+        {
+          "id": "estrategia_plano_mkt",
+          "title": "Plano de Marketing",
+          "description": "Documento estratégico com metas, personas, canais e cronograma de ações de marketing.",
+          "isMonthly": false,
+          "defaultUnitValue": 3000
+        },
+        {
+          "id": "estrategia_relatorio",
+          "title": "Relatórios Mensais",
+          "description": "Análises mensais com indicadores de desempenho, aprendizados e sugestões de melhoria.",
+          "isMonthly": true,
+          "defaultUnitValue": 800
+        },
+        {
+          "id": "estrategia_workshop",
+          "title": "Workshop de Inovação",
+          "description": "Encontro criativo para alinhamento estratégico e geração de ideias com equipe e stakeholders.",
+          "isMonthly": false,
+          "defaultUnitValue": 2500
+        },
+        {
+          "id": "estrategia_matriz_canais",
+          "title": "Matriz de Canais",
+          "description": "Diagnóstico e recomendação dos melhores canais de marketing para atingir os objetivos da marca.",
+          "isMonthly": false,
+          "defaultUnitValue": 1800
+        },
+        {
+          "id": "estrategia_mensuracao",
+          "title": "Plano de Mensuração",
+          "description": "Estruturação dos KPIs e métodos de avaliação de campanhas e ações de marketing.",
+          "isMonthly": false,
+          "defaultUnitValue": 1600
+        }
+      ]
+    },
+    
+    {
+      "id": "audiovisual",
+      "name": "AUDIOVISUAL",
+      "paymentOptions": [],
+      "services": [
+        {
+          "id": "audiovisual_fotos_produto",
+          "title": "Fotos de Produto",
+          "description": "Sessão fotográfica profissional para catálogo, redes sociais ou e-commerce.",
+          "isMonthly": false,
+          "defaultUnitValue": 1600
+        },
+        {
+          "id": "audiovisual_video_institucional",
+          "title": "Vídeo Institucional",
+          "description": "Produção de vídeo com roteiro, captação, edição e trilha sonora.",
+          "isMonthly": false,
+          "defaultUnitValue": 4200
+        },
+        {
+          "id": "audiovisual_reels_mensais",
+          "title": "Criação de Reels Mensais",
+          "description": "Criação e edição de vídeos curtos otimizados para redes sociais.",
+          "isMonthly": true,
+          "defaultUnitValue": 1500
+        },
+        {
+          "id": "audiovisual_fotografia_evento",
+          "title": "Cobertura Fotográfica de Evento",
+          "description": "Captação de imagens em eventos com edição e entrega digital.",
+          "isMonthly": false,
+          "defaultUnitValue": 1800
+        },
+        {
+          "id": "audiovisual_edicao_conteudo",
+          "title": "Edição de Conteúdo em Vídeo",
+          "description": "Montagem, cortes, efeitos e ajustes para vídeos já gravados.",
+          "isMonthly": true,
+          "defaultUnitValue": 1000
+        }
+      ]
+    },
+    
+    {
+      "id": "web",
+      "name": "Web",
+      "paymentOptions": [],
+      "services": [
+        {
+          "id": "web_site_blog",
+          "title": "Site com Blog",
+          "description": "Site completo com blog integrado e SEO básico.",
+          "isMonthly": false,
+          "defaultUnitValue": 5300
+        },
+        {
+          "id": "web_landing",
+          "title": "Landing Page de Conversão",
+          "description": "Página única otimizada para conversão com formulário.",
+          "isMonthly": false,
+          "defaultUnitValue": 1200
+        },
+        {
+          "id": "web_manutencao",
+          "title": "Manutenção de Site",
+          "description": "Atualizações, backups e suporte técnico mensal.",
+          "isMonthly": true,
+          "defaultUnitValue": 400
+        }
+      ]
+    },
+    {
+      "id": "trafego_pago",
+      "name": "Tráfego Pago",
+      "paymentOptions": [],
+      "services": [
+        {
+          "id": "trafego_planejamento",
+          "title": "Planejamento de Campanhas",
+          "description": "Estratégia de alocação de verba e canais de mídia.",
+          "isMonthly": false,
+          "defaultUnitValue": 1800
+        },
+        {
+          "id": "trafego_gestao_ads",
+          "title": "Gestão de Ads",
+          "description": "Configuração e monitoramento diário de anúncios.",
+          "isMonthly": true,
+          "defaultUnitValue": 1500
+        },
+        {
+          "id": "trafego_otimizacao",
+          "title": "Otimização de Conversão",
+          "description": "Testes A/B e ajustes para melhorar ROI.",
+          "isMonthly": true,
+          "defaultUnitValue": 1200
+        }
+      ]
+    },
+    {
+      "id": "crm",
+      "name": "CRM",
+      "paymentOptions": [],
+      "services": [
+        {
+          "id": "crm_implementacao",
+          "title": "Implementação de CRM",
+          "description": "Configuração e estruturação inicial da plataforma CRM conforme o modelo de negócios.",
+          "isMonthly": false,
+          "defaultUnitValue": 3500
+        },
+        {
+          "id": "crm_automacoes",
+          "title": "Criação de Automações",
+          "description": "Fluxos automatizados para nutrição, conversão e pós-venda.",
+          "isMonthly": true,
+          "defaultUnitValue": 1200
+        },
+        {
+          "id": "crm_integracoes",
+          "title": "Integrações com Ferramentas",
+          "description": "Integração do CRM com WhatsApp, e-mail, site e ferramentas externas.",
+          "isMonthly": false,
+          "defaultUnitValue": 2000
+        },
+        {
+          "id": "crm_ferramentas",
+          "title": "Criação de Ferramentas",
+          "description": "Criação de ferramentas para automação e facilitação de processos",
+          "isMonthly": false,
+          "defaultUnitValue": 7000
+        },
+        {
+          "id": "crm_relatorios",
+          "title": "Relatórios Personalizados",
+          "description": "Criação de dashboards e relatórios para acompanhamento de vendas e relacionamento.",
+          "isMonthly": true,
+          "defaultUnitValue": 900
+        }
+      ]
+    }
+    
+  ]
+}

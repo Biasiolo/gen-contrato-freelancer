@@ -1,11 +1,9 @@
-// src/components/PrintView.jsx
 import React, { useRef, useMemo } from 'react';
 import html2pdf from 'html2pdf.js';
 import { useSelector, useDispatch } from 'react-redux';
 import servicesCatalog from '../data/services.json';
 import proposalInfo from '../data/proposalInfo.json';
 import { resetProposal } from '../store/slices/proposalSlice';
-import { ChevronLeft } from 'lucide-react';
 
 export default function PrintView({ onBack }) {
   const dispatch = useDispatch();
@@ -49,15 +47,29 @@ export default function PrintView({ onBack }) {
     document.querySelectorAll('.html2pdf__page-container').forEach(el => el.remove());
   };
 
+  // Configurações PDF comuns para reuso
+  const getPdfOptions = () => ({
+    margin: [1.5, 0], 
+    filename: `${client.company || 'proposta'}-${proposalId}.pdf`,
+    image: { type: 'jpeg', quality: 0.98 },
+    html2canvas: { 
+      scale: 2, 
+      useCORS: true,
+      letterRendering: true,
+    },
+    jsPDF: { 
+      unit: 'cm', 
+      format: 'a4', 
+      orientation: 'portrait',
+      compress: true,
+      precision: 16
+    },
+    pagebreak: { mode: ['avoid-all', 'css', 'legacy'] }
+  });
+
   const handleDownloadPDF = () =>
     html2pdf()
-      .set({
-        margin: [1.5, 0],
-        filename: `${client.company || 'proposta'}-${proposalId}.pdf`,
-        image: { type: 'jpeg', quality: 0.98 },
-        html2canvas: { scale: 2, useCORS: true },
-        jsPDF: { unit: 'cm', format: 'a4', orientation: 'portrait' }
-      })
+      .set(getPdfOptions())
       .from(printRef.current)
       .save()
       .then(cleanup)
@@ -67,24 +79,46 @@ export default function PrintView({ onBack }) {
 
   const handleShare = async () => {
     try {
+      // Tente primeiro o método de Web Share API com arquivo
       const blob = await html2pdf()
-        .set({
-          margin: [1.5, 0],
-          filename: `${client.company}-${proposalId}.pdf`,
-          image: { type: 'jpeg', quality: 0.98 },
-          html2canvas: { scale: 2, useCORS: true },
-          jsPDF: { unit: 'cm', format: 'a4', orientation: 'portrait' }
-        })
+        .set(getPdfOptions())
         .from(printRef.current)
         .output('blob');
-      const file = new File([blob], `${client.company}-${proposalId}.pdf`, { type: 'application/pdf' });
-      if (navigator.canShare?.({ files: [file] })) {
-        await navigator.share({ files: [file], title: 'Proposta Comercial' });
+      
+      const file = new File([blob], `${client.company || 'proposta'}-${proposalId}.pdf`, { 
+        type: 'application/pdf' 
+      });
+      
+      // Verifica se o navegador suporta compartilhamento de arquivos
+      if (navigator.canShare && navigator.canShare({ files: [file] })) {
+        await navigator.share({ 
+          files: [file], 
+          title: 'Proposta Comercial',
+          text: `Proposta para ${client.company || client.name}` 
+        });
+        return;
+      }
+      
+      // Fallback 2: Em dispositivos móveis, tente criar URL temporária para compartilhar
+      const fileURL = URL.createObjectURL(blob);
+      
+      // Tente compartilhar apenas a URL (funciona em mais navegadores)
+      if (navigator.share) {
+        await navigator.share({
+          title: 'Proposta Comercial',
+          text: `Proposta para ${client.company || client.name}`,
+          url: fileURL
+        });
+        
+        // Limpar URL após compartilhamento
+        setTimeout(() => URL.revokeObjectURL(fileURL), 60000);
         return;
       }
     } catch (e) {
-      console.error(e);
+      console.error('Erro ao compartilhar:', e);
     }
+    
+    // Fallback final: baixar o PDF normalmente
     handleDownloadPDF();
   };
 
@@ -120,16 +154,105 @@ export default function PrintView({ onBack }) {
 
   return (
     <>
+      {/* Estilos aprimorados para impressão */}
       <style>{`
-        @media print { .no-print { display: none !important; } }
+        @page {
+          size: A4;
+          margin: 1.5cm;
+        }
+        
+        @media print {
+          html, body {
+            width: 210mm;
+            height: 297mm;
+            margin: 0;
+            padding: 0;
+            background: white !important;
+          }
+          
+          body * {
+            visibility: hidden;
+            background: white !important;
+          }
+          
+          #print-area, #print-area * {
+            visibility: visible;
+            color-adjust: exact !important;
+            -webkit-print-color-adjust: exact !important;
+            print-color-adjust: exact !important;
+          }
+          
+          #print-area {
+            position: absolute;
+            left: 0;
+            top: 0;
+            width: 100%;
+            padding: 0;
+            margin: 0;
+            background: white !important;
+            box-shadow: none !important;
+          }
+          
+          .no-print {
+            display: none !important;
+          }
+          
+          /* Controle de quebra de página */
+          .page-break-avoid {
+            page-break-inside: avoid;
+          }
+          
+          .page-break-before {
+            page-break-before: always;
+          }
+          
+          /* Forçar elementos críticos a não quebrar página */
+          table, tr, td, th, section {
+            page-break-inside: avoid;
+          }
+        }
+        
+        @media screen {
+          #print-area {
+            width: 210mm;
+            min-height: 297mm;
+            margin: 0 auto;
+            background: white;
+            box-sizing: border-box;
+            box-shadow: 0 25px 50px -12px rgba(0,0,0,0.25);
+          }
+        }
+        
         @media (max-width: 640px) {
-          .print-controls { flex-direction: column; gap: 0.5rem; }
-          .print-btn { width: 100% !important; }
+          .print-controls { 
+            flex-direction: column; 
+            gap: 0.5rem; 
+          }
+          .print-btn { 
+            width: 100% !important; 
+          }
+          #print-area {
+            width: 100%;
+            min-height: auto;
+          }
         }
       `}</style>
-      <div style={{ display: 'flex', justifyContent: 'center', background: 'linear-gradient(to bottom right, #000, #18181b, #000)', padding: '3rem 0.5rem', minHeight: '100vh' }}>
+      
+      <div style={{ 
+        display: 'flex', 
+        justifyContent: 'center', 
+        background: 'linear-gradient(to bottom right, #000, #18181b, #000)', 
+        padding: '3rem 0.5rem', 
+        minHeight: '100vh' 
+      }}>
         <div style={{ width: '100%', maxWidth: '60rem' }}>
-          <div className="no-print print-controls" style={{ display: 'flex', justifyContent: 'center', gap: '1rem', marginBottom: '1.5rem', flexWrap: 'wrap' }}>
+          <div className="no-print print-controls" style={{ 
+            display: 'flex', 
+            justifyContent: 'center', 
+            gap: '1rem', 
+            marginBottom: '1.5rem', 
+            flexWrap: 'wrap' 
+          }}>
             {[{
               label: 'Voltar',
               onClick: onBack,
@@ -137,15 +260,15 @@ export default function PrintView({ onBack }) {
             }, {
               label: 'Imprimir',
               onClick: handlePrint,
-              bg: '#14B8A6'
+              bg: '#0f9686'
             }, {
               label: 'Baixar PDF',
               onClick: handleDownloadPDF,
-              bg: '#14B8A6'
+              bg: '#0f9686'
             }, {
               label: 'Compartilhar',
               onClick: handleShare,
-              bg: '#14B8A6'
+              bg: '#0f9686'
             }, {
               label: 'Nova Proposta',
               onClick: handleNew,
@@ -155,100 +278,121 @@ export default function PrintView({ onBack }) {
                 key={i}
                 onClick={btn.onClick}
                 className="print-btn"
-                style={{ backgroundColor: btn.bg, color: '#fff', padding: '0.5rem 1rem', borderRadius: '1.5rem', minWidth: '10rem', cursor: 'pointer' }}>
+                style={{ 
+                  backgroundColor: btn.bg, 
+                  color: '#fff', 
+                  padding: '0.5rem 1rem', 
+                  borderRadius: '1.5rem', 
+                  minWidth: '10rem', 
+                  cursor: 'pointer' 
+                }}>
                 {btn.label}
               </button>
             ))}
           </div>
 
-          <div ref={printRef} style={{ background: '#fff', borderRadius: '1rem', padding: '2rem', boxShadow: '0 25px 50px -12px rgba(0,0,0,0.25)' }}>
-          <header
-  style={{
-    marginBottom: '1.5rem',
-    display: 'flex',
-    flexWrap: 'wrap',
-    alignItems: 'center',
-    justifyContent: 'space-between',
-    gap: '1.5rem',
-  }}
->
-  {/* Logo à esquerda */}
-  <div style={{ flex: '0 0 auto' }}>
-    <img
-      src="/logo.png"
-      alt="Logo"
-      style={{
-        maxHeight: '128px',
-        objectFit: 'contain',
-        display: 'block',
-      }}
-    />
-  </div>
+          <div ref={printRef} id="print-area" style={{ 
+            background: '#fff', 
+            padding: '2rem'
+          }}>
+            <header
+              className="page-break-avoid"
+              style={{
+                marginBottom: '1.5rem',
+                display: 'flex',
+                flexWrap: 'wrap',
+                alignItems: 'center',
+                justifyContent: 'space-between',
+                gap: '1.5rem',
+              }}
+            >
+              {/* Logo à esquerda */}
+              <div style={{ flex: '0 0 auto' }}>
+                <img
+                  src="/logo.png"
+                  alt="Logo"
+                  style={{
+                    maxHeight: '128px',
+                    objectFit: 'contain',
+                    display: 'block',
+                  }}
+                />
+              </div>
 
-  {/* Informações à direita */}
-  <div style={{ flex: '1 1 0', minWidth: '250px', textAlign: 'right' }}>
-    <h1
-      style={{
-        fontSize: '1.875rem',
-        fontWeight: 700,
-        color: '#111827',
-        marginBottom: '0.5rem',
-      }}
-    >
-      {proposalInfo.proposalHeader.title}
-    </h1>
-    <div
-      style={{
-        display: 'flex',
-        flexWrap: 'wrap',
-        gap: '1rem',
-        color: '#374151',
-        marginBottom: '0.5rem',
-        justifyContent: 'flex-end',
-      }}
-    >
-      <span>
-        <strong>Cliente:</strong> {client.name}
-      </span>
-      <span>
-        <strong>Empresa:</strong> {client.company}
-      </span>
-      <span>
-        <strong>Email:</strong> {client.email}
-      </span>
-    </div>
-    <div
-      style={{
-        display: 'flex',
-        flexWrap: 'wrap',
-        gap: '1rem',
-        color: '#374151',
-        justifyContent: 'flex-end',
-      }}
-    >
-      <span>
-        <strong>ID:</strong> {proposalId}
-      </span>
-      <span>
-        <strong>Validade:</strong> {proposalInfo.proposalHeader.validity}
-      </span>
-      <span>
-        <strong>Data:</strong> {today}
-      </span>
-    </div>
-  </div>
-</header>
-<hr style={{ marginBottom: '1.5rem' }}></hr>
+              {/* Informações à direita */}
+              <div style={{ flex: '1 1 0', minWidth: '250px', textAlign: 'right' }}>
+                <h1
+                  style={{
+                    fontSize: '1.875rem',
+                    fontWeight: 700,
+                    color: '#111827',
+                    marginBottom: '0.5rem',
+                  }}
+                >
+                  {proposalInfo.proposalHeader.title}
+                </h1>
+                <div
+                  style={{
+                    display: 'flex',
+                    flexWrap: 'wrap',
+                    gap: '1rem',
+                    color: '#374151',
+                    marginBottom: '0.5rem',
+                    justifyContent: 'flex-end',
+                  }}
+                >
+                  <span>
+                    <strong>Cliente:</strong> {client.name}
+                  </span>
+                  <span>
+                    <strong>Empresa:</strong> {client.company}
+                  </span>
+                  <span>
+                    <strong>Email:</strong> {client.email}
+                  </span>
+                </div>
+                <div
+                  style={{
+                    display: 'flex',
+                    flexWrap: 'wrap',
+                    gap: '1rem',
+                    color: '#374151',
+                    justifyContent: 'flex-end',
+                  }}
+                >
+                  <span>
+                    <strong>ID:</strong> {proposalId}
+                  </span>
+                  <span>
+                    <strong>Validade:</strong> {proposalInfo.proposalHeader.validity}
+                  </span>
+                  <span>
+                    <strong>Data:</strong> {today}
+                  </span>
+                </div>
+              </div>
+            </header>
+            <hr style={{ marginBottom: '1.5rem' }}></hr>
 
-
-            <p style={{ textAlign: 'justify', color: '#374151', marginBottom: '1.5rem' }}>{proposalInfo.introduction}</p>
+            <p style={{ textAlign: 'justify', color: '#374151', marginBottom: '1.5rem' }}>
+              {proposalInfo.introduction}
+            </p>
+            <hr style={{ marginBottom: '1.5rem' }}></hr>
 
             {servicesCatalog.serviceTypes.map(type => {
               const list = grouped[type.id] || [];
               if (!list.length) return null;
               return (
-                <section key={type.id} style={{ marginBottom: '2rem', pageBreakInside: 'avoid' }}>
-                  <h2 style={{ textAlign: 'center', fontWeight: 600, fontSize: '1.25rem', background: '#14B8A6', color: '#fff', padding: '0.5rem', borderRadius: '1rem 1rem 0 0' }}>
+                <section key={type.id} className="page-break-avoid" style={{ marginBottom: '2rem' }}>
+                  <h2 style={{ 
+                    textAlign: 'center', 
+                    fontWeight: 600, 
+                    fontSize: '1.25rem', 
+                    background: '#0f9686', 
+                    color: '#fff', 
+                    padding: '0.5rem', 
+                    borderRadius: '1rem 1rem 0 0' 
+                  }}>
                     {type.name} – Pacote: R$ {typeTotals[type.id].toLocaleString('pt-BR', { minimumFractionDigits: 2 })}
                   </h2>
                   <div style={{ overflowX: 'auto' }}>
@@ -280,41 +424,76 @@ export default function PrintView({ onBack }) {
                       </tbody>
                     </table>
                   </div>
-                  <div style={{ backgroundColor: '#F3F4F6', borderRadius: '0 0 1rem 1rem', padding: '0.5rem' }}>
-                    <h3 style={{ fontSize: '1.125rem', fontWeight: 500, color: '#1F2937', textAlign: 'center', marginBottom: '0.5rem' }}>Condições de Pagamento</h3>
-                    <div style={{ display: 'flex', justifyContent: 'center', gap: '1.5rem', color: '#374151' }}>
+                  <div style={{ 
+                    backgroundColor: '#F3F4F6', 
+                    borderRadius: '0 0 1rem 1rem', 
+                    padding: '0.5rem' 
+                  }}>
+                    <h3 style={{ 
+                      fontSize: '1.125rem', 
+                      fontWeight: 500, 
+                      color: '#1F2937', 
+                      textAlign: 'center', 
+                      marginBottom: '0.5rem' 
+                    }}>
+                      Condições de Pagamento
+                    </h3>
+                    <div style={{ 
+                      display: 'flex', 
+                      justifyContent: 'center', 
+                      gap: '1.5rem', 
+                      color: '#374151',
+                      flexWrap: 'wrap' 
+                    }}>
                       <span><strong>Método:</strong> {payment[type.id]?.method || '-'}</span>
                       <span><strong>Entrada:</strong> {payment[type.id]?.entry || '-'}</span>
                       <span><strong>Parcelas:</strong> {payment[type.id]?.installments || '-'}</span>
                     </div>
                     {payment[type.id]?.notes && (
-                      <p style={{ fontSize: '0.875rem', color: '#374151', marginTop: '0.5rem' }}><strong>Observações:</strong> {payment[type.id].notes}</p>
+                      <p style={{ fontSize: '0.875rem', color: '#374151', marginTop: '0.5rem' }}>
+                        <strong>Observações:</strong> {payment[type.id].notes}
+                      </p>
                     )}
                   </div>
                 </section>
               );
             })}
 
-            <div style={{ textAlign: 'right', fontSize: '1.25rem', fontWeight: 700, color: '#111827', marginBottom: '1.5rem' }}>
+            <div className="page-break-avoid" style={{ 
+              textAlign: 'right', 
+              fontSize: '1.25rem', 
+              fontWeight: 700, 
+              color: '#111827', 
+              marginBottom: '1.5rem' 
+            }}>
               Total Geral: R$ {typeTotals.overall.toLocaleString('pt-BR', { minimumFractionDigits: 2 })}
             </div>
 
-            <section style={{ marginBottom: '1.5rem' }}>
+            <section className="page-break-avoid" style={{ marginBottom: '1.5rem' }}>
               <h2 style={detailsTitle}>Detalhes Adicionais</h2>
               <p style={{ color: '#374151' }}>{details}</p>
             </section>
 
-            <section style={{ marginBottom: '1.5rem' }}>
+            <section className="page-break-avoid" style={{ marginBottom: '1.5rem' }}>
               <h2 style={detailsTitle}>Informações Importantes</h2>
               <ul style={listStyle}>
                 {proposalInfo.importantInfo.map((info, i) => <li key={i}>{info}</li>)}
               </ul>
             </section>
 
-            <footer style={{ borderTop: '1px solid #000', paddingTop: '1rem', fontSize: '0.75rem', textAlign: 'center' }}>
+            <footer className="page-break-avoid" style={{ 
+              borderTop: '1px solid #000', 
+              paddingTop: '1rem', 
+              fontSize: '0.75rem', 
+              textAlign: 'center' 
+            }}>
               <div><strong>{proposalInfo.company.name}</strong> – CNPJ {proposalInfo.company.cnpj}</div>
               <div>Email: {proposalInfo.company.email} | Tel: {proposalInfo.company.phone}</div>
-              <div>{proposalInfo.company.address.street}, {proposalInfo.company.address.number} – {proposalInfo.company.address.neighborhood}, {proposalInfo.company.address.city} – {proposalInfo.company.address.state}, CEP {proposalInfo.company.address.cep}</div>
+              <div>
+                {proposalInfo.company.address.street}, {proposalInfo.company.address.number} – 
+                {proposalInfo.company.address.neighborhood}, {proposalInfo.company.address.city} – 
+                {proposalInfo.company.address.state}, CEP {proposalInfo.company.address.cep}
+              </div>
             </footer>
           </div>
         </div>

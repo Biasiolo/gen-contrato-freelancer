@@ -78,11 +78,11 @@ const StepPreview = ({ onBack, onNext }) => {
             if (!list.length) return null;
             return (
               <section key={type.id} className="space-y-4 mb-8">
-                <h2 className="text-xl sm:text-2xl text-center font-semibold text-white mb-2 bg-teal-600 rounded-t-3xl p-2">
+                <h2 className="text-xl sm:text-2xl text-center font-semibold text-white mb-2 bg-teal-700 rounded-t-3xl p-2">
                   {type.name} – Pacote: R$ {typeTotals[type.id].toLocaleString('pt-BR', { minimumFractionDigits: 2 })}
                 </h2>
                 <div className="overflow-x-auto">
-                  <table className="w-full table-auto border-collapse mb-2 text-sm">
+                  <table className="w-full table-auto border-collapse mb-0 text-sm">
                     <thead>
                       <tr className="bg-gray-100">
                         <th className="border px-2 py-1">Serviço</th>
@@ -112,7 +112,7 @@ const StepPreview = ({ onBack, onNext }) => {
                     </tbody>
                   </table>
                 </div>
-                <div className="bg-gray-100 p-2 pt-0 rounded-b-3xl">
+                <div className="bg-gray-200 p-2 pt-2 rounded-b-3xl">
                   <h3 className="text-base font-medium mb-2 text-gray-800 text-center">Condições de Pagamento</h3>
                   <div className="flex flex-col sm:flex-row sm:space-x-6 text-gray-700 mb-2 justify-center items-center gap-1">
                     <span><strong>Método:</strong> {payment[type.id]?.method || '-'}</span>
