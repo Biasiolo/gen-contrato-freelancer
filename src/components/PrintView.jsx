@@ -380,84 +380,98 @@ export default function PrintView({ onBack }) {
             <hr style={{ marginBottom: '1.5rem' }}></hr>
 
             {servicesCatalog.serviceTypes.map(type => {
-              const list = grouped[type.id] || [];
-              if (!list.length) return null;
-              return (
-                <section key={type.id} className="page-break-avoid" style={{ marginBottom: '2rem' }}>
-                  <h2 style={{ 
-                    textAlign: 'center', 
-                    fontWeight: 600, 
-                    fontSize: '1.25rem', 
-                    background: '#0f9686', 
-                    color: '#fff', 
-                    padding: '0.5rem', 
-                    borderRadius: '1rem 1rem 0 0' 
-                  }}>
-                    {type.name} – Pacote: R$ {typeTotals[type.id].toLocaleString('pt-BR', { minimumFractionDigits: 2 })}
-                  </h2>
-                  <div style={{ overflowX: 'auto' }}>
-                    <table style={{ width: '100%', borderCollapse: 'collapse', marginTop: '0.5rem' }}>
-                      <thead>
-                        <tr style={{ backgroundColor: '#F3F4F6' }}>
-                          {['Serviço', 'Qtd', 'Prazo', 'Valor Unit.', 'Subtotal'].map((th, i) => (
-                            <th key={i} style={{ border: '1px solid #D1D5DB', padding: '0.25rem 0.5rem' }}>{th}</th>
-                          ))}
-                        </tr>
-                      </thead>
-                      <tbody>
-                        {list.map(item => (
-                          <React.Fragment key={item.id}>
-                            <tr>
-                              <td style={thTdStyle}>{item.title}</td>
-                              <td style={{ ...thTdStyle, textAlign: 'center' }}>{item.qty}</td>
-                              <td style={{ ...thTdStyle, textAlign: 'center' }}>{item.isMonthly ? `${item.term} meses` : 'Único'}</td>
-                              <td style={{ ...thTdStyle, textAlign: 'right' }}>R$ {item.unitValue.toLocaleString('pt-BR', { minimumFractionDigits: 2 })}</td>
-                              <td style={{ ...thTdStyle, textAlign: 'right' }}>R$ {item.subtotal.toLocaleString('pt-BR', { minimumFractionDigits: 2 })}</td>
-                            </tr>
-                            {item.description && (
-                              <tr>
-                                <td colSpan="5" style={{ ...thTdStyle, fontSize: '0.875rem', color: '#4B5563' }}>{item.description}</td>
-                              </tr>
-                            )}
-                          </React.Fragment>
-                        ))}
-                      </tbody>
-                    </table>
-                  </div>
-                  <div style={{ 
-                    backgroundColor: '#F3F4F6', 
-                    borderRadius: '0 0 1rem 1rem', 
-                    padding: '0.5rem' 
-                  }}>
-                    <h3 style={{ 
-                      fontSize: '1.125rem', 
-                      fontWeight: 500, 
-                      color: '#1F2937', 
-                      textAlign: 'center', 
-                      marginBottom: '0.5rem' 
-                    }}>
-                      Condições de Pagamento
-                    </h3>
-                    <div style={{ 
-                      display: 'flex', 
-                      justifyContent: 'center', 
-                      gap: '1.5rem', 
-                      color: '#374151',
-                      flexWrap: 'wrap' 
-                    }}>
-                      <span><strong>Método:</strong> {payment[type.id]?.method || '-'}</span>
-                      <span><strong>Entrada:</strong> {payment[type.id]?.entry || '-'}</span>
-                      <span><strong>Parcelas:</strong> {payment[type.id]?.installments || '-'}</span>
-                    </div>
-                    {payment[type.id]?.notes && (
-                      <p style={{ fontSize: '0.875rem', color: '#374151', marginTop: '0.5rem' }}>
-                        <strong>Observações:</strong> {payment[type.id].notes}
-                      </p>
-                    )}
-                  </div>
-                </section>
-              );
-            })}
+  const list = grouped[type.id] || [];
+  if (!list.length) return null;
+
+  const total = typeTotals[type.id] || 0;
+  const entrada = parseFloat((payment[type.id]?.entry || '').toString().replace(/[^\d,]/g, '').replace(',', '.')) || 0;
+  const parcelas = parseInt(payment[type.id]?.installments) || 0;
+  const saldo = total - entrada;
+  const valorParcela = parcelas > 0 ? saldo / parcelas : 0;
+
+  return (
+    <section key={type.id} className="page-break-avoid" style={{ marginBottom: '2rem' }}>
+      <h2 style={{ 
+        textAlign: 'center', 
+        fontWeight: 600, 
+        fontSize: '1.25rem', 
+        background: '#0f9686', 
+        color: '#fff', 
+        padding: '0.5rem', 
+        borderRadius: '1rem 1rem 0 0' 
+      }}>
+        {type.name} – Pacote: R$ {total.toLocaleString('pt-BR', { minimumFractionDigits: 2 })}
+      </h2>
+      <div style={{ overflowX: 'auto' }}>
+        <table style={{ width: '100%', borderCollapse: 'collapse', marginTop: '0.5rem' }}>
+          <thead>
+            <tr style={{ backgroundColor: '#F3F4F6' }}>
+              {['Serviço', 'Qtd', 'Prazo', 'Valor Unit.', 'Subtotal'].map((th, i) => (
+                <th key={i} style={{ border: '1px solid #D1D5DB', padding: '0.25rem 0.5rem' }}>{th}</th>
+              ))}
+            </tr>
+          </thead>
+          <tbody>
+            {list.map(item => (
+              <React.Fragment key={item.id}>
+                <tr>
+                  <td style={thTdStyle}>{item.title}</td>
+                  <td style={{ ...thTdStyle, textAlign: 'center' }}>{item.qty}</td>
+                  <td style={{ ...thTdStyle, textAlign: 'center' }}>{item.isMonthly ? `${item.term} meses` : 'Único'}</td>
+                  <td style={{ ...thTdStyle, textAlign: 'right' }}>R$ {item.unitValue.toLocaleString('pt-BR', { minimumFractionDigits: 2 })}</td>
+                  <td style={{ ...thTdStyle, textAlign: 'right' }}>R$ {item.subtotal.toLocaleString('pt-BR', { minimumFractionDigits: 2 })}</td>
+                </tr>
+                {item.description && (
+                  <tr>
+                    <td colSpan="5" style={{ ...thTdStyle, fontSize: '0.875rem', color: '#4B5563' }}>{item.description}</td>
+                  </tr>
+                )}
+              </React.Fragment>
+            ))}
+          </tbody>
+        </table>
+      </div>
+      <div style={{ 
+        backgroundColor: '#F3F4F6', 
+        borderRadius: '0 0 1rem 1rem', 
+        padding: '0.5rem' ,
+        paddingBottom: '1rem' 
+      }}>
+        <h3 style={{ 
+          fontSize: '1.125rem', 
+          fontWeight: 500, 
+          color: '#1F2937', 
+          textAlign: 'center', 
+          marginBottom: '0.5rem' 
+        }}>
+          Condições de Pagamento
+        </h3>
+        <div style={{ 
+          display: 'flex', 
+          justifyContent: 'center', 
+          gap: '1.5rem', 
+          color: '#374151',
+          flexWrap: 'wrap' 
+        }}>
+          <span><strong>Método:</strong> {payment[type.id]?.method || '-'}</span>
+          <span><strong>Entrada:</strong> R$ {entrada.toLocaleString('pt-BR', { minimumFractionDigits: 2 })}</span>
+          <span>
+            <strong>Saldo:</strong> R$ {saldo.toLocaleString('pt-BR', { minimumFractionDigits: 2 })}
+            {parcelas > 0 && (
+              <> em {parcelas}x de R$ {valorParcela.toLocaleString('pt-BR', { minimumFractionDigits: 2 })}</>
+            )}
+          </span>
+        </div>
+        {payment[type.id]?.notes && (
+          <p style={{ fontSize: '0.875rem', color: '#374151', marginTop: '0.5rem' }}>
+            <strong>Observações:</strong> {payment[type.id].notes}
+          </p>
+        )}
+      </div>
+    </section>
+  );
+})}
+
 
             <div className="page-break-avoid" style={{ 
               textAlign: 'right', 
