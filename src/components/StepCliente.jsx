@@ -32,7 +32,7 @@ const StepCliente = ({ data = {}, onChange, onNext }) => {
   };
 
   return (
-    <div className="flex items-center justify-center pt-0 sm:pt-24 bg-gradient-to-br from-black via-stone-950 to-black">
+    <div className="flex items-center justify-center pt-0 sm:pt-24 bg-transparent">
 
       <div className="relative max-w-4xl w-full mx-auto ">
         <div className="relative backdrop-blur-sm bg-neutral-200 bg-opacity-10 rounded-2xl shadow-2xl border border-white border-opacity-20 p-10 overflow-hidden">
