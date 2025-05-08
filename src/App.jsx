@@ -1,4 +1,3 @@
-// src/App.jsx
 import React, { useState } from 'react';
 import { Provider } from 'react-redux';
 import { PersistGate } from 'redux-persist/integration/react';
@@ -26,7 +25,8 @@ function WizardFlow() {
   return (
     <div className="min-h-screen bg-black">
       <div className="no-print">
-        <ProgressBar currentStep={step} />
+        {/* Passa onStepClick para habilitar navegação via ProgressBar */}
+        <ProgressBar currentStep={step} onStepClick={setStep} />
       </div>
 
       <div className="pt-20 px-4">

@@ -7,7 +7,7 @@ const Landing = () => {
   const navigate = useNavigate();
 
   useEffect(() => {
-    const timer = setTimeout(() => setShowButton(true), 5000);
+    const timer = setTimeout(() => setShowButton(true), 2000);
     return () => clearTimeout(timer);
   }, []);
 
@@ -23,21 +23,11 @@ const Landing = () => {
 
   return (
     <div className="relative w-full h-screen overflow-hidden bg-black">
-      {/* Vídeo de fundo local com velocidade ajustada */}
-      <video
-        ref={videoRef}
-        autoPlay
-        muted
-        loop
-        playsInline
-        className="absolute inset-0 w-full h-full object-cover z-0"
-      >
-        <source src="/video2.mp4" type="video/mp4" />
-        Seu navegador não suporta vídeo em HTML5.
-      </video>
+     
 
       {/* Botão de entrada com efeito de zoom suave e "encher" ao hover */}
-      <div className="relative z-10 h-full flex items-center justify-center">
+      <div className="relative z-10 h-full flex flex-col items-center justify-center">
+      <h1 className="text-4xl text-teal-600 text-center mb-8 font-bold">Propostas Voia</h1>
         <button
           onClick={handleNavigate}
           className={`

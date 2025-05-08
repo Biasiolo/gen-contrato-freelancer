@@ -1,4 +1,3 @@
-// src/components/ProgressBar.jsx
 import React from 'react';
 
 const steps = [
@@ -11,7 +10,7 @@ const steps = [
   { key: 7, label: 'Sucesso!' }
 ];
 
-export default function ProgressBar({ currentStep }) {
+export default function ProgressBar({ currentStep, onStepClick }) {
   return (
     <div className="fixed top-0 left-0 w-full backdrop-blur-sm bg-white/20 shadow z-50">
       <div className="relative max-w-4xl mx-auto px-4 md:px-6 py-3 md:py-4">
@@ -20,19 +19,20 @@ export default function ProgressBar({ currentStep }) {
         <div className="relative flex justify-between items-center">
           {steps.map(step => {
             const isCompleted = currentStep > step.key;
-            const isActive    = currentStep === step.key;
+            const isActive = currentStep === step.key;
 
             return (
               <div key={step.key} className="flex-1 flex flex-col items-center">
-                {/* circle */}
-                <div
-                  className={`flex items-center justify-center rounded-full z-10
+                {/* circle as button */}
+                <button
+                  onClick={() => onStepClick(step.key)}
+                  className={`flex items-center justify-center rounded-full z-10 transition cursor-pointer
                     ${isCompleted
-                      ? 'bg-teal-600 w-8 h-8 md:w-10 md:h-10'
+                      ? 'bg-teal-600 w-8 h-8 md:w-10 md:h-10 hover:scale-110'
                       : isActive
-                        ? 'bg-white border-2 border-teal-600 w-8 h-8 md:w-10 md:h-10'
-                        : 'bg-neutral-800 w-8 h-8 md:w-10 md:h-10'}`
-                  }
+                        ? 'bg-white border-2 border-teal-600 w-8 h-8 md:w-10 md:h-10 hover:scale-110'
+                        : 'bg-neutral-800 w-8 h-8 md:w-10 md:h-10 hover:scale-110'}`}
+                  title={`Ir para ${step.label}`}
                 >
                   <span
                     className={`font-semibold
@@ -40,11 +40,11 @@ export default function ProgressBar({ currentStep }) {
                         ? 'text-white text-sm md:text-base'
                         : isActive
                           ? 'text-gray-900 text-sm md:text-base'
-                          : 'text-neutral-400 text-sm md:text-base'}`
-                  }>
+                          : 'text-neutral-400 text-sm md:text-base'}`}
+                  >
                     {step.key}
                   </span>
-                </div>
+                </button>
 
                 {/* label: hidden on mobile, shown from sm+ */}
                 <div className={`mt-1 md:mt-2 text-center sm:block hidden`}>
