@@ -64,8 +64,8 @@ const StepCondicoes = ({ onBack, onNext }) => {
   ];
 
   return (
-    <div className="flex items-center justify-center min-h-screen bg-gradient-to-br from-black via-stone-950 to-black pt-0 sm:pt-10 px-4">
-      <div className="relative w-full max-w-4xl mx-auto p-4 sm:p-6">
+    <div className="flex items-center justify-center min-h-screen bg-gradient-to-br from-black via-stone-950 to-black pt-0 sm:pt-10 ">
+      <div className="relative w-full max-w-4xl mx-auto ">
         <div className="relative backdrop-blur-sm bg-neutral-200 bg-opacity-10 rounded-2xl shadow-2xl border border-white border-opacity-20 p-6 sm:p-10 overflow-auto">
           <h2 className="text-2xl sm:text-3xl font-extrabold text-gray-900 text-center mb-1">
             Defina as Condições

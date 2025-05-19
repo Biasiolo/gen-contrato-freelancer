@@ -2,7 +2,7 @@
   "serviceTypes": [
     {
       "id": "dna_mkt",
-      "name": "DNA MARCA",
+      "name": "DNA de Marca",
       "paymentOptions": [],
       "services": [
         {
@@ -45,7 +45,7 @@
     
     {
       "id": "mkt_estrategico",
-      "name": "MARKETING ESTRATÉGICO",
+      "name": "Marketing Estratégico",
       "paymentOptions": [],
       "services": [
         {
@@ -88,7 +88,7 @@
     
     {
       "id": "audiovisual",
-      "name": "AUDIOVISUAL",
+      "name": "Produção Audiovisual",
       "paymentOptions": [],
       "services": [
         {
@@ -131,7 +131,7 @@
     
     {
       "id": "web",
-      "name": "Web",
+      "name": "Presença Web",
       "paymentOptions": [],
       "services": [
         {
@@ -187,7 +187,7 @@
     },
     {
       "id": "crm",
-      "name": "CRM",
+      "name": "Ferramentas de Gerenciamento",
       "paymentOptions": [],
       "services": [
         {

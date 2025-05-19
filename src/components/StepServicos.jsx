@@ -3,7 +3,7 @@ import React, { useEffect, useState } from 'react';
 import servicesCatalog from '../data/services.json';
 import { useDispatch, useSelector } from 'react-redux';
 import { addService, updateService, removeService } from '../store/slices/proposalSlice';
-
+import { nanoid } from 'nanoid';
 
 const StepServicos = ({ onBack, onNext }) => {
   const dispatch = useDispatch();
@@ -15,6 +15,29 @@ const StepServicos = ({ onBack, onNext }) => {
   const currentType = serviceTypes[typeIndex];
   const [services, setServices] = useState([]);
 
+  const [customService, setCustomService] = useState({
+    title: '',
+    description: '',
+    unitValue: '',
+    isMonthly: false
+  });
+
+  const handleAddCustomService = () => {
+    if (!customService.title || !customService.unitValue) return;
+
+    dispatch(addService({
+      id: `custom_${nanoid(6)}`,
+      title: customService.title,
+      description: customService.description,
+      qty: 1,
+      unitValue: parseCurrency(customService.unitValue),
+      isMonthly: customService.isMonthly,
+      type: currentType.id
+    }));
+
+    setCustomService({ title: '', description: '', unitValue: '', isMonthly: false });
+  };
+
   useEffect(() => {
     const updated = currentType.services.map(svc => {
       const sel = selectedServices.find(item => item.id === svc.id);
@@ -25,7 +48,11 @@ const StepServicos = ({ onBack, onNext }) => {
         unitValue: sel ? sel.unitValue : svc.defaultUnitValue
       };
     });
-    setServices(updated);
+
+    const customs = selectedServices.filter(item => item.type === currentType.id && item.id.startsWith('custom_'));
+    const fullList = [...updated, ...customs.map(svc => ({ ...svc, selected: true }))];
+
+    setServices(fullList);
   }, [currentType, selectedServices]);
 
   const toggleSelect = svc => {
@@ -60,15 +87,15 @@ const StepServicos = ({ onBack, onNext }) => {
   const handleNext = () => {
     if (typeIndex < totalTypes - 1) {
       setTypeIndex(typeIndex + 1);
-      window.scrollTo({ top: 0, behavior: 'smooth' }); 
+      window.scrollTo({ top: 0, behavior: 'smooth' });
     } else {
       onNext();
     }
   };
 
   return (
-    <div className="flex items-center justify-center bg-gradient-to-br from-black via-stone-950 to-black pt-0 sm:py-10 px-4">
-      <div className="relative w-full max-w-4xl mx-auto p-4">
+    <div className="flex items-center justify-center bg-gradient-to-br from-black via-stone-950 to-black pt-0 sm:py-10">
+      <div className="relative w-full max-w-4xl mx-auto">
         <div className="relative backdrop-blur-sm bg-neutral-200 bg-opacity-10 rounded-2xl shadow-2xl border border-white border-opacity-20 p-6 sm:p-10 overflow-auto">
           <h2 className="text-2xl sm:text-3xl text-center font-semibold text-white mb-2 bg-teal-600 rounded-t-3xl p-2">
             {currentType.name}
@@ -84,7 +111,7 @@ const StepServicos = ({ onBack, onNext }) => {
                 className="group flex flex-col sm:flex-row sm:items-center justify-between gap-4 bg-white bg-opacity-10 border border-white border-opacity-20 rounded-lg p-4 transition hover:bg-opacity-20"
               >
                 <div className="flex-1">
-                  <h3 className="text-lg sm:text-xl font-semibold text-gray-600">{svc.title}</h3>
+                  <h3 className="text-lg sm:text-xl font-semibold text-neutral-800">{svc.title}</h3>
                   <p className="text-neutral-400 max-w-md text-sm sm:text-base">{svc.description}</p>
                 </div>
                 <div className="flex flex-row sm:flex-row sm:items-center gap-2 sm:gap-4">
@@ -95,12 +122,11 @@ const StepServicos = ({ onBack, onNext }) => {
                       onChange={() => toggleSelect(svc)}
                       className="w-6 h-5 text-teal-600 bg-neutral-800 border-neutral-600 rounded cursor-pointer"
                     />
-
                   </label>
 
                   {svc.selected && (
                     <>
-                      <label className="flex flex-col text-xs text-gray-400">
+                      <label className="flex flex-col text-xs text-neutral-500">
                         Qtd
                         <input
                           type="number"
@@ -128,6 +154,53 @@ const StepServicos = ({ onBack, onNext }) => {
             ))}
           </div>
 
+          <div className="mt-6 bg-neutral-700 p-4 rounded-xl space-y-3">
+            <h3 className="text-lg font-semibold text-white">Adicionar Serviço Personalizado</h3>
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+              <input
+                type="text"
+                placeholder="Título do serviço"
+                value={customService.title}
+                onChange={e => setCustomService({ ...customService, title: e.target.value })}
+                className="px-3 py-2 rounded-lg bg-white text-black"
+              />
+              <input
+                type="text"
+                placeholder="Descrição"
+                value={customService.description}
+                onChange={e => setCustomService({ ...customService, description: e.target.value })}
+                className="px-3 py-2 rounded-lg bg-white text-black"
+              />
+              <input
+  type="text"
+  placeholder="Valor (R$)"
+  value={formatCurrency(parseCurrency(customService.unitValue))}
+  onChange={e => {
+    const onlyNumbers = e.target.value.replace(/[^\d]/g, '');
+    const formatted = (parseInt(onlyNumbers || '0') / 100).toFixed(2).toString().replace('.', ',');
+    setCustomService({
+      ...customService,
+      unitValue: formatted
+    });
+  }}
+  className="px-3 py-2 rounded-lg bg-white text-black"
+/>
+              <label className="flex items-center gap-2 text-white">
+                <input
+                  type="checkbox"
+                  checked={customService.isMonthly}
+                  onChange={e => setCustomService({ ...customService, isMonthly: e.target.checked })}
+                /> Mensal?
+              </label>
+            </div>
+            <button
+              onClick={handleAddCustomService}
+              className="bg-teal-600 text-white px-4 py-2 rounded-3xl hover:bg-orange-500 transition cursor-pointer"
+            >
+              + Adicionar Serviço
+            </button>
+          </div>
+
           <div className="mt-6 flex flex-col md:flex-row justify-between gap-4">
             <button
               onClick={handlePrev}
@@ -136,7 +209,6 @@ const StepServicos = ({ onBack, onNext }) => {
               <span className="relative z-10  font-medium">
                 {typeIndex > 0 ? '◄ Anterior' : '◄ Voltar'}
               </span>
-              
               <span className="absolute inset-y-0 right-0 h-full w-0 bg-gradient-to-r from-orange-600 to-orange-500 transition-all duration-300 ease-out group-hover:w-full" />
             </button>
 
@@ -147,7 +219,6 @@ const StepServicos = ({ onBack, onNext }) => {
               <span className="relative z-10  font-medium">
                 {typeIndex < totalTypes - 1 ? 'Próximo ►' : 'Continuar ►'}
               </span>
-
               <span className="absolute inset-0 h-full w-0 bg-gradient-to-r from-orange-500 to-orange-600 transition-all duration-300 ease-out group-hover:w-full" />
             </button>
           </div>
