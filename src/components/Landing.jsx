@@ -44,9 +44,9 @@ const Landing = () => {
             ${showButton ? 'opacity-100 scale-100' : 'opacity-0 scale-50'}
           `}
         >
-          <span className="relative z-10 text-5xl font-light text-amber-50">Gerar Proposta</span>
+          <span className="relative z-10 text-5xl font-light text-neutral-50">Gerar Proposta</span>
           <span
-            className="absolute inset-0 w-0 h-full bg-teal-600 
+            className="absolute inset-0 w-0 h-full bg-orange-500 
               transition-all duration-1000 ease-out group-hover:w-full z-0"
           />
         </button>
