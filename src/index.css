@@ -5,14 +5,4 @@ body {
   font-family: "Poppins", sans-serif !important;
 }
 
-/* para qualquer impressão */
-@media print {
-    .progress-bar {
-      display: none !important;
-    }
-  }
-  /* para o html2pdf/html2canvas ignorarem */
-  .progress-bar {
-    /* opcional: também marcar como não visível para html2pdf */
-    visibility: hidden;
-  }
+  

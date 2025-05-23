@@ -5,6 +5,7 @@ import servicesCatalog from '../data/services.json';
 import proposalInfo from '../data/proposalInfo.json';
 import { resetProposal } from '../store/slices/proposalSlice';
 
+
 export default function PrintView({ onBack }) {
   const dispatch = useDispatch();
   const printRef = useRef();
@@ -47,22 +48,94 @@ export default function PrintView({ onBack }) {
     document.querySelectorAll('.html2pdf__page-container').forEach(el => el.remove());
   };
 
+  const parsePaymentValue = (value) => {
+    if (!value) return 0;
+    return parseFloat(
+      value.toString()
+        .replace(/[^\d,]/g, '')
+        .replace(',', '.')
+    ) || 0;
+  };
+
+  const parcelasAgrupadas = useMemo(() => {
+    // Criar um objeto para armazenar o valor de cada parcela por número
+    const parcelasPorNumero = {};
+
+    Object.entries(grouped).forEach(([typeId]) => {
+      const total = typeTotals[typeId] || 0;
+      const entrada = parsePaymentValue(payment[typeId]?.entry);
+      const parcelas = parseInt(payment[typeId]?.installments, 10) || 0;
+      const saldo = total - entrada;
+
+      if (parcelas > 0 && saldo > 0) {
+        const valorParcela = +(saldo / parcelas).toFixed(2);
+
+        // Adicionar o valor desta parcela a cada número de parcela
+        for (let i = 1; i <= parcelas; i++) {
+          if (!parcelasPorNumero[i]) {
+            parcelasPorNumero[i] = 0;
+          }
+          parcelasPorNumero[i] += valorParcela;
+        }
+      }
+    });
+
+
+
+    // Converter para array e agrupar parcelas consecutivas com o mesmo valor
+    const numerosParcelas = Object.keys(parcelasPorNumero)
+      .map(num => parseInt(num, 10))
+      .sort((a, b) => a - b);
+
+    if (numerosParcelas.length === 0) return [];
+
+    const grupos = [];
+    let inicio = numerosParcelas[0];
+    let valorAtual = parcelasPorNumero[inicio];
+
+    for (let i = 1; i < numerosParcelas.length; i++) {
+      const numeroAtual = numerosParcelas[i];
+      const valorParcela = parcelasPorNumero[numeroAtual];
+
+      // Se o valor mudou ou há uma quebra na sequência
+      if (Math.abs(valorParcela - valorAtual) > 0.01 || numeroAtual !== numerosParcelas[i - 1] + 1) {
+        grupos.push({
+          de: inicio,
+          ate: numerosParcelas[i - 1],
+          valor: valorAtual
+        });
+        inicio = numeroAtual;
+        valorAtual = valorParcela;
+      }
+    }
+
+    // Adicionar o último grupo
+    grupos.push({
+      de: inicio,
+      ate: numerosParcelas[numerosParcelas.length - 1],
+      valor: valorAtual
+    });
+
+    return grupos;
+  }, [grouped, payment, typeTotals]);
+
+
+
   // Configurações PDF comuns para reuso
   const getPdfOptions = () => ({
-    margin: [1.5, 0], 
+    margin: 0,
     filename: `${client.company || 'proposta'}-${proposalId}.pdf`,
-    image: { type: 'jpeg', quality: 0.98 },
-    html2canvas: { 
-      scale: 2, 
-      useCORS: true,
-      letterRendering: true,
+    image: { type: 'png', quality: 1 },
+    html2canvas: {
+        scale: 2,
+        useCORS: true,
+        allowTaint: true,
+        windowWidth: 1122,
     },
-    jsPDF: { 
-      unit: 'cm', 
-      format: 'a4', 
-      orientation: 'portrait',
-      compress: true,
-      precision: 16
+    jsPDF: {
+        unit: 'px',
+        format: [1122, 1587], // A4 retrato em px (96dpi → 29.7 x 21 cm)
+        orientation: 'portrait',
     },
     pagebreak: { mode: ['avoid-all', 'css', 'legacy'] }
   });
@@ -75,7 +148,9 @@ export default function PrintView({ onBack }) {
       .then(cleanup)
       .catch(console.error);
 
-  const handlePrint = () => window.print();
+  const handlePrint = () => {
+    window.print();
+  };
 
   const handleShare = async () => {
     try {
@@ -84,24 +159,24 @@ export default function PrintView({ onBack }) {
         .set(getPdfOptions())
         .from(printRef.current)
         .output('blob');
-      
-      const file = new File([blob], `${client.company || 'proposta'}-${proposalId}.pdf`, { 
-        type: 'application/pdf' 
+
+      const file = new File([blob], `${client.company || 'proposta'}-${proposalId}.pdf`, {
+        type: 'application/pdf'
       });
-      
+
       // Verifica se o navegador suporta compartilhamento de arquivos
       if (navigator.canShare && navigator.canShare({ files: [file] })) {
-        await navigator.share({ 
-          files: [file], 
+        await navigator.share({
+          files: [file],
           title: 'Proposta Comercial',
-          text: `Proposta para ${client.company || client.name}` 
+          text: `Proposta para ${client.company || client.name}`
         });
         return;
       }
-      
+
       // Fallback 2: Em dispositivos móveis, tente criar URL temporária para compartilhar
       const fileURL = URL.createObjectURL(blob);
-      
+
       // Tente compartilhar apenas a URL (funciona em mais navegadores)
       if (navigator.share) {
         await navigator.share({
@@ -109,7 +184,7 @@ export default function PrintView({ onBack }) {
           text: `Proposta para ${client.company || client.name}`,
           url: fileURL
         });
-        
+
         // Limpar URL após compartilhamento
         setTimeout(() => URL.revokeObjectURL(fileURL), 60000);
         return;
@@ -117,7 +192,7 @@ export default function PrintView({ onBack }) {
     } catch (e) {
       console.error('Erro ao compartilhar:', e);
     }
-    
+
     // Fallback final: baixar o PDF normalmente
     handleDownloadPDF();
   };
@@ -126,6 +201,9 @@ export default function PrintView({ onBack }) {
     dispatch(resetProposal());
     window.location.reload();
   };
+  
+
+
 
   const thTdStyle = {
     border: '1px solid #D1D5DB',
@@ -156,33 +234,27 @@ export default function PrintView({ onBack }) {
     <>
       {/* Estilos aprimorados para impressão */}
       <style>{`
-        @page {
-          size: A4;
-          margin: 1.5cm;
-        }
         
+
+  
         @media print {
-          html, body {
-            width: 210mm;
-            height: 297mm;
-            margin: 0;
-            padding: 0;
-            background: white !important;
-          }
-          
-          body * {
-            visibility: hidden;
-            background: white !important;
-          }
-          
-          #print-area, #print-area * {
-            visibility: visible;
-            color-adjust: exact !important;
-            -webkit-print-color-adjust: exact !important;
-            print-color-adjust: exact !important;
-          }
-          
-          #print-area {
+  @page {
+    size: 1122px 1587px; /* A4 em px */
+    margin: 120px;
+  }
+
+  body {
+    print-color-adjust: exact;
+  }
+
+  .no-print {
+    display: none;
+  }
+
+  .print-page {
+    page-break-after: always;
+  }
+    #print-area {
             position: absolute;
             left: 0;
             top: 0;
@@ -192,66 +264,24 @@ export default function PrintView({ onBack }) {
             background: white !important;
             box-shadow: none !important;
           }
-          
-          .no-print {
-            display: none !important;
-          }
-          
-          /* Controle de quebra de página */
-          .page-break-avoid {
-            page-break-inside: avoid;
-          }
-          
-          .page-break-before {
-            page-break-before: always;
-          }
-          
-          /* Forçar elementos críticos a não quebrar página */
-          table, tr, td, th, section {
-            page-break-inside: avoid;
-          }
-        }
-        
-        @media screen {
-          #print-area {
-            width: 210mm;
-            min-height: 297mm;
-            margin: 0 auto;
-            background: white;
-            box-sizing: border-box;
-            box-shadow: 0 25px 50px -12px rgba(0,0,0,0.25);
-          }
-        }
-        
-        @media (max-width: 640px) {
-          .print-controls { 
-            flex-direction: column; 
-            gap: 0.5rem; 
-          }
-          .print-btn { 
-            width: 100% !important; 
-          }
-          #print-area {
-            width: 100%;
-            min-height: auto;
-          }
-        }
+}
+
+
       `}</style>
-      
-      <div style={{ 
-        display: 'flex', 
-        justifyContent: 'center', 
-        background: 'linear-gradient(to bottom right, #000, #18181b, #000)', 
-        padding: '3rem 0.5rem', 
-        minHeight: '100vh' 
+      <div style={{
+        display: 'flex',
+        justifyContent: 'center',
+        background: 'linear-gradient(to bottom right, #000, #18181b, #000)',
+        padding: '3rem 0.5rem',
+        minHeight: '100vh'
       }}>
         <div style={{ width: '100%', maxWidth: '60rem' }}>
-          <div className="no-print print-controls" style={{ 
-            display: 'flex', 
-            justifyContent: 'center', 
-            gap: '1rem', 
-            marginBottom: '1.5rem', 
-            flexWrap: 'wrap' 
+          <div className="no-print print-controls" style={{
+            display: 'flex',
+            justifyContent: 'center',
+            gap: '1rem',
+            marginBottom: '1.5rem',
+            flexWrap: 'wrap'
           }}>
             {[{
               label: 'Voltar',
@@ -277,22 +307,22 @@ export default function PrintView({ onBack }) {
               <button
                 key={i}
                 onClick={btn.onClick}
-                className="print-btn"
-                style={{ 
-                  backgroundColor: btn.bg, 
-                  color: '#fff', 
-                  padding: '0.5rem 1rem', 
-                  borderRadius: '1.5rem', 
-                  minWidth: '10rem', 
-                  cursor: 'pointer' 
+                className="no-print"
+                style={{
+                  backgroundColor: btn.bg,
+                  color: '#fff',
+                  padding: '0.5rem 1rem',
+                  borderRadius: '1.5rem',
+                  minWidth: '10rem',
+                  cursor: 'pointer'
                 }}>
                 {btn.label}
               </button>
             ))}
           </div>
 
-          <div ref={printRef} id="print-area" style={{ 
-            background: '#fff', 
+          <div ref={printRef} id="print-area" style={{
+            background: '#fff',
             padding: '2rem'
           }}>
             <header
@@ -380,108 +410,125 @@ export default function PrintView({ onBack }) {
             <hr style={{ marginBottom: '1.5rem' }}></hr>
 
             {servicesCatalog.serviceTypes.map(type => {
-  const list = grouped[type.id] || [];
-  if (!list.length) return null;
+              const list = grouped[type.id] || [];
+              if (!list.length) return null;
 
-  const total = typeTotals[type.id] || 0;
-  const entrada = parseFloat((payment[type.id]?.entry || '').toString().replace(/[^\d,]/g, '').replace(',', '.')) || 0;
-  const parcelas = parseInt(payment[type.id]?.installments) || 0;
-  const saldo = total - entrada;
-  const valorParcela = parcelas > 0 ? saldo / parcelas : 0;
+              const total = typeTotals[type.id] || 0;
+              const entrada = parseFloat((payment[type.id]?.entry || '').toString().replace(/[^\d,]/g, '').replace(',', '.')) || 0;
+              const parcelas = parseInt(payment[type.id]?.installments) || 0;
+              const saldo = total - entrada;
+              const valorParcela = parcelas > 0 ? saldo / parcelas : 0;
 
-  return (
-    <section key={type.id} className="page-break-avoid" style={{ marginBottom: '2rem' }}>
-      <h2 style={{ 
-        textAlign: 'center', 
-        fontWeight: 600, 
-        fontSize: '1.25rem', 
-        background: '#0f9686', 
-        color: '#fff', 
-        padding: '0.5rem', 
-        borderRadius: '1rem 1rem 0 0' 
-      }}>
-        {type.name} – Pacote: R$ {total.toLocaleString('pt-BR', { minimumFractionDigits: 2 })}
-      </h2>
-      <div style={{ overflowX: 'auto' }}>
-        <table style={{ width: '100%', borderCollapse: 'collapse', marginTop: '0.5rem' }}>
-          <thead>
-            <tr style={{ backgroundColor: '#F3F4F6' }}>
-              {['Serviço', 'Qtd', 'Prazo', 'Valor Unit.', 'Subtotal'].map((th, i) => (
-                <th key={i} style={{ border: '1px solid #D1D5DB', padding: '0.25rem 0.5rem' }}>{th}</th>
-              ))}
-            </tr>
-          </thead>
-          <tbody>
-            {list.map(item => (
-              <React.Fragment key={item.id}>
-                <tr>
-                  <td style={thTdStyle}>{item.title}</td>
-                  <td style={{ ...thTdStyle, textAlign: 'center' }}>{item.qty}</td>
-                  <td style={{ ...thTdStyle, textAlign: 'center' }}>{item.isMonthly ? `${item.term} meses` : 'Único'}</td>
-                  <td style={{ ...thTdStyle, textAlign: 'right' }}>R$ {item.unitValue.toLocaleString('pt-BR', { minimumFractionDigits: 2 })}</td>
-                  <td style={{ ...thTdStyle, textAlign: 'right' }}>R$ {item.subtotal.toLocaleString('pt-BR', { minimumFractionDigits: 2 })}</td>
-                </tr>
-                {item.description && (
-                  <tr>
-                    <td colSpan="5" style={{ ...thTdStyle, fontSize: '0.875rem', color: '#4B5563' }}>{item.description}</td>
-                  </tr>
-                )}
-              </React.Fragment>
-            ))}
-          </tbody>
-        </table>
-      </div>
-      <div style={{ 
-        backgroundColor: '#F3F4F6', 
-        borderRadius: '0 0 1rem 1rem', 
-        padding: '0.5rem' ,
-        paddingBottom: '1rem' 
-      }}>
-        <h3 style={{ 
-          fontSize: '1.125rem', 
-          fontWeight: 500, 
-          color: '#1F2937', 
-          textAlign: 'center', 
-          marginBottom: '0.5rem' 
-        }}>
-          Condições de Pagamento
-        </h3>
-        <div style={{ 
-          display: 'flex', 
-          justifyContent: 'center', 
-          gap: '1.5rem', 
-          color: '#374151',
-          flexWrap: 'wrap' 
-        }}>
-          <span><strong>Método:</strong> {payment[type.id]?.method || '-'}</span>
-          <span><strong>Entrada:</strong> R$ {entrada.toLocaleString('pt-BR', { minimumFractionDigits: 2 })}</span>
-          <span>
-            <strong>Saldo:</strong> R$ {saldo.toLocaleString('pt-BR', { minimumFractionDigits: 2 })}
-            {parcelas > 0 && (
-              <> em {parcelas}x de R$ {valorParcela.toLocaleString('pt-BR', { minimumFractionDigits: 2 })}</>
-            )}
-          </span>
-        </div>
-        {payment[type.id]?.notes && (
-          <p style={{ fontSize: '0.875rem', color: '#374151', marginTop: '0.5rem' }}>
-            <strong>Observações:</strong> {payment[type.id].notes}
-          </p>
-        )}
-      </div>
-    </section>
-  );
-})}
+              return (
+                <section key={type.id} className="page-break-avoid" style={{ marginBottom: '2rem' }}>
+                  <h2 style={{
+                    textAlign: 'center',
+                    fontWeight: 600,
+                    fontSize: '1.25rem',
+                    background: '#0f9686',
+                    color: '#fff',
+                    padding: '0.5rem',
+                    borderRadius: '1rem 1rem 0 0'
+                  }}>
+                    {type.name} – Pacote: R$ {total.toLocaleString('pt-BR', { minimumFractionDigits: 2 })}
+                  </h2>
+                  <div style={{ overflowX: 'auto' }}>
+                    <table style={{ width: '100%', borderCollapse: 'collapse', marginTop: '0.5rem' }}>
+                      <thead>
+                        <tr style={{ backgroundColor: '#F3F4F6' }}>
+                          {['Serviço', 'Qtd', 'Prazo', 'Valor Unit.', 'Subtotal'].map((th, i) => (
+                            <th key={i} style={{ border: '1px solid #D1D5DB', padding: '0.25rem 0.5rem' }}>{th}</th>
+                          ))}
+                        </tr>
+                      </thead>
+                      <tbody>
+                        {list.map(item => (
+                          <React.Fragment key={item.id}>
+                            <tr>
+                              <td style={thTdStyle}>{item.title}</td>
+                              <td style={{ ...thTdStyle, textAlign: 'center' }}>{item.qty}</td>
+                              <td style={{ ...thTdStyle, textAlign: 'center' }}>{item.isMonthly ? `${item.term} meses` : 'Único'}</td>
+                              <td style={{ ...thTdStyle, textAlign: 'right' }}>R$ {item.unitValue.toLocaleString('pt-BR', { minimumFractionDigits: 2 })}</td>
+                              <td style={{ ...thTdStyle, textAlign: 'right' }}>R$ {item.subtotal.toLocaleString('pt-BR', { minimumFractionDigits: 2 })}</td>
+                            </tr>
+                            {item.description && (
+                              <tr>
+                                <td colSpan="5" style={{ ...thTdStyle, fontSize: '0.875rem', color: '#4B5563' }}>{item.description}</td>
+                              </tr>
+                            )}
+                          </React.Fragment>
+                        ))}
+                      </tbody>
+                    </table>
+                  </div>
+                  <div style={{
+                    backgroundColor: '#F3F4F6',
+                    borderRadius: '0 0 1rem 1rem',
+                    padding: '0.5rem',
+                    paddingBottom: '1rem'
+                  }}>
+                    <h3 style={{
+                      fontSize: '1.125rem',
+                      fontWeight: 500,
+                      color: '#1F2937',
+                      textAlign: 'center',
+                      marginBottom: '0.5rem'
+                    }}>
+                      Condições de Pagamento
+                    </h3>
+                    <div style={{
+                      display: 'flex',
+                      justifyContent: 'center',
+                      gap: '1.5rem',
+                      color: '#374151',
+                      flexWrap: 'wrap'
+                    }}>
+                      <span><strong>Método:</strong> {payment[type.id]?.method || '-'}</span>
+                      <span><strong>Entrada:</strong> R$ {entrada.toLocaleString('pt-BR', { minimumFractionDigits: 2 })}</span>
+                      <span>
+                        <strong>Saldo:</strong> R$ {saldo.toLocaleString('pt-BR', { minimumFractionDigits: 2 })}
+                        {parcelas > 0 && (
+                          <> em {parcelas}x de R$ {valorParcela.toLocaleString('pt-BR', { minimumFractionDigits: 2 })}</>
+                        )}
+                      </span>
+                    </div>
+                    {payment[type.id]?.notes && (
+                      <p style={{ fontSize: '0.875rem', color: '#374151', marginTop: '0.5rem' }}>
+                        <strong>Observações:</strong> {payment[type.id].notes}
+                      </p>
+                    )}
+                  </div>
+                </section>
+              );
+            })}
 
 
-            <div className="page-break-avoid" style={{ 
-              textAlign: 'right', 
-              fontSize: '1.25rem', 
-              fontWeight: 700, 
-              color: '#111827', 
-              marginBottom: '1.5rem' 
+            <div className="page-break-avoid" style={{
+              textAlign: 'right',
+              fontSize: '1.25rem',
+              fontWeight: 700,
+              color: '#111827',
+              marginBottom: '1.5rem'
             }}>
               Total Geral: R$ {typeTotals.overall.toLocaleString('pt-BR', { minimumFractionDigits: 2 })}
             </div>
+
+            {parcelasAgrupadas.length > 0 && (
+              <section className="page-break-avoid" style={{ marginBottom: '1.5rem' }}>
+                <h2 style={{ fontSize: '1.25rem', fontWeight: 600, color: '#1F2937', marginBottom: '0.5rem', textAlign: 'center' }}>
+                  Condições Gerais de Pagamento
+                </h2>
+                <ul style={{ listStyleType: 'disc', paddingInlineStart: '1rem', color: '#374151', fontSize: '0.875rem' }}>
+                  {parcelasAgrupadas.map((p, i) => (
+                    <li key={i}>
+                      {p.de === p.ate
+                        ? `Parcela ${p.de}: R$ ${p.valor.toLocaleString('pt-BR', { minimumFractionDigits: 2 })}`
+                        : `Da ${p.de}ª à ${p.ate}ª parcela: R$ ${p.valor.toLocaleString('pt-BR', { minimumFractionDigits: 2 })}`}
+                    </li>
+                  ))}
+                </ul>
+              </section>
+            )}
 
             <section className="page-break-avoid" style={{ marginBottom: '1.5rem' }}>
               <h2 style={detailsTitle}>Detalhes Adicionais</h2>
@@ -495,17 +542,17 @@ export default function PrintView({ onBack }) {
               </ul>
             </section>
 
-            <footer className="page-break-avoid" style={{ 
-              borderTop: '1px solid #000', 
-              paddingTop: '1rem', 
-              fontSize: '0.75rem', 
-              textAlign: 'center' 
+            <footer className="page-break-avoid" style={{
+              borderTop: '1px solid #000',
+              paddingTop: '1rem',
+              fontSize: '0.75rem',
+              textAlign: 'center'
             }}>
               <div><strong>{proposalInfo.company.name}</strong> – CNPJ {proposalInfo.company.cnpj}</div>
               <div>Email: {proposalInfo.company.email} | Tel: {proposalInfo.company.phone}</div>
               <div>
-                {proposalInfo.company.address.street}, {proposalInfo.company.address.number} – 
-                {proposalInfo.company.address.neighborhood}, {proposalInfo.company.address.city} – 
+                {proposalInfo.company.address.street}, {proposalInfo.company.address.number} –
+                {proposalInfo.company.address.neighborhood}, {proposalInfo.company.address.city} –
                 {proposalInfo.company.address.state}, CEP {proposalInfo.company.address.cep}
               </div>
             </footer>

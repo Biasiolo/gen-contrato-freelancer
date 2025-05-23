@@ -11,20 +11,52 @@ const fields = [
   { key: 'phone',   label: 'Telefone',        placeholder: '(00) 00000-0000',    type: 'tel',   icon: Phone     },
 ];
 
+// Função para aplicar a máscara de telefone
+const applyPhoneMask = (value) => {
+  // Remove todos os caracteres não numéricos
+  const numbers = value.replace(/\D/g, '');
+  
+  // Aplica a máscara baseada no tamanho
+  if (numbers.length <= 2) {
+    return numbers.length === 0 ? '' : `(${numbers}`;
+  } else if (numbers.length <= 7) {
+    return `(${numbers.slice(0, 2)}) ${numbers.slice(2)}`;
+  } else if (numbers.length <= 11) {
+    return `(${numbers.slice(0, 2)}) ${numbers.slice(2, 7)}-${numbers.slice(7)}`;
+  } else {
+    // Limita a 11 dígitos
+    return `(${numbers.slice(0, 2)}) ${numbers.slice(2, 7)}-${numbers.slice(7, 11)}`;
+  }
+};
+
+// Função para remover a máscara e obter apenas os números
+const removePhoneMask = (value) => {
+  return value.replace(/\D/g, '');
+};
+
 const StepCliente = ({ data = {}, onChange, onNext }) => {
   const dispatch = useDispatch();
   const clientData = { name: '', company: '', email: '', phone: '', ...data };
 
   const handleChange = (key, value) => {
+    let processedValue = value;
+    
+    // Aplica máscara apenas para o campo de telefone
+    if (key === 'phone') {
+      processedValue = applyPhoneMask(value);
+    }
+    
     if (typeof onChange === 'function') {
-      onChange(key, value);
+      onChange(key, processedValue);
     }
   };
 
   const handleNext = () => {
     // Persiste cada campo no Redux
     Object.entries(clientData).forEach(([field, value]) => {
-      dispatch(setClientField({ field, value }));
+      // Para o telefone, salva apenas os números no Redux
+      const valueToSave = field === 'phone' ? removePhoneMask(value) : value;
+      dispatch(setClientField({ field, value: valueToSave }));
     });
     if (typeof onNext === 'function') {
       onNext();
@@ -62,6 +94,7 @@ const StepCliente = ({ data = {}, onChange, onNext }) => {
                     placeholder={field.placeholder}
                     value={clientData[field.key]}
                     onChange={e => handleChange(field.key, e.target.value)}
+                    maxLength={field.key === 'phone' ? 15 : undefined} // Limita o tamanho do campo telefone
                   />
                 </div>
               );
