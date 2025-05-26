@@ -514,21 +514,60 @@ export default function PrintView({ onBack }) {
             </div>
 
             {parcelasAgrupadas.length > 0 && (
-              <section className="page-break-avoid" style={{ marginBottom: '1.5rem' }}>
-                <h2 style={{ fontSize: '1.25rem', fontWeight: 600, color: '#1F2937', marginBottom: '0.5rem', textAlign: 'center' }}>
-                  Condições Gerais de Pagamento
-                </h2>
-                <ul style={{ listStyleType: 'disc', paddingInlineStart: '1rem', color: '#374151', fontSize: '0.875rem' }}>
-                  {parcelasAgrupadas.map((p, i) => (
-                    <li key={i}>
-                      {p.de === p.ate
-                        ? `Parcela ${p.de}: R$ ${p.valor.toLocaleString('pt-BR', { minimumFractionDigits: 2 })}`
-                        : `Da ${p.de}ª à ${p.ate}ª parcela: R$ ${p.valor.toLocaleString('pt-BR', { minimumFractionDigits: 2 })}`}
-                    </li>
-                  ))}
-                </ul>
-              </section>
-            )}
+  <section className="page-break-avoid" style={{ marginBottom: '2rem' }}>
+    <h2
+      style={{
+        fontSize: '1.25rem',
+        fontWeight: 600,
+        color: '#ffffff',
+        backgroundColor: '#0f9686',
+        padding: '0.5rem',
+        textAlign: 'center',
+        borderRadius: '1rem 1rem 0 0',
+        marginBottom: '0',
+      }}
+    >
+      Condições Gerais de Pagamento
+    </h2>
+    <div
+      style={{
+        backgroundColor: '#F3F4F6',
+
+        borderTop: 'none',
+        borderRadius: '0 0 1rem 1rem',
+        padding: '1rem',
+        fontSize: '0.9rem',
+        color: '#374151',
+        boxShadow: '0 1px 3px rgba(0,0,0,0.05)',
+      }}
+    >
+      {parcelasAgrupadas.map((p, i) => (
+        <div
+          key={i}
+          style={{
+            display: 'flex',
+            justifyContent: 'space-between',
+            alignItems: 'center',
+            padding: '0.5rem 0.75rem',
+            marginBottom: '0.5rem',
+            borderRadius: '0.375rem',
+            backgroundColor: '#F9FAFB',
+            border: '1px solid #E5E7EB',
+          }}
+        >
+          <span style={{ fontWeight: 500 }}>
+            {p.de === p.ate
+              ? `Parcela ${p.de}`
+              : `Da ${p.de}ª à ${p.ate}ª parcela`}
+          </span>
+          <span style={{ fontWeight: 600, color: '#374151' }}>
+            R$ {p.valor.toLocaleString('pt-BR', { minimumFractionDigits: 2 })}
+          </span>
+        </div>
+      ))}
+    </div>
+  </section>
+)}
 
             <section className="page-break-avoid" style={{ marginBottom: '1.5rem' }}>
               <h2 style={detailsTitle}>Detalhes Adicionais</h2>

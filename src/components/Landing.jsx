@@ -40,7 +40,7 @@ const Landing = () => {
             group relative flex items-center justify-center overflow-hidden cursor-pointer
             rounded-none p-4 text-2xl font-bold border-white border 
             bg-transparent shadow-lg
-            transform transition-all ease-out duration-[750ms]
+            transform transition-all ease-in duration-[300ms]
             ${showButton ? 'opacity-100 scale-100' : 'opacity-0 scale-50'}
           `}
         >

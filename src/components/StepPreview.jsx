@@ -251,22 +251,28 @@ const StepPreview = ({ onBack, onNext }) => {
           </div>
 
           {/* Condições Gerais de Pagamento */}
-          {parcelasAgrupadas.length > 0 && (
-            <section className="mb-6">
-              <h2 className="text-lg sm:text-xl font-semibold text-gray-800 mb-2">
-                Condições Gerais de Pagamento
-              </h2>
-              <ul className="list-disc list-inside space-y-1 text-sm text-gray-700">
-                {parcelasAgrupadas.map((parcela, index) => (
-                  <li key={index}>
-                    {parcela.de === parcela.ate
-                      ? `Parcela ${parcela.de}: ${formatCurrency(parcela.valor)}`
-                      : `Da ${parcela.de}ª à ${parcela.ate}ª parcela: ${formatCurrency(parcela.valor)}`}
-                  </li>
-                ))}
-              </ul>
-            </section>
-          )}
+{parcelasAgrupadas.length > 0 && (
+  <section className="mb-8">
+    <h2 className="text-lg sm:text-xl font-semibold text-white mb-3 bg-teal-700 rounded-t-2xl px-4 py-2 text-center">
+      Condições Gerais de Pagamento
+    </h2>
+    <div className="bg-gray-200 border-none rounded-b-2xl shadow-sm p-4 space-y-2 text-sm sm:text-base text-gray-700">
+      {parcelasAgrupadas.map((parcela, index) => (
+        <div
+          key={index}
+          className="flex justify-between items-center bg-gray-50  rounded-md px-3 py-2 hover:bg-gray-100 transition"
+        >
+          <span className="font-medium">
+            {parcela.de === parcela.ate
+              ? `Parcela ${parcela.de}`
+              : `Da ${parcela.de}ª à ${parcela.ate}ª parcela`}
+          </span>
+          <span className="text-gray-800 font-semibold">{formatCurrency(parcela.valor)}</span>
+        </div>
+      ))}
+    </div>
+  </section>
+)}
 
           {/* Detalhes Adicionais */}
           <section className="mb-6">
