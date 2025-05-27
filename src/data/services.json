@@ -6,39 +6,46 @@
       "paymentOptions": [],
       "services": [
         {
-          "id": "dna_analise_concorrencia",
-          "title": "Análise de Concorrência",
-          "description": "Mapeamento detalhado de concorrentes diretos e indiretos, identificando oportunidades e ameaças no mercado.",
+          "id": "dna_inpi",
+          "title": "INPI",
+          "description": "Acompanhamento no registro da sua marca, patentes, desenhos industriais e periódicos geográficos.",
+          "isMonthly": false,
+          "defaultUnitValue": 0
+        },
+        {
+          "id": "dna_naming",
+          "title": "Naming",
+          "description": "Criação de nome",
           "isMonthly": false,
           "defaultUnitValue": 2000
         },
         {
-          "id": "dna_persona",
-          "title": "Definição de Persona",
-          "description": "Criação de personas com base em dados e comportamentos reais para direcionar ações estratégicas.",
+          "id": "dna_logo",
+          "title": "Logotipo",
+          "description": "Criação de logo memorável e impactante, que comunica a essência do seu negócio e se conecta com seu público-alvo.",
           "isMonthly": false,
-          "defaultUnitValue": 1500
+          "defaultUnitValue": 3800
         },
         {
-          "id": "dna_arquitetura_marca",
-          "title": "Arquitetura de Marca",
-          "description": "Organização de submarcas e extensões dentro de uma lógica estratégica e comunicacional.",
+          "id": "dna_manual_da_marca",
+          "title": "Manual da Marca",
+          "description": " Define as diretrizes para o uso da marca, garantindo que seja representada de forma coesa em diversas aplicações.",
           "isMonthly": false,
-          "defaultUnitValue": 2200
+          "defaultUnitValue": 1200
         },
         {
-          "id": "dna_tom_voz",
-          "title": "Definição de Tom de Voz",
-          "description": "Estabelecimento do estilo de comunicação verbal da marca em diferentes canais e contextos.",
+          "id": "dna_missao_viao_valores",
+          "title": "Missão, Visão e Valores",
+          "description": "Construção e auxílio para definir a Missão, Visão e Valores da sua marca, elementos que fortalecem a cultura da empresa.",
           "isMonthly": false,
-          "defaultUnitValue": 1300
+          "defaultUnitValue": 100
         },
         {
-          "id": "dna_territorio_marca",
-          "title": "Território de Marca",
-          "description": "Identificação e posicionamento nos espaços simbólicos e culturais que a marca deve ocupar.",
+          "id": "dna_analise_swot",
+          "title": "Análise Swot",
+          "description": "Pontos fortes e fracos, tendências do setor, estratégias para o futuro, otimizar recursos e analisar impactos.",
           "isMonthly": false,
-          "defaultUnitValue": 1900
+          "defaultUnitValue": 300
         }
       ]
     },
@@ -49,39 +56,81 @@
       "paymentOptions": [],
       "services": [
         {
-          "id": "estrategia_plano_mkt",
+          "id": "organizacao_redes",
           "title": "Plano de Marketing",
-          "description": "Documento estratégico com metas, personas, canais e cronograma de ações de marketing.",
+          "description": "Análise e otimização de redes sociais; Novas redes de acordo com o seu nicho; Checklist e planilha com todos os acessos atualizados.",
           "isMonthly": false,
-          "defaultUnitValue": 3000
+          "defaultUnitValue": 250
         },
         {
-          "id": "estrategia_relatorio",
-          "title": "Relatórios Mensais",
-          "description": "Análises mensais com indicadores de desempenho, aprendizados e sugestões de melhoria.",
+          "id": "planejamento",
+          "title": "Planejamento",
+          "description": "Desenvolvimento de um plano de marketing personalizado para alcançar seus objetivos.",
           "isMonthly": true,
-          "defaultUnitValue": 800
+          "defaultUnitValue": 1500
         },
         {
-          "id": "estrategia_workshop",
-          "title": "Workshop de Inovação",
-          "description": "Encontro criativo para alinhamento estratégico e geração de ideias com equipe e stakeholders.",
-          "isMonthly": false,
-          "defaultUnitValue": 2500
+          "id": "posts_stories",
+          "title": "Posts e Stories",
+          "description": "Produção de conteúdo visual e textual de alta qualidade para atrair e converter clientes.",
+          "isMonthly": true,
+          "defaultUnitValue": 2280
         },
         {
-          "id": "estrategia_matriz_canais",
-          "title": "Matriz de Canais",
-          "description": "Diagnóstico e recomendação dos melhores canais de marketing para atingir os objetivos da marca.",
+          "id": "reels",
+          "title": "Reels",
+          "description": "Produção de vídeos criativos para aumentar o alcance e o engajamento da sua marca.",
           "isMonthly": false,
-          "defaultUnitValue": 1800
+          "defaultUnitValue": 0
         },
         {
-          "id": "estrategia_mensuracao",
-          "title": "Plano de Mensuração",
-          "description": "Estruturação dos KPIs e métodos de avaliação de campanhas e ações de marketing.",
+          "id": "campanha_clientes",
+          "title": "Campanha Clientes",
+          "description": "Ações  direcionadas aos clientes para fortalecer o relacionamento e fidelização.",
+          "isMonthly": true,
+          "defaultUnitValue": 1500
+        },
+        {
+          "id": "agendamentos",
+          "title": "Agendamentos",
+          "description": "Agendamento de posts e stories, garantindo uma presença constante e organizada.",
+          "isMonthly": true,
+          "defaultUnitValue": 0
+        },
+        {
+          "id": "interacao",
+          "title": "Interação",
+          "description": "Monitoramento e gestão da interação com o seu público nas redes sociais.",
+          "isMonthly": true,
+          "defaultUnitValue": 0
+        },
+        {
+          "id": "gmn",
+          "title": "Google Meu Negócio",
+          "description": "Configuração do seu Perfil GMN, aumentando a visibilidade para potenciais clientes.",
           "isMonthly": false,
-          "defaultUnitValue": 1600
+          "defaultUnitValue": 0
+        },
+        {
+          "id": "pulverizacao",
+          "title": "Pulverização",
+          "description": "Criação de estratégias para pulverizar a marca.",
+          "isMonthly": false,
+          "defaultUnitValue": 0
+        },
+        {
+          "id": "conteudo_offline",
+          "title": "Conteúdo Offline",
+          "description": "Criação de outdoors e materiais gráficos em geral.",
+          "isMonthly": false,
+          "defaultUnitValue": 150
+        },
+        {
+          "id": "club",
+          "title": "Clube de Benefícios",
+          "description": "Criação de ambiente, para dar benefícios aos clientes (Estratégia)",
+          "isMonthly": false,
+          "defaultUnitValue": 7000
         }
       ]
     },
@@ -92,39 +141,25 @@
       "paymentOptions": [],
       "services": [
         {
-          "id": "audiovisual_fotos_produto",
-          "title": "Fotos de Produto",
-          "description": "Sessão fotográfica profissional para catálogo, redes sociais ou e-commerce.",
-          "isMonthly": false,
-          "defaultUnitValue": 1600
-        },
-        {
-          "id": "audiovisual_video_institucional",
-          "title": "Vídeo Institucional",
-          "description": "Produção de vídeo com roteiro, captação, edição e trilha sonora.",
-          "isMonthly": false,
-          "defaultUnitValue": 4200
-        },
-        {
-          "id": "audiovisual_reels_mensais",
-          "title": "Criação de Reels Mensais",
-          "description": "Criação e edição de vídeos curtos otimizados para redes sociais.",
+          "id": "audiovisual_planejamento_roteiro",
+          "title": "Planejamento e Roteiro",
+          "description": "Plano estratégico completo para suas mídias sociais. 15 reels",
           "isMonthly": true,
+          "defaultUnitValue": 125
+        },
+        {
+          "id": "audiovisual_captacao",
+          "title": "Captação",
+          "description": "Produção de vídeos de alta qualidade para suas redes sociais e campanhas. (3hrs)",
+          "isMonthly": true,
+          "defaultUnitValue": 450
+        },
+        {
+          "id": "audiovisual_treinamento",
+          "title": "Treinamento",
+          "description": "Treinamentos personalizados, sobre criação de conteúdos, gravações e ferramentas",
+          "isMonthly": false,
           "defaultUnitValue": 1500
-        },
-        {
-          "id": "audiovisual_fotografia_evento",
-          "title": "Cobertura Fotográfica de Evento",
-          "description": "Captação de imagens em eventos com edição e entrega digital.",
-          "isMonthly": false,
-          "defaultUnitValue": 1800
-        },
-        {
-          "id": "audiovisual_edicao_conteudo",
-          "title": "Edição de Conteúdo em Vídeo",
-          "description": "Montagem, cortes, efeitos e ajustes para vídeos já gravados.",
-          "isMonthly": true,
-          "defaultUnitValue": 1000
         }
       ]
     },
@@ -135,25 +170,67 @@
       "paymentOptions": [],
       "services": [
         {
-          "id": "web_site_blog",
-          "title": "Site com Blog",
-          "description": "Site completo com blog integrado e SEO básico.",
+          "id": "dominio",
+          "title": "Registro Domínio",
+          "description": "Registro do nome da sua marca, garantindo a exclusividade do seu endereço na internet.",
+          "isMonthly": false,
+          "defaultUnitValue": 0
+        },
+        {
+          "id": "mini_site",
+          "title": "Mini Site",
+          "description": "Página objetiva, utilizada nas redes sociais, otimizando a busca do cliente.",
+          "isMonthly": false,
+          "defaultUnitValue": 650
+        },
+        {
+          "id": "landing_page",
+          "title": "Manutenção de Site",
+          "description": "Página única, com objetivo específico, como gerar leads, promover um produto ou serviço.",
+          "isMonthly": false,
+          "defaultUnitValue": 2300
+        },
+        {
+          "id": "site",
+          "title": "Site",
+          "description": "Desenvolvimento de um site completo, para apresentar sua empresa, produtos ou serviços.",
           "isMonthly": false,
           "defaultUnitValue": 5300
         },
         {
-          "id": "web_landing",
-          "title": "Landing Page de Conversão",
-          "description": "Página única otimizada para conversão com formulário.",
+          "id": "ecommerce",
+          "title": "E-Commerce",
+          "description": "Criação de uma loja virtual para venda de produtos e serviços pela internet.",
           "isMonthly": false,
-          "defaultUnitValue": 1200
+          "defaultUnitValue": 14000
         },
         {
-          "id": "web_manutencao",
-          "title": "Manutenção de Site",
-          "description": "Atualizações, backups e suporte técnico mensal.",
-          "isMonthly": true,
-          "defaultUnitValue": 400
+          "id": "blog",
+          "title": "Blog",
+          "description": "Blog com conteúdo relevante e atrair visitantes para o seu site.",
+          "isMonthly": false,
+          "defaultUnitValue": 600
+        },
+        {
+          "id": "lgpd",
+          "title": "LGPD",
+          "description": "Medidas técnicas e administrativas para garantir conformidade com a legislação brasileira.",
+          "isMonthly": false,
+          "defaultUnitValue": 300
+        },
+        {
+          "id": "ferramentas_personalizadas",
+          "title": "Ferramentas Personalizadas",
+          "description": "Implementação de ferramentas para solução de demandas específicas do cliente.",
+          "isMonthly": false,
+          "defaultUnitValue": 7000
+        },
+        {
+          "id": "performance",
+          "title": "Performance SEO",
+          "description": "Análise técnica do site com otimização para mecanismos de busca (SEO).",
+          "isMonthly": false,
+          "defaultUnitValue": 0
         }
       ]
     },
@@ -163,67 +240,81 @@
       "paymentOptions": [],
       "services": [
         {
-          "id": "trafego_planejamento",
-          "title": "Planejamento de Campanhas",
-          "description": "Estratégia de alocação de verba e canais de mídia.",
+          "id": "abertura_bm",
+          "title": "Abertura de BM",
+          "description": "Configuração inicial de contas em plataformas de anúncios como Google Ads e Meta Ads.",
           "isMonthly": false,
-          "defaultUnitValue": 1800
+          "defaultUnitValue": 600
         },
         {
-          "id": "trafego_gestao_ads",
+          "id": "google_ads",
           "title": "Gestão de Ads",
-          "description": "Configuração e monitoramento diário de anúncios.",
-          "isMonthly": true,
-          "defaultUnitValue": 1500
-        },
-        {
-          "id": "trafego_otimizacao",
-          "title": "Otimização de Conversão",
-          "description": "Testes A/B e ajustes para melhorar ROI.",
+          "description": "Criação e gerenciamento de campanhas de anúncios no Google, direcionando tráfego qualificado.",
           "isMonthly": true,
           "defaultUnitValue": 1200
+        },
+        {
+          "id": "meta_ads",
+          "title": "Meta Ads",
+          "description": "Criação e gerenciamento de campanhas de anúncios no Meta, direcionando tráfego qualificado.",
+          "isMonthly": true,
+          "defaultUnitValue": 1200
+        },
+        {
+          "id": "tiktok_ads",
+          "title": "Tiktok Ads",
+          "description": "Criação e gerenciamento de campanhas de anúncios no Tiktok, direcionando tráfego qualificado.",
+          "isMonthly": true,
+          "defaultUnitValue": 1200
+        },
+        {
+          "id": "relatorios",
+          "title": "Relatórios",
+          "description": "Geração de relatórios periódicos com métricas de desempenho das campanhas.",
+          "isMonthly": false,
+          "defaultUnitValue": 0
+        },
+        {
+          "id": "remarketing",
+          "title": "Remarketing",
+          "description": "Retargeting para mostrar anúncios a usuários que já visitaram seu site ou interagiram com sua marca.",
+          "isMonthly": false,
+          "defaultUnitValue": 0
         }
       ]
     },
     {
-      "id": "crm",
-      "name": "Ferramentas de Gerenciamento",
+      "id": "geral",
+      "name": "Entregas Gerais",
       "paymentOptions": [],
       "services": [
         {
-          "id": "crm_implementacao",
-          "title": "Implementação de CRM",
-          "description": "Configuração e estruturação inicial da plataforma CRM conforme o modelo de negócios.",
+          "id": "campanha_colaboradores",
+          "title": "Campanha Colaboradores",
+          "description": "Ações de comunicação interna com o objetivo de fortalecer a cultura organizacional.",
           "isMonthly": false,
-          "defaultUnitValue": 3500
+          "defaultUnitValue": 300
         },
         {
-          "id": "crm_automacoes",
-          "title": "Criação de Automações",
-          "description": "Fluxos automatizados para nutrição, conversão e pós-venda.",
-          "isMonthly": true,
-          "defaultUnitValue": 1200
-        },
-        {
-          "id": "crm_integracoes",
-          "title": "Integrações com Ferramentas",
-          "description": "Integração do CRM com WhatsApp, e-mail, site e ferramentas externas.",
+          "id": "fornecedores",
+          "title": "Fornecedores",
+          "description": "Ações de comunicação para fornecedores com o objetivo de fortalecer o relacionamento e qualidade dos serviços prestados.",
           "isMonthly": false,
-          "defaultUnitValue": 2000
+          "defaultUnitValue": 300
         },
         {
-          "id": "crm_ferramentas",
-          "title": "Criação de Ferramentas",
-          "description": "Criação de ferramentas para automação e facilitação de processos",
+          "id": "clientes",
+          "title": "Clientes",
+          "description": "Ações de comunicação direcionadas aos clientes com o objetivo de fortalecer o relacionamento.",
           "isMonthly": false,
-          "defaultUnitValue": 7000
+          "defaultUnitValue":300
         },
         {
-          "id": "crm_relatorios",
-          "title": "Relatórios Personalizados",
-          "description": "Criação de dashboards e relatórios para acompanhamento de vendas e relacionamento.",
-          "isMonthly": true,
-          "defaultUnitValue": 900
+          "id": "treinamento_crm",
+          "title": "CRM",
+          "description": "Treinamento de gestãodo sistema para gerenciar o relacionamento com os clientes.",
+          "isMonthly": false,
+          "defaultUnitValue": 3900
         }
       ]
     }

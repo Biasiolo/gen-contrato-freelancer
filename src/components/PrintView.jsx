@@ -125,7 +125,7 @@ export default function PrintView({ onBack }) {
   const getPdfOptions = () => ({
     margin: 0,
     filename: `${client.company || 'proposta'}-${proposalId}.pdf`,
-    image: { type: 'png', quality: 1 },
+    image: { type: 'jpeg', quality: 1 },
     html2canvas: {
         scale: 2,
         useCORS: true,
@@ -434,32 +434,54 @@ export default function PrintView({ onBack }) {
                   </h2>
                   <div style={{ overflowX: 'auto' }}>
                     <table style={{ width: '100%', borderCollapse: 'collapse', marginTop: '0.5rem' }}>
-                      <thead>
-                        <tr style={{ backgroundColor: '#F3F4F6' }}>
-                          {['Serviço', 'Qtd', 'Prazo', 'Valor Unit.', 'Subtotal'].map((th, i) => (
-                            <th key={i} style={{ border: '1px solid #D1D5DB', padding: '0.25rem 0.5rem' }}>{th}</th>
-                          ))}
-                        </tr>
-                      </thead>
-                      <tbody>
-                        {list.map(item => (
-                          <React.Fragment key={item.id}>
-                            <tr>
-                              <td style={thTdStyle}>{item.title}</td>
-                              <td style={{ ...thTdStyle, textAlign: 'center' }}>{item.qty}</td>
-                              <td style={{ ...thTdStyle, textAlign: 'center' }}>{item.isMonthly ? `${item.term} meses` : 'Único'}</td>
-                              <td style={{ ...thTdStyle, textAlign: 'right' }}>R$ {item.unitValue.toLocaleString('pt-BR', { minimumFractionDigits: 2 })}</td>
-                              <td style={{ ...thTdStyle, textAlign: 'right' }}>R$ {item.subtotal.toLocaleString('pt-BR', { minimumFractionDigits: 2 })}</td>
-                            </tr>
-                            {item.description && (
-                              <tr>
-                                <td colSpan="5" style={{ ...thTdStyle, fontSize: '0.875rem', color: '#4B5563' }}>{item.description}</td>
-                              </tr>
-                            )}
-                          </React.Fragment>
-                        ))}
-                      </tbody>
-                    </table>
+  <thead>
+    <tr style={{ backgroundColor: '#F3F4F6' }}>
+      {['Serviço', 'Qtd', 'Prazo', 'Valor Unit.', 'Subtotal'].map((th, i) => (
+        <th
+          key={i}
+          style={{
+            border: '1px solid #D1D5DB',
+            padding: '0.75rem 1rem',
+          }}
+        >
+          {th}
+        </th>
+      ))}
+    </tr>
+  </thead>
+  <tbody>
+    {list.map(item => (
+      <React.Fragment key={item.id}>
+        <tr>
+          <td style={{ ...thTdStyle, padding: '0.75rem 1rem' }}>
+            <strong>{item.title}</strong>
+          </td>
+          <td style={{ ...thTdStyle, textAlign: 'center', padding: '0.75rem 1rem' }}>{item.qty}</td>
+          <td style={{ ...thTdStyle, textAlign: 'center', padding: '0.75rem 1rem' }}>{item.isMonthly ? `${item.term} meses` : 'Único'}</td>
+          <td style={{ ...thTdStyle, textAlign: 'right', padding: '0.75rem 1rem' }}>R$ {item.unitValue.toLocaleString('pt-BR', { minimumFractionDigits: 2 })}</td>
+          <td style={{ ...thTdStyle, textAlign: 'right', padding: '0.75rem 1rem' }}>R$ {item.subtotal.toLocaleString('pt-BR', { minimumFractionDigits: 2 })}</td>
+        </tr>
+
+        {item.description && (
+          <tr>
+            <td
+              colSpan="5"
+              style={{
+                ...thTdStyle,
+                fontSize: '0.875rem',
+                color: '#4B5563',
+                padding: '0.75rem 1rem',
+                borderTop: 'none', // REMOVE a divisão com o item acima
+              }}
+            >
+              {item.description}
+            </td>
+          </tr>
+        )}
+      </React.Fragment>
+    ))}
+  </tbody>
+</table>
                   </div>
                   <div style={{
                     backgroundColor: '#F3F4F6',

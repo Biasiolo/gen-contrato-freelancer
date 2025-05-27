@@ -119,9 +119,9 @@ const StepPreview = ({ onBack, onNext }) => {
   const renderServiceRow = (item) => (
     <React.Fragment key={item.id}>
       <tr>
-        <td className="border px-2 py-1 text-gray-800">{item.title}</td>
-        <td className="border px-2 py-1 text-center text-gray-800">{item.qty}</td>
-        <td className="border px-2 py-1 text-center text-gray-800">
+        <td className="border px-2 py-2 text-gray-800"><strong>{item.title}</strong></td>
+        <td className="border px-2 py-2 text-center text-gray-800">{item.qty}</td>
+        <td className="border px-2 py-2 text-center text-gray-800">
           {item.isMonthly ? `${item.term} meses` : 'Único'}
         </td>
         <td className="border px-2 py-1 text-right text-gray-800">
@@ -253,14 +253,14 @@ const StepPreview = ({ onBack, onNext }) => {
           {/* Condições Gerais de Pagamento */}
 {parcelasAgrupadas.length > 0 && (
   <section className="mb-8">
-    <h2 className="text-lg sm:text-xl font-semibold text-white mb-3 bg-teal-700 rounded-t-2xl px-4 py-2 text-center">
+    <h2 className="text-2xl sm:text-2xl font-semibold text-white mb-3 bg-teal-700 rounded-t-3xl px-4 py-2 text-center">
       Condições Gerais de Pagamento
     </h2>
-    <div className="bg-gray-200 border-none rounded-b-2xl shadow-sm p-4 space-y-2 text-sm sm:text-base text-gray-700">
+    <div className="bg-gray-200 border-none rounded-b-3xl shadow-sm p-4 space-y-2 text-sm sm:text-base text-gray-700">
       {parcelasAgrupadas.map((parcela, index) => (
         <div
           key={index}
-          className="flex justify-between items-center bg-gray-50  rounded-md px-3 py-2 hover:bg-gray-100 transition"
+          className="flex justify-between items-center  bg-gray-50 rounded-md px-3 py-2 hover:bg-gray-100 transition"
         >
           <span className="font-medium">
             {parcela.de === parcela.ate

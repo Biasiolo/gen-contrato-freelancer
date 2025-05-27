@@ -71,8 +71,7 @@ const StepServicos = ({ onBack, onNext }) => {
   const changeQty = (id, qty) => dispatch(updateService({ id, changes: { qty } }));
   const changeUnitValue = (id, val) => dispatch(updateService({ id, changes: { unitValue: val } }));
 
-  const formatCurrency = value =>
-    new Intl.NumberFormat('pt-BR', { style: 'currency', currency: 'BRL' }).format(value);
+
 
   const parseCurrency = value => {
     const cleaned = value.replace(/[^\d,]/g, '').replace(',', '.');
@@ -140,12 +139,16 @@ const StepServicos = ({ onBack, onNext }) => {
                       <label className="flex flex-col text-xs text-neutral-500">
                         Valor
                         <input
-                          type="text"
-                          inputMode="decimal"
-                          value={formatCurrency(svc.unitValue)}
-                          onChange={e => changeUnitValue(svc.id, parseCurrency(e.target.value))}
-                          className="w-28 px-2 py-1 bg-neutral-900 text-white rounded-lg focus:ring-2 focus:ring-teal-600 border-none"
-                        />
+  type="text"
+  inputMode="numeric"
+  value={`R$ ${svc.unitValue.toFixed(2).replace('.', ',')}`}
+  onChange={e => {
+    const onlyNumbers = e.target.value.replace(/[^\d]/g, '');
+    const value = parseFloat(onlyNumbers) / 100;
+    changeUnitValue(svc.id, value);
+  }}
+  className="w-28 px-2 py-1 bg-neutral-900 text-white rounded-lg focus:ring-2 focus:ring-teal-600 border-none"
+/>
                       </label>
                     </>
                   )}
@@ -174,10 +177,10 @@ const StepServicos = ({ onBack, onNext }) => {
               <input
   type="text"
   placeholder="Valor (R$)"
-  value={formatCurrency(parseCurrency(customService.unitValue))}
+  value={`R$ ${customService.unitValue}`}
   onChange={e => {
     const onlyNumbers = e.target.value.replace(/[^\d]/g, '');
-    const formatted = (parseInt(onlyNumbers || '0') / 100).toFixed(2).toString().replace('.', ',');
+    const formatted = (parseInt(onlyNumbers || '0') / 100).toFixed(2).replace('.', ',');
     setCustomService({
       ...customService,
       unitValue: formatted
