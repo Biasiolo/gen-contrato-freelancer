@@ -4,6 +4,7 @@ import { useSelector, useDispatch } from 'react-redux';
 import servicesCatalog from '../data/services.json';
 import proposalInfo from '../data/proposalInfo.json';
 import { resetProposal } from '../store/slices/proposalSlice';
+import { useNavigate } from 'react-router-dom';
 
 
 export default function PrintView({ onBack }) {
@@ -16,6 +17,8 @@ export default function PrintView({ onBack }) {
 
   const proposalId = useMemo(() => crypto.randomUUID().split('-')[0], []);
   const today = useMemo(() => new Date().toLocaleDateString('pt-BR'), []);
+
+  const navigate = useNavigate();
 
   const items = useMemo(() =>
     services.map(svc => {
@@ -198,9 +201,9 @@ export default function PrintView({ onBack }) {
   };
 
   const handleNew = () => {
-    dispatch(resetProposal());
-    window.location.reload();
-  };
+  dispatch(resetProposal());
+  navigate('/'); // Redireciona para a Landing
+};
   
 
 
