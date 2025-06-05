@@ -70,11 +70,18 @@
           "defaultUnitValue": 1500
         },
         {
-          "id": "posts_stories",
-          "title": "Posts e Stories",
+          "id": "posts",
+          "title": "Posts",
+          "description": "Gerenciamento de postagens de conteúdos",
+          "isMonthly": true,
+          "defaultUnitValue": 0
+        },
+        {
+          "id": "stories",
+          "title": "Stories",
           "description": "Produção de conteúdo visual e textual de alta qualidade para atrair e converter clientes.",
           "isMonthly": true,
-          "defaultUnitValue": 2280
+          "defaultUnitValue": 0
         },
         {
           "id": "reels",
@@ -185,7 +192,7 @@
         },
         {
           "id": "landing_page",
-          "title": "Manutenção de Site",
+          "title": "Landing Page",
           "description": "Página única, com objetivo específico, como gerar leads, promover um produto ou serviço.",
           "isMonthly": false,
           "defaultUnitValue": 2300
@@ -312,7 +319,7 @@
         {
           "id": "treinamento_crm",
           "title": "CRM",
-          "description": "Treinamento de gestãodo sistema para gerenciar o relacionamento com os clientes.",
+          "description": "Implantação e treinamento de gestão de sistema para gerenciar o relacionamento com os clientes.",
           "isMonthly": false,
           "defaultUnitValue": 3900
         }

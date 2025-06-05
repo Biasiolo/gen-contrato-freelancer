@@ -13,14 +13,17 @@ const StepPreview = ({ onBack, onNext }) => {
   const proposalId = useMemo(() => crypto.randomUUID().split('-')[0], []);
   const today = useMemo(() => new Date().toLocaleDateString('pt-BR'), []);
 
-  const items = useMemo(() =>
-    services.map(svc => {
+  const items = useMemo(() => {
+  return services
+    .map(svc => {
       const term = svc.isMonthly ? svc.term || 1 : 1;
-      const subtotal = svc.isMonthly ? svc.unitValue * svc.qty * term : svc.unitValue * svc.qty;
+      const subtotal = svc.isMonthly
+        ? svc.unitValue * svc.qty * term
+        : svc.unitValue * svc.qty;
       return { ...svc, term, subtotal };
-    }),
-    [services]
-  );
+    })
+    .sort((a, b) => b.subtotal - a.subtotal); // Ordena do maior para o menor
+}, [services]);
 
   const grouped = useMemo(() =>
     items.reduce((acc, item) => {
@@ -122,7 +125,7 @@ const StepPreview = ({ onBack, onNext }) => {
         <td className="border px-2 py-2 text-gray-800"><strong>{item.title}</strong></td>
         <td className="border px-2 py-2 text-center text-gray-800">{item.qty}</td>
         <td className="border px-2 py-2 text-center text-gray-800">
-          {item.isMonthly ? `${item.term} meses` : 'Único'}
+          {item.isMonthly ? `${item.term} mês(es)` : 'Único'}
         </td>
         <td className="border px-2 py-1 text-right text-gray-800">
           {formatCurrency(item.unitValue)}
@@ -176,7 +179,7 @@ const StepPreview = ({ onBack, onNext }) => {
         
         <div className="bg-gray-200 p-2 pt-2 rounded-b-3xl">
           <h3 className="text-base font-medium mb-2 text-gray-800 text-center">
-            Condições de Pagamento
+            Condições
           </h3>
           
           <div className="flex flex-col sm:flex-row sm:space-x-6 text-gray-700 mb-2 justify-center items-center gap-1">
@@ -187,7 +190,7 @@ const StepPreview = ({ onBack, onNext }) => {
               <strong>Entrada:</strong> {formatCurrency(entrada)}
             </span>
             <span>
-              <strong>Saldo:</strong> R$ {saldo.toLocaleString('pt-BR', { minimumFractionDigits: 2 })}
+              <strong>Saldo à pagar:</strong> R$ {saldo.toLocaleString('pt-BR', { minimumFractionDigits: 2 })}
               {parcelas > 0 && (
                 <> em {parcelas}x de R$ {valorParcela.toLocaleString('pt-BR', { minimumFractionDigits: 2 })}</>
               )}
@@ -243,7 +246,9 @@ const StepPreview = ({ onBack, onNext }) => {
           </section>
 
           {/* Service Sections */}
-          {servicesCatalog.serviceTypes.map(renderServiceSection)}
+          {[...servicesCatalog.serviceTypes]
+  .sort((a, b) => (typeTotals[b.id] || 0) - (typeTotals[a.id] || 0))
+  .map(renderServiceSection)}
 
           {/* Total Geral */}
           <div className="text-right text-lg sm:text-xl font-bold text-gray-900 mb-6">

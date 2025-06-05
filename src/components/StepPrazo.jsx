@@ -52,7 +52,7 @@ const StepPrazo = ({ onBack, onNext }) => {
 
                         {svc.isMonthly && (
                           <div className="flex flex-col sm:flex-row sm:items-center gap-2">
-                            <label className="text-sm text-gray-400 font-medium whitespace-nowrap">Prazo (meses):</label>
+                            <label className="text-sm text-gray-400 font-medium whitespace-nowrap">Prazo mês(es):</label>
                             <select
                               value={svc.term || 1}
                               onChange={e => handleTermChange(svc.id, Number(e.target.value))}

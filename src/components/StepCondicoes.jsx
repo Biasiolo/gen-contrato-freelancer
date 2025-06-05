@@ -1,5 +1,4 @@
-// src/components/StepCondicoes.jsx
-import React, { useMemo } from 'react';
+import React, { useMemo, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import servicesCatalog from '../data/services.json';
 import { setPaymentConditions } from '../store/slices/proposalSlice';
@@ -8,6 +7,8 @@ const StepCondicoes = ({ onBack, onNext }) => {
   const dispatch = useDispatch();
   const services = useSelector(state => state.proposal.services);
   const cond = useSelector(state => state.proposal.paymentConditions);
+
+  const [error, setError] = useState(null);
 
   const grouped = useMemo(() =>
     services.reduce((acc, svc) => {
@@ -54,6 +55,24 @@ const StepCondicoes = ({ onBack, onNext }) => {
     handleChange(typeId, 'entry', formatted);
   };
 
+  const handleContinue = () => {
+    const missing = servicesCatalog.serviceTypes.filter(type => {
+      const list = grouped[type.id];
+      if (!list || list.length === 0) return false;
+      const entry = cond[type.id]?.entry;
+      const installments = cond[type.id]?.installments;
+      return !entry || !installments;
+    });
+
+    if (missing.length > 0) {
+      setError('Preencha "Entrada" e "Parcelas" para todos os pacotes selecionados.');
+      return;
+    }
+
+    setError(null);
+    onNext();
+  };
+
   const paymentOptions = [
     'Pix',
     'Boleto',
@@ -64,8 +83,8 @@ const StepCondicoes = ({ onBack, onNext }) => {
   ];
 
   return (
-    <div className="flex items-center justify-center min-h-screen bg-gradient-to-br from-black via-stone-950 to-black pt-0 sm:pt-10 ">
-      <div className="relative w-full max-w-4xl mx-auto ">
+    <div className="flex items-center justify-center min-h-screen bg-gradient-to-br from-black via-stone-950 to-black pt-0 sm:pt-10">
+      <div className="relative w-full max-w-4xl mx-auto">
         <div className="relative backdrop-blur-sm bg-neutral-200 bg-opacity-10 rounded-2xl shadow-2xl border border-white border-opacity-20 p-6 sm:p-10 overflow-auto">
           <h2 className="text-2xl sm:text-3xl font-extrabold text-gray-900 text-center mb-1">
             Defina as Condições
@@ -139,6 +158,12 @@ const StepCondicoes = ({ onBack, onNext }) => {
             Total Geral: R$ {totals.overall.toLocaleString('pt-BR', { minimumFractionDigits: 2 })}
           </div>
 
+          {error && (
+            <div className="mt-4 text-red-600 text-sm text-center font-medium">
+              {error}
+            </div>
+          )}
+
           <div className="mt-10 flex flex-col sm:flex-row justify-between gap-4">
             <button
               onClick={onBack}
@@ -148,7 +173,7 @@ const StepCondicoes = ({ onBack, onNext }) => {
               <span className="absolute inset-y-0 right-0 h-full w-0 bg-gradient-to-r from-orange-600 to-orange-500 transition-all duration-300 ease-out group-hover:w-full" />
             </button>
             <button
-              onClick={onNext}
+              onClick={handleContinue}
               className="group relative flex items-center justify-center overflow-hidden cursor-pointer rounded-3xl bg-gradient-to-r from-teal-600 to-teal-600 w-full sm:w-40 py-2 text-white shadow-lg transition-all hover:shadow-orange-500/25"
             >
               <span className="relative z-10 font-medium">Continuar ►</span>

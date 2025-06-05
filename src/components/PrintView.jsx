@@ -209,7 +209,7 @@ export default function PrintView({ onBack }) {
 
 
   const thTdStyle = {
-    border: '1px solid #D1D5DB',
+    border: '1px solid #a1a1a1',
     padding: '0.25rem 0.5rem',
     fontSize: '0.875rem',
     color: '#374151',
@@ -293,15 +293,15 @@ export default function PrintView({ onBack }) {
             }, {
               label: 'Imprimir',
               onClick: handlePrint,
-              bg: '#0f9686'
+              bg: '#0e7468'
             }, {
               label: 'Baixar PDF',
               onClick: handleDownloadPDF,
-              bg: '#0f9686'
+              bg: '#0e7468'
             }, {
               label: 'Compartilhar',
               onClick: handleShare,
-              bg: '#0f9686'
+              bg: '#0e7468'
             }, {
               label: 'Nova Proposta',
               onClick: handleNew,
@@ -412,9 +412,11 @@ export default function PrintView({ onBack }) {
             </p>
             <hr style={{ marginBottom: '1.5rem' }}></hr>
 
-            {servicesCatalog.serviceTypes.map(type => {
-              const list = grouped[type.id] || [];
-              if (!list.length) return null;
+            {[...servicesCatalog.serviceTypes]
+  .sort((a, b) => (typeTotals[b.id] || 0) - (typeTotals[a.id] || 0))
+  .map(type => {
+    const list = grouped[type.id] || [];
+    if (!list.length) return null;
 
               const total = typeTotals[type.id] || 0;
               const entrada = parseFloat((payment[type.id]?.entry || '').toString().replace(/[^\d,]/g, '').replace(',', '.')) || 0;
@@ -428,7 +430,7 @@ export default function PrintView({ onBack }) {
                     textAlign: 'center',
                     fontWeight: 600,
                     fontSize: '1.25rem',
-                    background: '#0f9686',
+                    background: '#0e7468',
                     color: '#fff',
                     padding: '0.5rem',
                     borderRadius: '1rem 1rem 0 0'
@@ -443,7 +445,7 @@ export default function PrintView({ onBack }) {
         <th
           key={i}
           style={{
-            border: '1px solid #D1D5DB',
+            border: '1px solid #858585',
             padding: '0.75rem 1rem',
           }}
         >
@@ -460,7 +462,7 @@ export default function PrintView({ onBack }) {
             <strong>{item.title}</strong>
           </td>
           <td style={{ ...thTdStyle, textAlign: 'center', padding: '0.75rem 1rem' }}>{item.qty}</td>
-          <td style={{ ...thTdStyle, textAlign: 'center', padding: '0.75rem 1rem' }}>{item.isMonthly ? `${item.term} meses` : 'Único'}</td>
+          <td style={{ ...thTdStyle, textAlign: 'center', padding: '0.75rem 1rem' }}>{item.isMonthly ? `${item.term} mês(es)` : 'Único'}</td>
           <td style={{ ...thTdStyle, textAlign: 'right', padding: '0.75rem 1rem' }}>R$ {item.unitValue.toLocaleString('pt-BR', { minimumFractionDigits: 2 })}</td>
           <td style={{ ...thTdStyle, textAlign: 'right', padding: '0.75rem 1rem' }}>R$ {item.subtotal.toLocaleString('pt-BR', { minimumFractionDigits: 2 })}</td>
         </tr>
@@ -487,7 +489,7 @@ export default function PrintView({ onBack }) {
 </table>
                   </div>
                   <div style={{
-                    backgroundColor: '#F3F4F6',
+                    backgroundColor: '#e4e4e4',
                     borderRadius: '0 0 1rem 1rem',
                     padding: '0.5rem',
                     paddingBottom: '1rem'
@@ -545,7 +547,7 @@ export default function PrintView({ onBack }) {
         fontSize: '1.25rem',
         fontWeight: 600,
         color: '#ffffff',
-        backgroundColor: '#0f9686',
+        backgroundColor: '#0e7468',
         padding: '0.5rem',
         textAlign: 'center',
         borderRadius: '1rem 1rem 0 0',
@@ -556,7 +558,7 @@ export default function PrintView({ onBack }) {
     </h2>
     <div
       style={{
-        backgroundColor: '#F3F4F6',
+        backgroundColor: '#e4e4e4',
 
         borderTop: 'none',
         borderRadius: '0 0 1rem 1rem',
@@ -577,7 +579,7 @@ export default function PrintView({ onBack }) {
             marginBottom: '0.5rem',
             borderRadius: '0.375rem',
             backgroundColor: '#F9FAFB',
-            border: '1px solid #E5E7EB',
+            border: '1px solid #858585',
           }}
         >
           <span style={{ fontWeight: 500 }}>

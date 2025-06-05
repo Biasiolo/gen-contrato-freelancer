@@ -9,7 +9,7 @@ const initialState = {
     phone: ''
   },
   services: [],
-  term: 1, // meses
+  term: 1, 
   paymentConditions: {
     method: '',
     entry: '',
