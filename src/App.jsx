@@ -11,7 +11,7 @@ import StepPrazo from './components/StepPrazo';
 import StepCondicoes from './components/StepCondicoes';
 import StepDetalhes from './components/StepDetalhes';
 import StepPreview from './components/StepPreview';
-import PrintView from './components/PrintView';
+import StepApresentacao from './components/StepApresentacao';
 import './index.css';
 
 // Tela com fluxo das etapas
@@ -68,7 +68,7 @@ function WizardFlow() {
           />
         )}
         {step === 7 && (
-          <PrintView
+          <StepApresentacao
             onBack={() => setStep(6)}
           />
         )}

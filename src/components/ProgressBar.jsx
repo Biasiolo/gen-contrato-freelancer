@@ -1,4 +1,7 @@
 import React from 'react';
+import { useNavigate } from 'react-router-dom';
+import { useDispatch } from 'react-redux';
+import { resetProposal } from '../store/slices/proposalSlice';
 
 const steps = [
   { key: 1, label: 'Boas-vindas' },
@@ -11,19 +14,29 @@ const steps = [
 ];
 
 export default function ProgressBar({ currentStep, onStepClick }) {
+  const dispatch = useDispatch();
+  const navigate = useNavigate();
+
+  const handleNew = () => {
+    dispatch(resetProposal());
+    navigate('/');
+  };
+
   return (
     <div className="fixed top-0 left-0 w-full backdrop-blur-sm bg-white/20 shadow z-50">
-      <div className="relative max-w-4xl mx-auto px-4 md:px-6 py-3 md:py-4">
-        {/* connector line */}
+      <div className="relative max-w-8xl mx-auto px-4 md:px-6 py-3 md:py-4 flex justify-center items-center">
+
+        {/* linha de conexão */}
         <div className="absolute top-1/2 left-4 md:left-6 right-4 md:right-6 h-[2px] bg-neutral-600 transform -translate-y-1/2" />
-        <div className="relative flex justify-between items-center">
+
+        {/* botões de etapas */}
+        <div className="relative flex justify-between items-center w-full max-w-4xl px-2">
           {steps.map(step => {
             const isCompleted = currentStep > step.key;
             const isActive = currentStep === step.key;
 
             return (
               <div key={step.key} className="flex-1 flex flex-col items-center">
-                {/* circle as button */}
                 <button
                   onClick={() => onStepClick(step.key)}
                   className={`flex items-center justify-center rounded-full z-10 transition cursor-pointer
@@ -46,8 +59,7 @@ export default function ProgressBar({ currentStep, onStepClick }) {
                   </span>
                 </button>
 
-                {/* label: hidden on mobile, shown from sm+ */}
-                <div className={`mt-1 md:mt-2 text-center sm:block hidden`}>
+                <div className="mt-1 md:mt-2 text-center sm:block hidden">
                   <span
                     className={`text-xs md:text-sm font-medium 
                       ${isCompleted
@@ -63,6 +75,14 @@ export default function ProgressBar({ currentStep, onStepClick }) {
             );
           })}
         </div>
+
+        {/* botão Nova Proposta */}
+        <button
+          onClick={handleNew}
+          className="absolute cursor-pointer right-4 top-3 md:top-4 bg-orange-500 text-white text-xs md:text-sm px-4 py-1 rounded-full shadow hover:bg-orange-600"
+        >
+          Nova Proposta
+        </button>
       </div>
     </div>
   );
