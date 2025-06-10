@@ -18,7 +18,7 @@ import {
   calcParcelasAgrupadas,
 } from '../utils/proposalCalc';
 
-/* ------- Catálogo de serviços (p/ nomes dos pacotes) ------- */
+/* ------- catálogo (nomes dos pacotes) ------- */
 import servicesCatalog from '../data/services.json';
 
 export default function StepApresentacao({ onBack, onNext }) {
@@ -27,68 +27,72 @@ export default function StepApresentacao({ onBack, onNext }) {
   const [pdfUrl, setPdfUrl]   = useState('');
   const [numPages, setNumPages] = useState(1);
 
-  /* ---------- Dados consolidados p/ o PDF ---------- */
+  /* ---------- consolida dados ---------- */
   const dataForPdf = useMemo(() => {
     const today      = new Date().toLocaleDateString('pt-BR');
     const proposalId = crypto.randomUUID().split('-')[0];
 
-    /* 1. cálculos de itens / totais iguais ao StepPreview */
     const items   = buildItems(proposal.services);
     const grouped = groupByType(items);
     const totals  = calcTypeTotals(grouped);
     const parcelasAgrupadas = calcParcelasAgrupadas(
       grouped,
       totals,
-      proposal.paymentConditions
+      proposal.paymentConditions,
     );
 
-    /* 2. gera array de pacotes no mesmo formato do Preview */
+    /* pacotes efetivamente selecionados */
     const packages = servicesCatalog.serviceTypes
-  .map((type) => {
-    const list   = grouped[type.id] || [];
-    if (!list.length) return null;                // ← ignora pacotes vazios
+      .map((type) => {
+        const list = grouped[type.id] || [];
+        if (!list.length) return null;
 
-    const total  = totals[type.id] || 0;
-    const payCfg = proposal.paymentConditions[type.id] || {};
+        const total   = totals[type.id] || 0;
+        const payCfg  = proposal.paymentConditions[type.id] || {};
+        const entry   = parseMoney(payCfg.entry);
+        const parcelas = +payCfg.installments || 0;
+        const saldo    = total - entry;
+        const valorParc = parcelas ? +(saldo / parcelas).toFixed(2) : 0;
 
-    const entry    = parseMoney(payCfg.entry);
-    const parcelas = +payCfg.installments || 0;
-    const saldo    = total - entry;
-    const valParc  = parcelas ? +(saldo / parcelas).toFixed(2) : 0;
+        return {
+          id: type.id,
+          name: type.name,
+          items: list,
+          total,
+          cond: {
+            method:   payCfg.method || '-',
+            entry,
+            saldo,
+            parcelas,
+            parcela: valorParc,
+          },
+        };
+      })
+      .filter(Boolean);
 
-    return {
-      id: type.id,
-      name: type.name,
-      items: list,
-      total,
-      cond: {
-        method: payCfg.method || '-',
-        entry,
-        saldo,
-        parcelas,
-        parcela: valParc,
-      },
-    };
-  })
-  .filter(Boolean);    
+    /* resumo global */
+    const entradaTotal = packages.reduce((s, p) => s + p.cond.entry, 0);
+    const maxParcelas  = packages.reduce((m, p) => Math.max(m, p.cond.parcelas), 0);
 
     return {
       client: proposal.client,
       items,
       totals,
       parcelasAgrupadas,
-      packages,          // ← novo
+      packages,
+      entradaTotal,
+      maxParcelas,
       proposalId,
       today,
     };
   }, [proposal]);
 
-  /* ---------- Gera Blob e URL quando os dados mudam ---------- */
+  /* ---------- gera PDF quando dados mudam ---------- */
   useEffect(() => {
     let localUrl;
     (async () => {
-      const blob = await generateProposalPDF(dataForPdf);
-      localUrl   = URL.createObjectURL(blob);
+      const blob   = await generateProposalPDF(dataForPdf);
+      localUrl     = URL.createObjectURL(blob);
       setPdfUrl(localUrl);
     })();
     return () => { if (localUrl) URL.revokeObjectURL(localUrl); };
@@ -98,7 +102,7 @@ export default function StepApresentacao({ onBack, onNext }) {
   return (
     <section className="flex flex-col items-center p-4 min-h-screen">
       {pdfUrl && (
-        <div className="w-full max-w-5xl h-[85vh] overflow-auto rounded shadow">
+        <div className="w-full max-w-4xl h-[85vh] overflow-auto rounded shadow mx-auto">
           <Document
             file={pdfUrl}
             onLoadSuccess={({ numPages }) => setNumPages(numPages)}
@@ -107,7 +111,7 @@ export default function StepApresentacao({ onBack, onNext }) {
               <Page
                 key={i}
                 pageNumber={i + 1}
-                width={800}
+                width={860}
                 renderTextLayer={false}
                 renderAnnotationLayer={false}
               />
@@ -137,7 +141,7 @@ export default function StepApresentacao({ onBack, onNext }) {
   );
 }
 
-/* ---------- util local ---------- */
+/* ---------- utils ---------- */
 function parseMoney(str) {
   return parseFloat(String(str || '').replace(/[^\d,]/g, '').replace(',', '.')) || 0;
 }

@@ -58,15 +58,15 @@ export async function generateProposalPDF(data, template = '/MODELO-PROPOSTA.pdf
   let y    = 780;
 
   /* título + dados do cliente */
-  tx(page, 'Proposta Comercial', { x: M, y, f: bold, s: 16 }); y -= 18;
-  tx(page, `Cliente: ${data.client.company}`, { x: M, y, f: helv, s: 11 }); y -= 14;
-  tx(page, `ID: ${data.proposalId}    Data: ${data.today}`, { x: M, y, f: helv, s: 10 }); y -= 24;
+  tx(page, 'Proposta Comercial', { x: M, y, f: helv, s: 32 }); y -= 32;
+  tx(page, `Cliente: ${data.client.company}`, { x: M, y, f: helv, s: 14 }); y -= 14;
+  tx(page, `ID: ${data.proposalId}    Data: ${data.today}`, { x: M, y, f: helv, s: 12 }); y -= 42;
 
   /* 5.1 pacotes */
   for (const pkg of packages) {
     /* cabeçalho simples */
     tx(page, `${pkg.name} – Pacote: ${fmt(pkg.total)}`,
-       { x: M, y, f: bold, s: 12 }); y -= 20;
+       { x: M, y, f: helv, s: 18 }); y -= 20;
 
     /* cabeçalho tabela */
     ['Serviço','Qtd','Prazo','Valor Unit.','Subtotal'].forEach((t,i)=>
@@ -81,8 +81,8 @@ hLine(page, y - 2); y -= LH;
   { v: item.title,          x: COL[0] + 2,  right: false },
   { v: item.qty,            x: COL[1] + 15, right: true  }, // offset ↓
   { v: prazo,               x: COL[2] + 32, right: true  }, // offset ↓
-  { v: fmt(item.unitValue), x: COL[3] + 60, right: true  }, // offset ↓
-  { v: fmt(item.subtotal),  x: COL[4] + 35,  right: true  },
+  { v: fmt(item.unitValue), x: COL[3] + 50, right: true  }, // offset ↓
+  { v: fmt(item.subtotal),  x: COL[4] + 40,  right: true  },
 ];
       cells.forEach(c => tx(page, c.v, { x: c.x, y, f: helv, s: 9, right: c.right }));
       hLine(page, y - 2, C_GRAY); y -= LH;
@@ -95,7 +95,7 @@ hLine(page, y - 2); y -= LH;
                 `Saldo: ${fmt(pkg.cond.saldo)}` +
                 (pkg.cond.parcelas ? ` em ${pkg.cond.parcelas}x de ${fmt(pkg.cond.parcela)}` : '');
     tx(page, txt, { x: M + 12, y: y - 20, f: helv, s: 9 });
-    y -= BOX + 18;
+    y -= BOX + 24;
   }
 
   /* 5.2 total geral */
@@ -103,10 +103,61 @@ hLine(page, y - 2); y -= LH;
   y -= 32;
 
   /* 5.3 condições gerais */
-  rect(page, { x: M, y: y - 22, w: PAGE[0]-M*2, h: 22, fill: C_TEAL, r: 10 });
-  tx(page, 'Condições Gerais de Pagamento',
-     { x: PAGE[0]/2, y: y - 16, f: bold, s: 12, c: rgb(1,1,1), right: true });
-  y -= 34;
+  const title = 'Condições Gerais de Pagamento';
+
+/* fundo preto (ou aproveite C_TEAL se quiser) */
+rect(page, {
+  x: M,
+  y: y - 24,             // 24 px de altura
+  w: PAGE[0] - M * 2,
+  h: 24,
+  fill: rgb(0, 0, 0),    // PRETO
+  r: 10,
+});
+
+/* largura do texto para centralizar */
+const titleWidth = bold.widthOfTextAtSize(title, 12);
+const centerX = PAGE[0] / 2 - titleWidth / 2;
+
+/* texto em branco */
+tx(page, title, {
+  x: centerX,
+  y: y - 17,             // 17 px desce p/ alinhar vertical
+  f: bold,
+  s: 14,
+  c: rgb(1, 1, 1),
+});
+
+y -= 36;                 // espaço depois do cabeçalho
+
+/* 5.3.1 resumo adicional — box centralizado ---------------- */
+const RES_H = 26;                                     // altura do card
+rect(page, {
+  x: M,
+  y: y - RES_H,
+  w: PAGE[0] - M * 2,
+  h: RES_H,
+  fill: C_GRAY,
+  r: 6,
+});
+
+const resumoTxt =
+  `Entrada Total: ${fmt(data.entradaTotal)}   |   Parcelas Máx.: ${data.maxParcelas}`;
+
+/* largura do texto para centralizar */
+const resumoW = helv.widthOfTextAtSize(resumoTxt, 12);
+const resumoX = PAGE[0] / 2 - resumoW / 2;
+
+/* escreve texto em 12 pt, centralizado na vertical do box */
+tx(page, resumoTxt, {
+  x: resumoX,
+  y: y - RES_H + (RES_H / 2) - 3,   // ajuste vertical
+  f: helv,
+  s: 12,
+});
+
+y -= RES_H + 12;    // espaço depois do card
+
 
   data.parcelasAgrupadas.forEach(p => {
     if (y < 60) { page = pdf.addPage(PAGE); y = 780; }
@@ -116,6 +167,24 @@ hLine(page, y - 2); y -= LH;
     tx(page, fmt(p.valor),     { x: PAGE[0]-M-12, y: y - 12, f: helv, s: 9, right: true });
     y -= 26;
   });
+
+  const footerBytes = await fetch('/rodape-proposta.png').then(r => r.arrayBuffer());
+const footerImg   = await pdf.embedPng(footerBytes);          // use embedJpg se for .jpg
+
+/* ❷  Página final (a variável page já aponta para ela) */
+const lastPage = page;                                        // page → último addPage
+
+/* ❸  Calcula escala para ocupar a largura completa */
+const scale    = PAGE[0] / footerImg.width;
+const footH    = footerImg.height * scale;
+
+/* ❹  Desenha alinhado na borda inferior, sem margem */
+lastPage.drawImage(footerImg, {
+  x: 0,
+  y: 0,                     // fundo, sem margem
+  width: PAGE[0],           // largura total
+  height: footH,
+});
 
   /* 6. salva */
   return new Blob([await pdf.save()], { type: 'application/pdf' });
