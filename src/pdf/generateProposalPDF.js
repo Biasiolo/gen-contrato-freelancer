@@ -2,7 +2,7 @@
 import { PDFDocument, StandardFonts, rgb } from 'pdf-lib';
 
 /* ─── Layout & cores ─────────────────────────────── */
-const PAGE = [595, 842];          // A4 portrait, pontos
+const PAGE = [596, 842];          // A4 portrait, pontos
 const M    = 40;                  // margem lateral
 
 const COL  = [                    // x das colunas
@@ -19,6 +19,8 @@ const LH = 18;                    // line height
 const C_GRAY   = rgb(0.92, 0.92, 0.94);
 const C_BORDER = rgb(0.75, 0.75, 0.75);
 const C_TEXT   = rgb(0.15, 0.15, 0.15);
+
+
 
 /* helpers simples */
 const fmt = (v) => v.toLocaleString('pt-BR', { style: 'currency', currency: 'BRL' });
