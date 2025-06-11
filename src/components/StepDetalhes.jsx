@@ -12,7 +12,7 @@ const StepDetalhes = ({ onBack, onNext }) => {
   return (
     <div className="flex items-center justify-center min-h-screen bg-gradient-to-br from-black via-stone-950 to-black pt-0 sm:pt-10">
       <div className="relative max-w-4xl w-full mx-auto ">
-        <div className="relative backdrop-blur-sm bg-neutral-200 bg-opacity-10 rounded-2xl shadow-2xl border border-white border-opacity-20 p-6 sm:p-10 overflow-auto">
+        <div className="relative backdrop-blur-sm bg-white bg-opacity-10 shadow-2xl border border-white border-opacity-20 p-6 sm:p-10 overflow-auto">
 
           <h2 className="text-2xl sm:text-3xl font-extrabold text-white text-center mb-2 bg-teal-600 rounded-t-3xl p-2">
             Toques Finais
@@ -24,7 +24,7 @@ const StepDetalhes = ({ onBack, onNext }) => {
 
           <textarea
             rows="6"
-            className="w-full px-4 py-3 bg-white text-gray-400 rounded-lg focus:outline-none focus:ring-2 focus:ring-teal-600 border-none resize-none"
+            className="w-full px-4 py-3 bg-neutral-100 text-gray-400 rounded-lg focus:outline-none focus:ring-2 focus:ring-teal-600 border-none resize-none"
             placeholder="Ex: Incluir cronograma detalhado, observações sobre reuniões, etc."
             value={details}
             onChange={handleChange}

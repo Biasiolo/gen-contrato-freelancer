@@ -126,7 +126,13 @@ export default function StepApresentacao({ onBack, onNext }) {
         </button>
 
         <button
-          onClick={() => downloadPdf(pdfUrl, dataForPdf.proposalId)}
+          onClick={() =>
+            downloadPdf(
+              pdfUrl,
+              dataForPdf.client.company,   // ← nome do cliente
+              dataForPdf.proposalId        // ← id curto
+            )
+          }
           disabled={!pdfUrl}
           className="btn-primary flex-1 cursor-pointer rounded-3xl bg-gradient-to-r from-teal-600 to-teal-600 py-2 text-white shadow-lg transition-all hover:shadow-orange-500/25"
         >
@@ -146,10 +152,18 @@ function parseMoney(str) {
   return parseFloat(String(str || '').replace(/[^\d,]/g, '').replace(',', '.')) || 0;
 }
 
-function downloadPdf(url, id) {
+function downloadPdf(url, clientName, id) {
   if (!url) return;
+
+  const slug = clientName
+    .normalize('NFD')                 // remove acentos
+    .replace(/[\u0300-\u036f]/g, '')
+    .replace(/[^a-zA-Z0-9]+/g, '-')   // espaços e símbolos → hífen
+    .replace(/^-+|-+$/g, '')          // remove hífens extremos
+    .toLowerCase();
+
   const a = document.createElement('a');
   a.href = url;
-  a.download = `Proposta-${id}.pdf`;
+  a.download = `Proposta-${slug}-${id}.pdf`;
   a.click();
 }

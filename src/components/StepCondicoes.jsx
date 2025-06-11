@@ -85,7 +85,7 @@ const StepCondicoes = ({ onBack, onNext }) => {
   return (
     <div className="flex items-center justify-center min-h-screen bg-gradient-to-br from-black via-stone-950 to-black pt-0 sm:pt-10">
       <div className="relative w-full max-w-4xl mx-auto">
-        <div className="relative backdrop-blur-sm bg-neutral-200 bg-opacity-10 rounded-2xl shadow-2xl border border-white border-opacity-20 p-6 sm:p-10 overflow-auto">
+        <div className="relative backdrop-blur-sm bg-white bg-opacity-10 shadow-2xl border border-white border-opacity-20 p-6 sm:p-10 overflow-auto">
           <h2 className="text-2xl sm:text-3xl font-extrabold text-gray-900 text-center mb-1">
             Defina as Condições
           </h2>
@@ -105,9 +105,9 @@ const StepCondicoes = ({ onBack, onNext }) => {
                   <div className="space-y-4 px-2 pb-2">
                     <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
                       <div>
-                        <label className="block text-neutral-500 mb-1">Método de Pagamento</label>
+                        <label className="block text-neutral-700 mb-1">Método de Pagamento</label>
                         <select
-                          className="w-full px-3 py-2 bg-white text-gray-800 rounded-lg focus:outline-none focus:ring-2 focus:ring-teal-600 border-none"
+                          className="w-full px-3 py-2 bg-neutral-100 text-gray-800 rounded-lg focus:outline-none focus:ring-2 focus:ring-teal-600 border-none"
                           value={cond[type.id]?.method || ''}
                           onChange={e => handleChange(type.id, 'method', e.target.value)}
                         >
@@ -118,30 +118,30 @@ const StepCondicoes = ({ onBack, onNext }) => {
                         </select>
                       </div>
                       <div>
-                        <label className="block text-neutral-500 mb-1">Entrada</label>
+                        <label className="block text-neutral-700 mb-1">Entrada</label>
                         <input
                           type="text"
-                          className="w-full px-3 py-2 bg-white text-gray-800 rounded-lg focus:outline-none focus:ring-2 focus:ring-teal-600 border-none"
+                          className="w-full px-3 py-2 bg-neutral-100 text-gray-800 rounded-lg focus:outline-none focus:ring-2 focus:ring-teal-600 border-none"
                           placeholder="Ex.: R$ 1.000,00"
                           value={cond[type.id]?.entry || ''}
                           onChange={e => handleCurrencyInput(e, type.id)}
                         />
                       </div>
                       <div>
-                        <label className="block text-neutral-500 mb-1">Parcelas (Saldo)</label>
+                        <label className="block text-neutral-700 mb-1">Parcelas (Saldo)</label>
                         <input
                           type="number"
                           min="1"
-                          className="w-full px-3 py-2 bg-white text-gray-800 rounded-lg focus:outline-none focus:ring-2 focus:ring-teal-600 border-none"
+                          className="w-full px-3 py-2 bg-neutral-100 text-gray-800 rounded-lg focus:outline-none focus:ring-2 focus:ring-teal-600 border-none"
                           value={cond[type.id]?.installments || ''}
                           onChange={e => handleChange(type.id, 'installments', Number(e.target.value))}
                         />
                       </div>
                       <div>
-                        <label className="block text-neutral-500 mb-1">Observações</label>
+                        <label className="block text-neutral-700 mb-1">Observações</label>
                         <textarea
                           rows="1"
-                          className="w-full px-3 py-2 bg-white text-gray-800 rounded-lg focus:outline-none focus:ring-2 focus:ring-teal-600 border-none"
+                          className="w-full px-3 py-2 bg-neutral-100 text-gray-800 rounded-lg focus:outline-none focus:ring-2 focus:ring-teal-600 border-none"
                           placeholder="Notas adicionais..."
                           value={cond[type.id]?.notes || ''}
                           onChange={e => handleChange(type.id, 'notes', e.target.value)}

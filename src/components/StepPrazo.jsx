@@ -21,7 +21,7 @@ const StepPrazo = ({ onBack, onNext }) => {
   return (
     <div className="flex items-center justify-center min-h-screen bg-gradient-to-br from-black via-stone-950 to-black pt-0 md:pt-10 sm:pt-10">
       <div className="relative max-w-4xl w-full mx-auto ">
-        <div className="relative backdrop-blur-sm bg-neutral-200 bg-opacity-10 rounded-2xl shadow-2xl border border-white border-opacity-20 p-6 sm:p-10 overflow-auto">
+        <div className="relative backdrop-blur-sm bg-white bg-opacity-10 shadow-2xl border border-white border-opacity-20 p-6 sm:p-10 overflow-auto">
           <h2 className="text-2xl sm:text-3xl font-extrabold text-gray-800 text-center mb-1">
             Defina os Prazos
           </h2>
@@ -42,7 +42,7 @@ const StepPrazo = ({ onBack, onNext }) => {
 
                   <div className="space-y-4">
                     {list.map(svc => (
-                      <div key={svc.id} className="group flex flex-col sm:flex-row sm:items-center justify-between bg-white bg-opacity-10 border border-white border-opacity-20 rounded-lg p-4 hover:bg-opacity-20 transition">
+                      <div key={svc.id} className="group flex flex-col sm:flex-row sm:items-center justify-between bg-neutral-100 bg-opacity-10 border border-white border-opacity-20  p-4 hover:bg-opacity-20 transition">
                         <div className="mb-2 sm:mb-0">
                           <h4 className="text-lg font-semibold text-gray-600">{svc.title}</h4>
                           {!svc.isMonthly && (

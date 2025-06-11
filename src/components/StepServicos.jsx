@@ -95,7 +95,7 @@ const StepServicos = ({ onBack, onNext }) => {
   return (
     <div className="flex items-center justify-center bg-gradient-to-br from-black via-stone-950 to-black pt-0 sm:py-10">
       <div className="relative w-full max-w-4xl mx-auto">
-        <div className="relative backdrop-blur-sm bg-neutral-200 bg-opacity-10 rounded-2xl shadow-2xl border border-white border-opacity-20 p-6 sm:p-10 overflow-auto">
+        <div className="relative backdrop-blur-sm bg-white bg-opacity-10 shadow-2xl border border-white border-opacity-20 p-6 sm:p-10 overflow-auto">
           <h2 className="text-2xl sm:text-3xl text-center font-semibold text-white mb-2 bg-teal-600 rounded-t-3xl p-2">
             {currentType.name}
           </h2>
@@ -107,7 +107,7 @@ const StepServicos = ({ onBack, onNext }) => {
             {services.map(svc => (
               <div
                 key={svc.id}
-                className="group flex flex-col sm:flex-row sm:items-center justify-between gap-4 bg-white bg-opacity-10 border border-white border-opacity-20 rounded-lg p-4 transition hover:bg-opacity-20"
+                className="group flex flex-col sm:flex-row sm:items-center justify-between gap-4 bg-neutral-100 bg-opacity-10 border border-white border-opacity-20 p-4 transition hover:bg-opacity-20"
               >
                 <div className="flex-1">
                   <h3 className="text-lg sm:text-xl font-semibold text-neutral-800">{svc.title}</h3>

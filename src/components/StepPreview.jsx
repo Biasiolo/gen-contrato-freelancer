@@ -240,7 +240,7 @@ const StepPreview = ({ onBack, onNext }) => {
 
           {/* Introduction */}
           <section className="mb-6">
-            <p className="text-justify text-gray-700 text-sm sm:text-base">
+            <p className="text-center text-gray-700 text-xl sm:text-xl">
               {proposalInfo.introduction}
             </p>
           </section>
