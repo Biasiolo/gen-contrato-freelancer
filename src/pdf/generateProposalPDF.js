@@ -2,10 +2,10 @@
 import { PDFDocument, StandardFonts, rgb } from 'pdf-lib';
 
 /* ─── Layout & cores ─────────────────────────────── */
-const PAGE = [596, 842];             // A4 portrait, em pontos
-const M    = 40;                     // margem lateral
+const PAGE = [596, 842];    // A4 portrait, em pontos
+const M    = 40;            // margem lateral
 
-const COL = [                        // x de cada coluna
+const COL = [               // x de cada coluna
   M,
   M + 230,
   M + 290,
@@ -13,42 +13,38 @@ const COL = [                        // x de cada coluna
   M + 470,
 ];
 
-const LH       = 16;                 // line-height da linha principal
-const DESC_LH  = 12;                 // line-height da descrição
-const TEXT_DEF = 10;                  // tamanho fonte conteúdo
+const LH        = 18;       // linha principal (nome, qty, etc.)
+const DESC_FT   = 8;        // fonte da descrição
+const DESC_LH   = 10;       // line-height da descrição
 
 /* cores */
 const C_GRAY   = rgb(0.92, 0.92, 0.94);
 const C_BORDER = rgb(0.75, 0.75, 0.75);
 const C_TEXT   = rgb(0.15, 0.15, 0.15);
-const C_DESC   = rgb(0.30, 0.30, 0.30);   // descrição levemente mais clara
+const C_DESC   = rgb(0.30, 0.30, 0.30);
 
-/* ─── helpers rápidos ────────────────────────────── */
+/*──────────────── helpers ——————————————————————————*/
 const fmt = (v) =>
   v.toLocaleString('pt-BR', { style: 'currency', currency: 'BRL' });
 
-function tx(page, text, { x, y, f, s = TEXT_DEF, c = C_TEXT, right = false }) {
+function tx(page, text, { x, y, f, s = 10, c = C_TEXT, right = false }) {
   const t  = String(text);
   const xx = right ? x - f.widthOfTextAtSize(t, s) : x;
   page.drawText(t, { x: xx, y, size: s, font: f, color: c });
 }
 
 const hLine = (page, y, c = C_BORDER) =>
-  page.drawLine({
-    start: { x: M, y },
-    end:   { x: PAGE[0] - M, y },
-    thickness: 0.3,
-    color: c,
-  });
+  page.drawLine({ start: { x: M, y }, end: { x: PAGE[0] - M, y },
+                  thickness: 0.3, color: c });
 
 const rect = (page, { x, y, w, h, fill, r = 0 }) =>
   page.drawRectangle({ x, y, width: w, height: h, color: fill, borderRadius: r });
 
-/* quebra a descrição em várias linhas respeitando largura máx. */
+/* quebra texto da descrição em várias linhas dentro de um width máximo */
 function wrapText(text, font, size, maxWidth) {
-  const words   = String(text).split(/\s+/);
-  const lines   = [];
-  let   line    = '';
+  const words = String(text).split(/\s+/);
+  const lines = [];
+  let   line  = '';
 
   words.forEach((w) => {
     const test = line ? `${line} ${w}` : w;
@@ -69,8 +65,8 @@ export async function generateProposalPDF(data, template = '/MODELO-PROPOSTA.pdf
   const tmpl = await fetch(template).then((r) => r.arrayBuffer());
   const src  = await PDFDocument.load(tmpl);
 
-  /* 2. novo PDF + cópia das 3 capas do modelo */
-  const pdf  = await PDFDocument.create();
+  /* 2. novo PDF + capas do modelo */
+  const pdf = await PDFDocument.create();
   const [cap0, cap1, cap2] = await pdf.copyPages(src, [0, 1, 2]);
   pdf.addPage(cap0); pdf.addPage(cap1); pdf.addPage(cap2);
 
@@ -78,52 +74,49 @@ export async function generateProposalPDF(data, template = '/MODELO-PROPOSTA.pdf
   const helv = await pdf.embedFont(StandardFonts.Helvetica);
   const bold = await pdf.embedFont(StandardFonts.HelveticaBold);
 
-  /* 4. prepara marca-d’água (uma instância para reuso) */
-  const wmBytes   = await fetch('/marca.png').then((r) => r.arrayBuffer());
-  const wmImg     = await pdf.embedPng(wmBytes);
-  const WM_SCALE  = 0.3;
-  const wmW       = wmImg.width  * WM_SCALE;
-  const wmH       = wmImg.height * WM_SCALE;
-  const wmX       = (PAGE[0] - wmW) / 2;
-  const wmY       = (PAGE[1] - wmH) / 8;
+  /* 4. marca-d’água (reutilizável) */
+  const wmBytes  = await fetch('/marca.png').then((r) => r.arrayBuffer());
+  const wmImg    = await pdf.embedPng(wmBytes);
+  const WM_SCALE = 0.3;
+  const wmW      = wmImg.width  * WM_SCALE;
+  const wmH      = wmImg.height * WM_SCALE;
+  const wmX      = (PAGE[0] - wmW) / 2;
+  const wmY      = (PAGE[1] - wmH) / 8;
   const drawWM = (p) =>
     p.drawImage(wmImg, { x: wmX, y: wmY, width: wmW, height: wmH, opacity: 0.25 });
 
-  /* 5. pacotes realmente selecionados */
-  const packages = (Array.isArray(data.packages) ? data.packages : []).filter(
-    (p) => p.items?.length,
-  );
+  /* 5. pacotes escolhidos */
+  const packages = (Array.isArray(data.packages) ? data.packages : [])
+    .filter((p) => p.items?.length);
 
   /* 6. página da proposta (4ª) */
   let page = pdf.addPage(PAGE);
   drawWM(page);
   let y = 780;
 
-  /* Cabeçalho da proposta */
-  tx(page, 'Proposta Comercial',             { x: M, y, f: helv, s: 32 }); y -= 32;
+  /* Cabeçalho principal */
+  tx(page, 'Proposta Comercial', { x: M, y, f: helv, s: 32 }); y -= 32;
   tx(page, `Cliente: ${data.client.company}`, { x: M, y, f: helv, s: 14 }); y -= 14;
   tx(page, `ID: ${data.proposalId}    Data: ${data.today}`, { x: M, y, f: helv, s: 12 }); y -= 42;
 
-  /* 7. blocos dos pacotes ------------------------------------------------ */
+  /* 7. blocos de pacotes ---------------------------------------------- */
   for (const pkg of packages) {
-    /* título do pacote */
     tx(page, `${pkg.name} – Pacote: ${fmt(pkg.total)}`, { x: M, y, f: helv, s: 18 }); y -= 20;
 
-    /* cabeçalho da tabela */
     ['Serviço', 'Qtd', 'Prazo', 'Valor Unit.', 'Subtotal'].forEach((t, i) =>
-      tx(page, t, { x: COL[i] + (i ? 2 : 0), y, f: bold, s: 9 }),
-    );
+      tx(page, t, { x: COL[i] + (i ? 2 : 0), y, f: bold, s: 9 }));
     hLine(page, y - 2); y -= LH;
 
-    /* linhas de serviço */
+    /* linhas de serviço + descrição */
     for (const item of pkg.items) {
-      //------------------------------------------------ quebra automática
+      /* quebra de página automática */
       if (y < 100) {
         page = pdf.addPage(PAGE);
         drawWM(page);
         y = 780;
       }
-      //------------------------------------------------ linha principal
+
+      /* linha principal */
       const prazo = item.isMonthly ? `${item.term} mês(es)` : 'Único';
       const cells = [
         { v: item.title,          x: COL[0] + 2,  r: false },
@@ -133,14 +126,13 @@ export async function generateProposalPDF(data, template = '/MODELO-PROPOSTA.pdf
         { v: fmt(item.subtotal),  x: COL[4] + 40, r: true  },
       ];
       cells.forEach((c) =>
-        tx(page, c.v, { x: c.x, y, f: helv, s: TEXT_DEF, right: c.r }),
-      );
-      y -= LH;                                    // ↓ próxima linha base
+        tx(page, c.v, { x: c.x, y, f: helv, s: 9, right: c.r }));
+      y -= 12;                        /* ↓ 12 pt – aproxima descrição */
 
-      //------------------------------------------------ descrição (opcional)
+      /* descrição (opcional) */
       if (item.description) {
-        const maxWidth = COL[4] - COL[0] - 10;    // larg. total entre 1ª e 5ª
-        const lines    = wrapText(item.description, helv, 8, maxWidth);
+        const maxW  = COL[4] - COL[0] - 10;
+        const lines = wrapText(item.description, helv, DESC_FT, maxW);
 
         for (const line of lines) {
           if (y < 80) {
@@ -148,12 +140,15 @@ export async function generateProposalPDF(data, template = '/MODELO-PROPOSTA.pdf
             drawWM(page);
             y = 780;
           }
-          tx(page, line, { x: COL[0] + 6, y, f: helv, s: 8, c: C_DESC });
+          tx(page, line, { x: COL[0] + 6, y, f: helv, s: DESC_FT, c: C_DESC });
           y -= DESC_LH;
         }
       }
 
-      y -= 4;  // pequeno espaçamento antes do próximo serviço
+      y -= 8;                         /* margem inferior do item */
+      /* linha divisória entre itens */
+      hLine(page, y + 4, C_GRAY);
+      y -= 6;                         /* espaço extra pós-linha */
     }
 
     /* condições do pacote */
@@ -167,21 +162,16 @@ export async function generateProposalPDF(data, template = '/MODELO-PROPOSTA.pdf
     y -= BOX + 32;
   }
 
-  /* 8. total geral ------------------------------------------------------- */
-  tx(page, `Total Geral: ${fmt(data.totals.overall)}`, {
-    x: PAGE[0] - M,
-    y,
-    f: bold,
-    s: 16,
-    right: true,
-  });
+  /* 8. total geral ----------------------------------------------------- */
+  tx(page, `Total Geral: ${fmt(data.totals.overall)}`,
+     { x: PAGE[0] - M, y, f: bold, s: 16, right: true });
   y -= 32;
 
-  /* 9. condições gerais + resumo + parcelas ------------------------------ */
-  const titleCG = 'Condições Gerais de Pagamento';
+  /* 9. condições gerais + resumo + parcelas --------------------------- */
+  const title = 'Condições Gerais de Pagamento';
   rect(page, { x: M, y: y - 24, w: PAGE[0] - M * 2, h: 24, fill: rgb(0, 0, 0), r: 10 });
-  const tW = bold.widthOfTextAtSize(titleCG, 12);
-  tx(page, titleCG, { x: PAGE[0] / 2 - tW / 2, y: y - 17, f: bold, s: 14, c: rgb(1, 1, 1) });
+  const titleW = bold.widthOfTextAtSize(title, 12);
+  tx(page, title, { x: PAGE[0] / 2 - titleW / 2, y: y - 17, f: bold, s: 14, c: rgb(1, 1, 1) });
   y -= 36;
 
   /* resumo */
@@ -190,15 +180,11 @@ export async function generateProposalPDF(data, template = '/MODELO-PROPOSTA.pdf
   const resumo =
     `Entrada Total: ${fmt(data.entradaTotal)}   |   Parcelas Máx.: ${data.maxParcelas}`;
   const resumoW = helv.widthOfTextAtSize(resumo, 12);
-  tx(page, resumo, {
-    x: PAGE[0] / 2 - resumoW / 2,
-    y: y - RES_H / 2 - 3,
-    f: helv,
-    s: 12,
-  });
+  tx(page, resumo,
+     { x: PAGE[0] / 2 - resumoW / 2, y: y - RES_H / 2 - 3, f: helv, s: 12 });
   y -= RES_H + 12;
 
-  /* parcelas agrupadas */
+  /* parcelas */
   data.parcelasAgrupadas.forEach((p) => {
     if (y < 60) {
       page = pdf.addPage(PAGE);
@@ -209,30 +195,19 @@ export async function generateProposalPDF(data, template = '/MODELO-PROPOSTA.pdf
     const label =
       p.de === p.ate ? `Parcela ${p.de}` : `Da ${p.de}ª à ${p.ate}ª parcela`;
     tx(page, label, { x: M + 12, y: y - 12, f: helv, s: 9 });
-    tx(page, fmt(p.valor), {
-      x: PAGE[0] - M - 12,
-      y: y - 12,
-      f: helv,
-      s: 9,
-      right: true,
-    });
+    tx(page, fmt(p.valor),
+       { x: PAGE[0] - M - 12, y: y - 12, f: helv, s: 9, right: true });
     y -= 26;
   });
 
-  /* 10. rodapé (só na última página efetivamente usada) ------------------ */
-  {
-    const footBytes = await fetch('/rodape-proposta.png').then((r) => r.arrayBuffer());
-    const footImg   = await pdf.embedPng(footBytes);
-    const scale     = PAGE[0] / footImg.width;
-    page.drawImage(footImg, {
-      x: 0,
-      y: 0,
-      width: PAGE[0],
-      height: footImg.height * scale,
-    });
-  }
+  /* 10. rodapé (última página) ---------------------------------------- */
+  const footBytes = await fetch('/rodape-proposta.png').then((r) => r.arrayBuffer());
+  const footImg   = await pdf.embedPng(footBytes);
+  const scale     = PAGE[0] / footImg.width;
+  page.drawImage(footImg,
+    { x: 0, y: 0, width: PAGE[0], height: footImg.height * scale });
 
-  /* 11. salva tudo */
+  /* 11. salva PDF ------------------------------------------------------ */
   const bytes = await pdf.save();
   return new Blob([bytes], { type: 'application/pdf' });
 }
