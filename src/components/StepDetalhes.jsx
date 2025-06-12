@@ -14,7 +14,7 @@ const StepDetalhes = ({ onBack, onNext }) => {
       <div className="relative max-w-4xl w-full mx-auto ">
         <div className="relative backdrop-blur-sm bg-white bg-opacity-10 shadow-2xl border border-white border-opacity-20 p-6 sm:p-10 overflow-auto">
 
-          <h2 className="text-2xl sm:text-3xl font-extrabold text-white text-center mb-2 bg-teal-600 rounded-t-3xl p-2">
+          <h2 className="text-2xl sm:text-3xl font-extrabold text-white text-center mb-2 bg-black rounded-t-3xl p-2">
             Toques Finais
           </h2>
 

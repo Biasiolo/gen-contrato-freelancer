@@ -71,7 +71,7 @@ const StepCliente = ({ data = {}, onChange, onNext }) => {
           <div className="absolute top-0 left-0 w-full h-1 bg-gradient-to-r from-teal-200 via-teal-600 to-teal-200" />
 
           <div className="mb-10">
-            <h2 className="text-4xl text-center items-center font-semibold text-white mb-2 bg-teal-600 rounded-t-3xl p-2">Boas-Vindas</h2>
+            <h2 className="text-4xl text-center items-center font-semibold text-white mb-2 bg-black rounded-t-3xl p-2">Boas-Vindas</h2>
             <p className="text-neutral-500 text-center">
               Preencha os dados para começar uma proposta personalizada
             </p>

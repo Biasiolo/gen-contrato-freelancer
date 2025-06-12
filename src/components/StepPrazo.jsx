@@ -36,7 +36,7 @@ const StepPrazo = ({ onBack, onNext }) => {
 
               return (
                 <section key={type.id}>
-                  <h3 className="text-xl font-semibold text-white mb-2 bg-teal-600 rounded-t-3xl p-2 text-center">
+                  <h3 className="text-xl font-semibold text-white mb-2 bg-black rounded-t-3xl p-2 text-center">
                     {type.name}
                   </h3>
 

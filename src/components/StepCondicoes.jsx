@@ -99,7 +99,7 @@ const StepCondicoes = ({ onBack, onNext }) => {
               if (!list.length) return null;
               return (
                 <section key={type.id}>
-                  <h3 className="text-xl items-center font-semibold text-white mb-2 bg-teal-600 rounded-t-3xl p-2">
+                  <h3 className="text-xl items-center font-semibold text-white mb-2 bg-black rounded-t-3xl p-2">
                     {type.name} – Pacote: R$ {totals[type.id].toLocaleString('pt-BR', { minimumFractionDigits: 2 })}
                   </h3>
                   <div className="space-y-4 px-2 pb-2">

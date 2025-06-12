@@ -156,7 +156,7 @@ const StepPreview = ({ onBack, onNext }) => {
 
     return (
       <section key={type.id} className="space-y-4 mb-8">
-        <h2 className="text-xl sm:text-2xl text-center font-semibold text-white mb-2 bg-teal-700 rounded-t-3xl p-2">
+        <h2 className="text-xl sm:text-2xl text-center font-semibold text-white mb-2 bg-black rounded-t-3xl p-2">
           {type.name} – Pacote: {formatCurrency(total)}
         </h2>
         
@@ -258,7 +258,7 @@ const StepPreview = ({ onBack, onNext }) => {
           {/* Condições Gerais de Pagamento */}
 {parcelasAgrupadas.length > 0 && (
   <section className="mb-8">
-    <h2 className="text-2xl sm:text-2xl font-semibold text-white mb-3 bg-teal-700 rounded-t-3xl px-4 py-2 text-center">
+    <h2 className="text-2xl sm:text-2xl font-semibold text-white mb-3 bg-black rounded-t-3xl px-4 py-2 text-center">
       Condições Gerais de Pagamento
     </h2>
     <div className="bg-gray-200 border-none rounded-b-3xl shadow-sm p-4 space-y-2 text-sm sm:text-base text-gray-700">

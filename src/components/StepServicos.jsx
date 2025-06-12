@@ -96,7 +96,7 @@ const StepServicos = ({ onBack, onNext }) => {
     <div className="flex items-center justify-center bg-gradient-to-br from-black via-stone-950 to-black pt-0 sm:py-10">
       <div className="relative w-full max-w-4xl mx-auto">
         <div className="relative backdrop-blur-sm bg-white bg-opacity-10 shadow-2xl border border-white border-opacity-20 p-6 sm:p-10 overflow-auto">
-          <h2 className="text-2xl sm:text-3xl text-center font-semibold text-white mb-2 bg-teal-600 rounded-t-3xl p-2">
+          <h2 className="text-2xl sm:text-3xl text-center font-semibold text-white mb-2 bg-black rounded-t-3xl p-2">
             {currentType.name}
           </h2>
           <p className="text-orange-400 text-lg font-bold text-center mb-6">
@@ -157,7 +157,7 @@ const StepServicos = ({ onBack, onNext }) => {
             ))}
           </div>
 
-          <div className="mt-6 bg-neutral-700 p-4 rounded-xl space-y-3">
+          <div className="mt-6 bg-black p-4 rounded-xl space-y-3">
             <h3 className="text-lg font-semibold text-white">Adicionar Serviço Personalizado</h3>
             <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
               <input
