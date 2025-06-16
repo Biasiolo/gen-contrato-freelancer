@@ -101,7 +101,7 @@ export async function generateProposalPDF(data, template = '/MODELO-PROPOSTA.pdf
 
   /* 7. blocos de pacotes ---------------------------------------------- */
   for (const pkg of packages) {
-    tx(page, `${pkg.name} – Pacote: ${fmt(pkg.total)}`, { x: M, y, f: helv, s: 18 }); y -= 20;
+    tx(page, `${pkg.name} – Pacote: ${fmt(pkg.total)}`, { x: M, y, f: bold, s: 18 }); y -= 20;
 
     ['Serviço', 'Qtd', 'Prazo', 'Valor Unit.', 'Subtotal'].forEach((t, i) =>
       tx(page, t, { x: COL[i] + (i ? 2 : 0), y, f: bold, s: 9 }));
@@ -153,13 +153,19 @@ export async function generateProposalPDF(data, template = '/MODELO-PROPOSTA.pdf
 
     /* condições do pacote */
     const BOX = 32;
-    rect(page, { x: M, y: y - BOX, w: PAGE[0] - M * 2, h: BOX, fill: C_GRAY, r: 6 });
-    const txtCond =
-      `Método: ${pkg.cond.method}   Entrada: ${fmt(pkg.cond.entry)}   ` +
-      `Saldo: ${fmt(pkg.cond.saldo)}` +
-      (pkg.cond.parcelas ? ` em ${pkg.cond.parcelas}x de ${fmt(pkg.cond.parcela)}` : '');
-    tx(page, txtCond, { x: M + 12, y: y - 20, f: helv, s: 9 });
-    y -= BOX + 32;
+rect(page, { x: M, y: y - BOX, w: PAGE[0] - M * 2, h: BOX, fill: C_GRAY, r: 6 });
+
+const txtCond =
+  `Método: ${pkg.cond.method}   Entrada: ${fmt(pkg.cond.entry)}   ` +
+  `Saldo: ${fmt(pkg.cond.saldo)}` +
+  (pkg.cond.parcelas ? ` em ${pkg.cond.parcelas}x de ${fmt(pkg.cond.parcela)}` : '');
+
+const fontSize = 9;
+const textWidth = helv.widthOfTextAtSize(txtCond, fontSize);
+const centerX = (PAGE[0] - textWidth) / 2;
+
+tx(page, txtCond, { x: centerX, y: y - 20, f: helv, s: fontSize });
+y -= BOX + 32;
   }
 
   /* 8. total geral ----------------------------------------------------- */
@@ -176,7 +182,7 @@ export async function generateProposalPDF(data, template = '/MODELO-PROPOSTA.pdf
 
   /* resumo */
   const RES_H = 26;
-  rect(page, { x: M, y: y - RES_H, w: PAGE[0] - M * 2, h: RES_H, fill: C_GRAY, r: 6 });
+  rect(page, { x: M, y: y - RES_H, w: PAGE[0] - M * 2, h: RES_H, fill: C_GRAY, f: helv, r: 6 });
   const resumo =
     `Entrada Total: ${fmt(data.entradaTotal)}   |   Parcelas Máx.: ${data.maxParcelas}`;
   const resumoW = helv.widthOfTextAtSize(resumo, 12);

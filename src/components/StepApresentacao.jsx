@@ -101,9 +101,9 @@ export default function StepApresentacao({ onBack }) {
 
   /* ---------- UI ---------- */
   return (
-    <section className="flex flex-col items-center px-4 py-8 min-h-screen">
+    <section className="flex flex-col items-center px-4 py-8 ">
       {pdfUrl && (
-        <div className="w-full max-w-4xl h-[85vh] overflow-auto rounded shadow mx-auto">
+        <div className="w-full max-w-fit h-[85vh] overflow-auto rounded shadow mx-auto">
           <Document file={pdfUrl} onLoadSuccess={({ numPages }) => setNumPages(numPages)}>
             {Array.from({ length: numPages }).map((_, i) => (
               <Page

@@ -78,11 +78,21 @@ export default function ProgressBar({ currentStep, onStepClick }) {
 
         {/* botão Nova Proposta */}
         <button
-          onClick={handleNew}
-          className="absolute cursor-pointer right-4 top-3 md:top-4 bg-orange-500 text-white text-xs md:text-sm px-4 py-1 rounded-full shadow hover:bg-orange-600"
-        >
-          Nova Proposta
-        </button>
+  onClick={handleNew}
+  className="hidden md:block absolute right-4 top-3 md:top-4 bg-orange-500 text-white text-xs md:text-sm px-4 py-1 rounded-full shadow hover:bg-orange-600"
+>
+  Nova Proposta
+</button>
+
+{/* botão Nova Proposta (mobile - abaixo da barra) */}
+<div className="block md:hidden mt-2 text-center">
+  <button
+    onClick={handleNew}
+    className="bg-orange-500 text-white text-sm px-4 py-1 rounded-full shadow hover:bg-orange-600"
+  >
+    Nova Proposta
+  </button>
+</div>
       </div>
     </div>
   );

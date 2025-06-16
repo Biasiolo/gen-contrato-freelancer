@@ -22,21 +22,21 @@
         {
           "id": "dna_logo",
           "title": "Logotipo",
-          "description": "Criação de logo memorável e impactante, que comunica a essência do seu negócio e se conecta com seu público-alvo.",
+          "description": "Logo memorável e impactante, com a essência do seu negócio conectando com seu público-alvo.",
           "isMonthly": false,
           "defaultUnitValue": 3800
         },
         {
           "id": "dna_manual_da_marca",
           "title": "Manual da Marca",
-          "description": " Define as diretrizes para o uso da marca, garantindo que seja representada de forma coesa em diversas aplicações.",
+          "description": " Diretrizes para o uso da marca, garantindo que seja representada de forma coesa em diversas aplicações.",
           "isMonthly": false,
           "defaultUnitValue": 1200
         },
         {
           "id": "dna_missao_viao_valores",
           "title": "Missão, Visão e Valores",
-          "description": "Construção e auxílio para definir a Missão, Visão e Valores da sua marca, elementos que fortalecem a cultura da empresa.",
+          "description": "Construção e auxílio para Missão, Visão e Valores da sua marca, fortalecendo a cultura da empresa.",
           "isMonthly": false,
           "defaultUnitValue": 100
         },
@@ -58,7 +58,7 @@
         {
           "id": "organizacao_redes",
           "title": "Plano de Marketing",
-          "description": "Análise e otimização de redes sociais; Novas redes de acordo com o seu nicho; Checklist e planilha com todos os acessos atualizados.",
+          "description": "Análise e otimização de redes sociais; Checklist e planilha com todos os acessos atualizados.",
           "isMonthly": false,
           "defaultUnitValue": 250
         },

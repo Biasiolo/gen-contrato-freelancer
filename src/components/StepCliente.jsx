@@ -67,12 +67,12 @@ const StepCliente = ({ data = {}, onChange, onNext }) => {
     <div className="flex items-center justify-center pt-0 sm:pt-24 bg-transparent">
 
       <div className="relative max-w-4xl w-full mx-auto ">
-        <div className="relative backdrop-blur-sm bg-white bg-opacity-10  shadow-2xl border border-white border-opacity-20 p-10 overflow-hidden">
-          <div className="absolute top-0 left-0 w-full h-1 bg-gradient-to-r from-teal-200 via-teal-600 to-teal-200" />
+        <div className="relative backdrop-blur-sm bg-white/5 border border-teal-700/40 rounded-lg p-12 overflow-hidden">
+          <div className="absolute top-0 left-0 w-full h-px bg-gradient-to-r from-transparent via-teal-700 to-transparent opacity-60" />
 
           <div className="mb-10">
-            <h2 className="text-4xl text-center items-center font-semibold text-white mb-2 bg-black rounded-t-3xl p-2">Boas-Vindas</h2>
-            <p className="text-neutral-500 text-center">
+            <h2 className="text-4xl text-center items-center font-semibold text-orange-100 mb-2 rounded-t-3xl p-2">Boas-Vindas</h2>
+            <p className="text-orange-100 text-center">
               Preencha os dados para começar uma proposta personalizada
             </p>
           </div>
@@ -82,15 +82,15 @@ const StepCliente = ({ data = {}, onChange, onNext }) => {
               const Icon = field.icon;
               return (
                 <div key={field.key} className="group">
-                  <label className="flex items-center text-neutral-800 font-medium mb-3">
-                    <div className="flex items-center justify-center w-8 h-8 bg-teal-600 bg-opacity-50 rounded-lg mr-3 transition-colors group-hover:bg-orange-500">
+                  <label className="flex items-center text-neutral-200 font-medium mb-3">
+                    <div className="flex items-center justify-center w-8 h-8 text-neutral-100 bg-teal-600 bg-opacity-50 rounded-lg mr-3 transition-colors group-hover:bg-orange-500">
                       <Icon size={16} className="text-neutral-200 transition-colors group-hover:text-white" />
                     </div>
                     {field.label}
                   </label>
                   <input
                     type={field.type}
-                    className="w-full px-5 py-4 bg-neutral-100 bg-opacity-20 rounded-xl text-neutral-900 placeholder-gray-300 placeholder-opacity-50 focus:outline-none focus:ring-2 focus:ring-teal-600 transition-all"
+                    className="w-full px-5 py-4 bg-stone-200 bg-opacity-20 rounded-xl text-neutral-900 placeholder-gray-300 placeholder-opacity-50 focus:outline-none focus:ring-2 focus:ring-teal-600 transition-all"
                     placeholder={field.placeholder}
                     value={clientData[field.key]}
                     onChange={e => handleChange(field.key, e.target.value)}
