@@ -126,7 +126,7 @@ export async function generateProposalPDF(data, template = '/MODELO-PROPOSTA.pdf
       }
 
       /* linha principal - mantém as mesmas posições */
-      const prazo = item.isMonthly ? `${item.term} mês(es)` : 'Único';
+      const prazo = item.isMonthly ? `Mensal` : 'Único';
       const cells = [
         { v: item.title,           x: COL[0] + 17,  r: false },
         { v: fmt(item.unitValue),  x: COL[1] + 32,  r: true  },
@@ -168,10 +168,7 @@ export async function generateProposalPDF(data, template = '/MODELO-PROPOSTA.pdf
     y -= BOX + 32;
   }
 
-  /* 8. total geral ----------------------------------------------------- */
-  tx(page, `Total Geral: ${fmt(data.totals.overall)}`,
-     { x: PAGE[0] - M, y, f: bold, s: 16, right: true });
-  y -= 32;
+
 
   /* 9. condições gerais + resumo + parcelas --------------------------- */
   const title = 'Condições Gerais de Pagamento';
@@ -203,7 +200,7 @@ export async function generateProposalPDF(data, template = '/MODELO-PROPOSTA.pdf
     tx(page, label, { x: M + 12, y: y - 12, f: helv, s: 9 });
     tx(page, fmt(p.valor),
        { x: PAGE[0] - M - 12, y: y - 12, f: helv, s: 9, right: true });
-    y -= 26;
+    y -= 24;
   });
 
   /* 10. rodapé (última página) ---------------------------------------- */
