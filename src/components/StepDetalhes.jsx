@@ -25,7 +25,7 @@ const StepDetalhes = ({ onBack, onNext }) => {
 
         <textarea
           rows="6"
-          className="w-full px-4 py-3 bg-stone-200 bg-opacity-20 text-gray-900 placeholder-gray-900 placeholder-opacity-60 rounded-xl focus:outline-none focus:ring-2 focus:ring-teal-600 border-none resize-none"
+          className="w-full px-4 py-3 bg-stone-200 bg-opacity-20 text-gray-900 placeholder-gray-600 placeholder-opacity-60 rounded-xl focus:outline-none focus:ring-2 focus:ring-teal-600 border-none resize-none"
           placeholder="Ex: Incluir cronograma detalhado, observações sobre reuniões, etc."
           value={details}
           onChange={handleChange}

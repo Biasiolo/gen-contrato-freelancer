@@ -90,7 +90,7 @@ const StepCliente = ({ data = {}, onChange, onNext }) => {
                   </label>
                   <input
                     type={field.type}
-                    className="w-full px-5 py-4 bg-stone-200 bg-opacity-20 rounded-xl text-neutral-900 placeholder-gray-300 placeholder-opacity-50 focus:outline-none focus:ring-2 focus:ring-teal-600 transition-all"
+                    className="w-full px-5 py-4 bg-stone-200 bg-opacity-20 rounded-xl text-neutral-900 placeholder-gray-600 placeholder-opacity-50 focus:outline-none focus:ring-2 focus:ring-teal-600 transition-all"
                     placeholder={field.placeholder}
                     value={clientData[field.key]}
                     onChange={e => handleChange(field.key, e.target.value)}

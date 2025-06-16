@@ -109,7 +109,7 @@ const StepCondicoes = ({ onBack, onNext }) => {
                     <div>
                       <label className="block text-neutral-100 mb-1">Método de Pagamento</label>
                       <select
-                        className="w-full px-3 py-2 bg-stone-200 bg-opacity-20 text-gray-900 rounded-xl focus:ring-2 focus:ring-teal-600 placeholder-gray-900 placeholder-opacity-60"
+                        className="w-full px-3 py-2 bg-stone-200 bg-opacity-20 text-gray-900 rounded-xl focus:ring-2 focus:ring-teal-600 placeholder-gray-600 placeholder-opacity-60"
                         value={cond[type.id]?.method || ''}
                         onChange={e => handleChange(type.id, 'method', e.target.value)}
                       >
@@ -124,7 +124,7 @@ const StepCondicoes = ({ onBack, onNext }) => {
                       <label className="block text-neutral-100 mb-1">Entrada</label>
                       <input
                         type="text"
-                        className="w-full px-3 py-2 bg-stone-200 bg-opacity-20 text-gray-900 rounded-xl focus:ring-2 focus:ring-teal-600 placeholder-gray-900 placeholder-opacity-60"
+                        className="w-full px-3 py-2 bg-stone-200 bg-opacity-20 text-gray-900 rounded-xl focus:ring-2 focus:ring-teal-600 placeholder-gray-600 placeholder-opacity-60"
                         placeholder="Ex.: R$ 1.000,00"
                         value={cond[type.id]?.entry || ''}
                         onChange={e => handleCurrencyInput(e, type.id)}
@@ -136,7 +136,7 @@ const StepCondicoes = ({ onBack, onNext }) => {
                       <input
                         type="number"
                         min="1"
-                        className="w-full px-3 py-2 bg-stone-200 bg-opacity-20 text-gray-900 rounded-xl focus:ring-2 focus:ring-teal-600 placeholder-gray-900 placeholder-opacity-60"
+                        className="w-full px-3 py-2 bg-stone-200 bg-opacity-20 text-gray-900 rounded-xl focus:ring-2 focus:ring-teal-600 placeholder-gray-600 placeholder-opacity-60"
                         value={cond[type.id]?.installments || ''}
                         onChange={e => handleChange(type.id, 'installments', Number(e.target.value))}
                       />
@@ -146,7 +146,7 @@ const StepCondicoes = ({ onBack, onNext }) => {
                       <label className="block text-neutral-100 mb-1">Observações</label>
                       <textarea
                         rows="1"
-                        className="w-full px-3 py-2 bg-stone-200 bg-opacity-20 text-gray-900 rounded-xl focus:ring-2 focus:ring-teal-600 placeholder-gray-900 placeholder-opacity-60"
+                        className="w-full px-3 py-2 bg-stone-200 bg-opacity-20 text-gray-900 rounded-xl focus:ring-2 focus:ring-teal-600 placeholder-gray-600 placeholder-opacity-60"
                         placeholder="Notas adicionais..."
                         value={cond[type.id]?.notes || ''}
                         onChange={e => handleChange(type.id, 'notes', e.target.value)}

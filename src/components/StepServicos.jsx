@@ -167,14 +167,14 @@ const StepServicos = ({ onBack, onNext }) => {
               placeholder="Título do serviço"
               value={customService.title}
               onChange={e => setCustomService({ ...customService, title: e.target.value })}
-              className="px-3 py-2 rounded-xl bg-stone-200 bg-opacity-20 text-gray-900 placeholder-gray-900 focus:ring-2 focus:ring-teal-600"
+              className="px-3 py-2 rounded-xl bg-stone-200 bg-opacity-20 text-gray-900 placeholder-gray-600 focus:ring-2 focus:ring-teal-600"
             />
             <input
               type="text"
               placeholder="Descrição"
               value={customService.description}
               onChange={e => setCustomService({ ...customService, description: e.target.value })}
-              className="px-3 py-2 rounded-xl bg-stone-200 bg-opacity-20 text-gray-900 placeholder-gray-900 focus:ring-2 focus:ring-teal-600"
+              className="px-3 py-2 rounded-xl bg-stone-200 bg-opacity-20 text-gray-900 placeholder-gray-600 focus:ring-2 focus:ring-teal-600"
             />
             <input
               type="text"
@@ -185,7 +185,7 @@ const StepServicos = ({ onBack, onNext }) => {
                 const formatted = (parseInt(onlyNumbers || '0') / 100).toFixed(2).replace('.', ',');
                 setCustomService({ ...customService, unitValue: formatted });
               }}
-              className="px-3 py-2 rounded-xl bg-stone-200 bg-opacity-20 text-gray-900 placeholder-gray-900 focus:ring-2 focus:ring-teal-600"
+              className="px-3 py-2 rounded-xl bg-stone-200 bg-opacity-20 text-gray-900 placeholder-gray-600 focus:ring-2 focus:ring-teal-600"
             />
             <label className="flex items-center gap-2 text-orange-100">
               <input

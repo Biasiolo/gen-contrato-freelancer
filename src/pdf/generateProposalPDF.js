@@ -74,7 +74,7 @@ export async function generateProposalPDF(data, template = '/MODELO-PROPOSTA.pdf
   const helv = await pdf.embedFont(StandardFonts.Helvetica);
   const bold = await pdf.embedFont(StandardFonts.HelveticaBold);
 
-  /* 4. marca-d’água (reutilizável) */
+  /* 4. marca-d'água (reutilizável) */
   const wmBytes  = await fetch('/marca.png').then((r) => r.arrayBuffer());
   const wmImg    = await pdf.embedPng(wmBytes);
   const WM_SCALE = 0.3;
@@ -101,11 +101,20 @@ export async function generateProposalPDF(data, template = '/MODELO-PROPOSTA.pdf
 
   /* 7. blocos de pacotes ---------------------------------------------- */
   for (const pkg of packages) {
-    tx(page, `${pkg.name} – Pacote: ${fmt(pkg.total)}`, { x: M, y, f: bold, s: 18 }); y -= 20;
+    tx(page, `${pkg.name}`, { x: M, y, f: bold, s: 18 }); y -= 20;
 
-    ['Serviço', 'Qtd', 'Prazo', 'Valor Unit.', 'Subtotal'].forEach((t, i) =>
-      tx(page, t, { x: COL[i] + (i ? 2 : 0), y, f: bold, s: 9 }));
-    hLine(page, y - 2); y -= LH;
+    /* CORREÇÃO: Títulos das colunas alinhados com o conteúdo */
+    const headerCells = [
+      { text: 'Serviço',      x: COL[0] + 17, right: false },
+      { text: 'Valor Unit.',  x: COL[1] + 32, right: true  },
+      { text: 'Qtd',          x: COL[2] + 50, right: true  },
+      { text: 'Prazo',        x: COL[3] + 40, right: true  }
+    ];
+
+    headerCells.forEach((header) =>
+      tx(page, header.text, { x: header.x, y, f: bold, s: 9, right: header.right }));
+    
+    hLine(page, y - 4); y -= LH;
 
     /* linhas de serviço + descrição */
     for (const item of pkg.items) {
@@ -116,15 +125,15 @@ export async function generateProposalPDF(data, template = '/MODELO-PROPOSTA.pdf
         y = 780;
       }
 
-      /* linha principal */
+      /* linha principal - mantém as mesmas posições */
       const prazo = item.isMonthly ? `${item.term} mês(es)` : 'Único';
       const cells = [
-        { v: item.title,          x: COL[0] + 2,  r: false },
-        { v: item.qty,            x: COL[1] + 15, r: true  },
-        { v: prazo,               x: COL[2] + 32, r: true  },
-        { v: fmt(item.unitValue), x: COL[3] + 50, r: true  },
-        { v: fmt(item.subtotal),  x: COL[4] + 40, r: true  },
+        { v: item.title,           x: COL[0] + 17,  r: false },
+        { v: fmt(item.unitValue),  x: COL[1] + 32,  r: true  },
+        { v: item.qty,             x: COL[2] + 50,  r: true  },
+        { v: prazo,                x: COL[3] + 40,  r: true  },
       ];
+      
       cells.forEach((c) =>
         tx(page, c.v, { x: c.x, y, f: helv, s: 9, right: c.r }));
       y -= 12;                        /* ↓ 12 pt – aproxima descrição */
@@ -148,24 +157,15 @@ export async function generateProposalPDF(data, template = '/MODELO-PROPOSTA.pdf
       y -= 8;                         /* margem inferior do item */
       /* linha divisória entre itens */
       hLine(page, y + 4, C_GRAY);
-      y -= 6;                         /* espaço extra pós-linha */
+      y -= 8;                         /* espaço extra pós-linha */
     }
 
     /* condições do pacote */
     const BOX = 32;
-rect(page, { x: M, y: y - BOX, w: PAGE[0] - M * 2, h: BOX, fill: C_GRAY, r: 6 });
+    rect(page, { x: M, y: y - BOX, w: PAGE[0] - M * 2, h: BOX, fill: C_GRAY, r: 6 });
 
-const txtCond =
-  `Método: ${pkg.cond.method}   Entrada: ${fmt(pkg.cond.entry)}   ` +
-  `Saldo: ${fmt(pkg.cond.saldo)}` +
-  (pkg.cond.parcelas ? ` em ${pkg.cond.parcelas}x de ${fmt(pkg.cond.parcela)}` : '');
-
-const fontSize = 9;
-const textWidth = helv.widthOfTextAtSize(txtCond, fontSize);
-const centerX = (PAGE[0] - textWidth) / 2;
-
-tx(page, txtCond, { x: centerX, y: y - 20, f: helv, s: fontSize });
-y -= BOX + 32;
+    
+    y -= BOX + 32;
   }
 
   /* 8. total geral ----------------------------------------------------- */
