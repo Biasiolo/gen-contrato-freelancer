@@ -33,51 +33,52 @@ export default function StepApresentacao({ onBack }) {
 
   /* ---------- dados p/ PDF ---------- */
   const dataForPdf = useMemo(() => {
-    const today = new Date().toLocaleDateString('pt-BR');
-    const proposalId = crypto.randomUUID().split('-')[0];
+  const today = new Date().toLocaleDateString('pt-BR');
+  const proposalId = crypto.randomUUID().split('-')[0];
 
-    const items   = buildItems(proposal.services);
-    const grouped = groupByType(items);
-    const totals  = calcTypeTotals(grouped);
-    const parcelasAgrupadas = calcParcelasAgrupadas(grouped, totals, proposal.paymentConditions);
+  const items   = buildItems(proposal.services);
+  const grouped = groupByType(items);
+  const totals  = calcTypeTotals(grouped);
+  const parcelasAgrupadas = calcParcelasAgrupadas(grouped, totals, proposal.paymentConditions);
 
-    const packages = servicesCatalog.serviceTypes
-      .map((type) => {
-        const list = grouped[type.id] || [];
-        if (!list.length) return null;
+  const packages = servicesCatalog.serviceTypes
+    .map((type) => {
+      const list = grouped[type.id] || [];
+      if (!list.length) return null;
 
-        const total   = totals[type.id] || 0;
-        const cfg     = proposal.paymentConditions[type.id] || {};
-        const entry   = parseMoney(cfg.entry);
-        const parcelas = +cfg.installments || 0;
-        const saldo    = total - entry;
-        const parcela  = parcelas ? +(saldo / parcelas).toFixed(2) : 0;
+      const total   = totals[type.id] || 0;
+      const cfg     = proposal.paymentConditions[type.id] || {};
+      const entry   = parseMoney(cfg.entry);
+      const parcelas = +cfg.installments || 0;
+      const saldo    = total - entry;
+      const parcela  = parcelas ? +(saldo / parcelas).toFixed(2) : 0;
 
-        return {
-          id: type.id,
-          name: type.name,
-          items: list,
-          total,
-          cond: { method: cfg.method || '-', entry, saldo, parcelas, parcela },
-        };
-      })
-      .filter(Boolean);
+      return {
+        id: type.id,
+        name: type.name,
+        items: list,
+        total,
+        cond: { method: cfg.method || '-', entry, saldo, parcelas, parcela },
+      };
+    })
+    .filter(Boolean);
 
-    const entradaTotal = packages.reduce((s, p) => s + p.cond.entry, 0);
-    const maxParcelas  = packages.reduce((m, p) => Math.max(m, p.cond.parcelas), 0);
+  const entradaTotal = packages.reduce((s, p) => s + p.cond.entry, 0);
+  const maxParcelas  = packages.reduce((m, p) => Math.max(m, p.cond.parcelas), 0);
 
-    return {
-      client: proposal.client,
-      items,
-      totals,
-      parcelasAgrupadas,
-      packages,
-      entradaTotal,
-      maxParcelas,
-      proposalId,
-      today,
-    };
-  }, [proposal]);
+  return {
+    client: proposal.client,
+    items,
+    totals,
+    parcelasAgrupadas,
+    packages,
+    entradaTotal,
+    maxParcelas,
+    proposalId,
+    today,
+    details: proposal.details || '', // ✅ agora funciona
+  };
+}, [proposal]);
 
   /* ---------- gera PDF ---------- */
   useEffect(() => {

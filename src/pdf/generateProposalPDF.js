@@ -7,10 +7,10 @@ const M    = 40;            // margem lateral
 
 const COL = [               // x de cada coluna
   M,
-  M + 230,
-  M + 290,
-  M + 360,
-  M + 470,
+  M + 260,
+  M + 320,
+  M + 390,
+  M + 500,
 ];
 
 const LH        = 18;       // linha principal (nome, qty, etc.)
@@ -105,10 +105,10 @@ export async function generateProposalPDF(data, template = '/MODELO-PROPOSTA.pdf
 
     /* CORREÇÃO: Títulos das colunas alinhados com o conteúdo */
     const headerCells = [
-      { text: 'Serviço',      x: COL[0] + 17, right: false },
+      { text: 'Serviço',      x: COL[0] + 15, right: false },
       { text: 'Valor Unit.',  x: COL[1] + 32, right: true  },
       { text: 'Qtd',          x: COL[2] + 50, right: true  },
-      { text: 'Prazo',        x: COL[3] + 40, right: true  }
+      { text: 'Periodicidade',        x: COL[3] + 61, right: true  }
     ];
 
     headerCells.forEach((header) =>
@@ -130,8 +130,8 @@ export async function generateProposalPDF(data, template = '/MODELO-PROPOSTA.pdf
       const cells = [
         { v: item.title,           x: COL[0] + 17,  r: false },
         { v: fmt(item.unitValue),  x: COL[1] + 32,  r: true  },
-        { v: item.qty,             x: COL[2] + 50,  r: true  },
-        { v: prazo,                x: COL[3] + 40,  r: true  },
+        { v: item.qty,             x: COL[2] + 48,  r: true  },
+        { v: prazo,                x: COL[3] + 44,  r: true  },
       ];
       
       cells.forEach((c) =>
@@ -157,35 +157,59 @@ export async function generateProposalPDF(data, template = '/MODELO-PROPOSTA.pdf
       y -= 8;                         /* margem inferior do item */
       /* linha divisória entre itens */
       hLine(page, y + 4, C_GRAY);
-      y -= 8;                         /* espaço extra pós-linha */
+      y -= 12;                         /* espaço extra pós-linha */
     }
 
     /* condições do pacote */
     const BOX = 32;
     rect(page, { x: M, y: y - BOX, w: PAGE[0] - M * 2, h: BOX, fill: C_GRAY, r: 6 });
 
-    
+    const txtCond =
+      
+      (pkg.cond.parcelas ? ` ${pkg.cond.parcelas}x de ${fmt(pkg.cond.parcela)}` : '');
+
+    const fontSize = 9;
+    const textWidth = helv.widthOfTextAtSize(txtCond, fontSize);
+    const centerX = (PAGE[0] - textWidth) / 2;
+
+    tx(page, txtCond, { x: centerX, y: y - 20, f: helv, s: fontSize });
     y -= BOX + 32;
   }
 
 
-
   /* 9. condições gerais + resumo + parcelas --------------------------- */
   const title = 'Condições Gerais de Pagamento';
-  rect(page, { x: M, y: y - 24, w: PAGE[0] - M * 2, h: 24, fill: rgb(0, 0, 0), r: 10 });
-  const titleW = bold.widthOfTextAtSize(title, 12);
-  tx(page, title, { x: PAGE[0] / 2 - titleW / 2, y: y - 17, f: bold, s: 14, c: rgb(1, 1, 1) });
-  y -= 36;
+rect(page, { x: M, y: y - 28, w: PAGE[0] - M * 2, h: 28, fill: rgb(0, 0, 0), r: 8 });
+tx(page, title, {
+  x: PAGE[0] / 2 - bold.widthOfTextAtSize(title, 13) / 2,
+  y: y - 20,
+  f: bold,
+  s: 13,
+  c: rgb(1, 1, 1)
+});
+y -= 40;
 
   /* resumo */
-  const RES_H = 26;
-  rect(page, { x: M, y: y - RES_H, w: PAGE[0] - M * 2, h: RES_H, fill: C_GRAY, f: helv, r: 6 });
-  const resumo =
-    `Entrada Total: ${fmt(data.entradaTotal)}   |   Parcelas Máx.: ${data.maxParcelas}`;
-  const resumoW = helv.widthOfTextAtSize(resumo, 12);
-  tx(page, resumo,
-     { x: PAGE[0] / 2 - resumoW / 2, y: y - RES_H / 2 - 3, f: helv, s: 12 });
-  y -= RES_H + 12;
+  const RES_H = 32;
+rect(page, {
+  x: M,
+  y: y - RES_H,
+  w: PAGE[0] - M * 2,
+  h: RES_H,
+  fill: C_GRAY,
+  r: 8,
+});
+const resumo =
+  `Entrada Total: ${fmt(data.entradaTotal)}   |   Parcelas: ${data.maxParcelas}`;
+const resumoW = bold.widthOfTextAtSize(resumo, 11);
+tx(page, resumo, {
+  x: PAGE[0] / 2 - resumoW / 2,
+  y: y - RES_H / 2 - 4,
+  f: bold,
+  s: 11,
+  c: rgb(0.2, 0.2, 0.2),
+});
+y -= RES_H + 20;
 
   /* parcelas */
   data.parcelasAgrupadas.forEach((p) => {
@@ -194,14 +218,60 @@ export async function generateProposalPDF(data, template = '/MODELO-PROPOSTA.pdf
       drawWM(page);
       y = 780;
     }
-    rect(page, { x: M, y: y - 18, w: PAGE[0] - M * 2, h: 18, fill: C_GRAY, r: 6 });
+    rect(page, { x: M, y: y - 18, w: PAGE[0] - M * 2, h: 22, fill: C_GRAY, r: 6 });
     const label =
       p.de === p.ate ? `Parcela ${p.de}` : `Da ${p.de}ª à ${p.ate}ª parcela`;
-    tx(page, label, { x: M + 12, y: y - 12, f: helv, s: 9 });
+    tx(page, label, { x: M + 12, y: y - 12, f: bold, s: 12 });
     tx(page, fmt(p.valor),
-       { x: PAGE[0] - M - 12, y: y - 12, f: helv, s: 9, right: true });
-    y -= 24;
+       { x: PAGE[0] - M - 12, y: y - 12, f: bold, s: 12, right: true });
+    y -= 32;
   });
+
+  // 9.5 – Detalhes adicionais
+if (data.details) {
+  if (y < 120) {
+    page = pdf.addPage(PAGE);
+    drawWM(page);
+    y = 780;
+  }
+
+  const blocoH = 80;
+  rect(page, {
+    x: M,
+    y: y - blocoH,
+    w: PAGE[0] - M * 2,
+    h: blocoH,
+    fill: rgb(0.98, 0.98, 0.98),
+    r: 8
+  });
+
+  const title = 'Detalhes Adicionais';
+  const titleWidth = bold.widthOfTextAtSize(title, 12);
+  tx(page, title, {
+    x: PAGE[0] / 2 - titleWidth / 2,
+    y: y - 20,
+    f: bold,
+    s: 12,
+    c: C_TEXT
+  });
+
+  const maxTextWidth = PAGE[0] - M * 2 - 20;
+  const detailLines = wrapText(data.details, helv, 9, maxTextWidth);
+
+  let lineY = y - 36;
+  for (const line of detailLines) {
+    if (lineY < 60) {
+      page = pdf.addPage(PAGE);
+      drawWM(page);
+      lineY = 780;
+    }
+    tx(page, line, { x: M + 10, y: lineY, f: helv, s: 9, c: C_DESC });
+    lineY -= 12;
+  }
+
+  y = lineY - 24;
+}
+
 
   /* 10. rodapé (última página) ---------------------------------------- */
   const footBytes = await fetch('/rodape-proposta.png').then((r) => r.arrayBuffer());

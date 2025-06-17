@@ -93,141 +93,141 @@ const StepServicos = ({ onBack, onNext }) => {
   };
 
   return (
-  <div className="flex items-center justify-center pt-0 sm:pt-24 bg-transparent">
-    <div className="relative w-full max-w-4xl mx-auto">
-      <div className="relative backdrop-blur-sm bg-white/5 border border-teal-700/40 rounded-lg p-10 overflow-hidden">
-        <div className="absolute top-0 left-0 w-full h-px bg-gradient-to-r from-transparent via-teal-700 to-transparent opacity-60" />
+    <div className="flex items-center justify-center pt-0 sm:pt-24 bg-transparent">
+      <div className="relative w-full max-w-4xl mx-auto">
+        <div className="relative backdrop-blur-sm bg-white/5 border border-teal-700/40 rounded-lg p-10 overflow-hidden">
+          <div className="absolute top-0 left-0 w-full h-px bg-gradient-to-r from-transparent via-teal-700 to-transparent opacity-60" />
 
-        <h2 className="text-3xl sm:text-4xl text-center font-semibold text-orange-100 mb-2 rounded-t-3xl p-2">
-          {currentType.name}
-        </h2>
-        <p className="text-orange-100 text-lg text-center mb-6">
-          {typeIndex + 1} de {totalTypes}
-        </p>
+          <h2 className="text-3xl sm:text-4xl text-center font-semibold text-orange-100 mb-2 rounded-t-3xl p-2">
+            {currentType.name}
+          </h2>
+          <p className="text-orange-100 text-lg text-center mb-6">
+            {typeIndex + 1} de {totalTypes}
+          </p>
 
-        <div className="space-y-4">
-          {services.map(svc => (
-            <div
-              key={svc.id}
-              className="group flex flex-col sm:flex-row sm:items-center justify-between gap-4 bg-white/10 border border-white/20 rounded-xl p-4 transition hover:bg-opacity-20"
-            >
-              <div className="flex-1">
-                <h3 className="text-lg sm:text-xl font-semibold text-white">{svc.title}</h3>
-                <p className="text-orange-100 max-w-md text-sm sm:text-base">{svc.description}</p>
+          <div className="space-y-4">
+            {services.map(svc => (
+              <div
+                key={svc.id}
+                className="group flex flex-col sm:flex-row sm:items-center justify-between gap-4 bg-white/10 border border-white/20 rounded-xl p-4 transition hover:bg-opacity-20"
+              >
+                <div className="flex-1">
+                  <h3 className="text-lg sm:text-xl font-semibold text-white">{svc.title}</h3>
+                  <p className="text-orange-100 max-w-md text-sm sm:text-base">{svc.description}</p>
+                </div>
+                <div className="flex flex-row sm:flex-row sm:items-center gap-2 sm:gap-4">
+                  <label className="flex items-center gap-1 text-sm text-orange-100">
+                    <input
+                      type="checkbox"
+                      checked={svc.selected}
+                      onChange={() => toggleSelect(svc)}
+                      className="w-6 h-5 text-teal-600 bg-neutral-800 border-neutral-600 rounded cursor-pointer"
+                    />
+                  </label>
+
+                  {svc.selected && (
+                    <>
+                      <label className="flex flex-col text-xs text-orange-100">
+                        Qtd
+                        <input
+                          type="number"
+                          min="1"
+                          value={svc.qty}
+                          onChange={e => changeQty(svc.id, Number(e.target.value))}
+                          className="w-20 px-2 py-1 bg-stone-200 bg-opacity-20 text-gray-900 rounded-lg focus:ring-2 focus:ring-teal-600 border-none"
+                        />
+                      </label>
+
+                      <label className="flex flex-col text-xs text-orange-100">
+                        Valor
+                        <input
+                          type="text"
+                          inputMode="numeric"
+                          value={`R$ ${svc.unitValue.toFixed(2).replace('.', ',')}`}
+                          onChange={e => {
+                            const onlyNumbers = e.target.value.replace(/[^\d]/g, '');
+                            const value = parseFloat(onlyNumbers) / 100;
+                            changeUnitValue(svc.id, value);
+                          }}
+                          className="w-28 px-2 py-1 bg-stone-200 bg-opacity-20 text-gray-900 rounded-lg focus:ring-2 focus:ring-teal-600 border-none"
+                        />
+                      </label>
+                    </>
+                  )}
+                </div>
               </div>
-              <div className="flex flex-row sm:flex-row sm:items-center gap-2 sm:gap-4">
-                <label className="flex items-center gap-1 text-sm text-orange-100">
-                  <input
-                    type="checkbox"
-                    checked={svc.selected}
-                    onChange={() => toggleSelect(svc)}
-                    className="w-6 h-5 text-teal-600 bg-neutral-800 border-neutral-600 rounded cursor-pointer"
-                  />
-                </label>
-
-                {svc.selected && (
-                  <>
-                    <label className="flex flex-col text-xs text-orange-100">
-                      Qtd
-                      <input
-                        type="number"
-                        min="1"
-                        value={svc.qty}
-                        onChange={e => changeQty(svc.id, Number(e.target.value))}
-                        className="w-20 px-2 py-1 bg-stone-200 bg-opacity-20 text-gray-900 rounded-lg focus:ring-2 focus:ring-teal-600 border-none"
-                      />
-                    </label>
-
-                    <label className="flex flex-col text-xs text-orange-100">
-                      Valor
-                      <input
-                        type="text"
-                        inputMode="numeric"
-                        value={`R$ ${svc.unitValue.toFixed(2).replace('.', ',')}`}
-                        onChange={e => {
-                          const onlyNumbers = e.target.value.replace(/[^\d]/g, '');
-                          const value = parseFloat(onlyNumbers) / 100;
-                          changeUnitValue(svc.id, value);
-                        }}
-                        className="w-28 px-2 py-1 bg-stone-200 bg-opacity-20 text-gray-900 rounded-lg focus:ring-2 focus:ring-teal-600 border-none"
-                      />
-                    </label>
-                  </>
-                )}
-              </div>
-            </div>
-          ))}
-        </div>
-
-        <div className="mt-8 bg-black/30 border border-teal-700/40 p-6 rounded-3xl space-y-4">
-          <h3 className="text-lg font-semibold text-white">Adicionar Serviço Personalizado</h3>
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-            <input
-              type="text"
-              placeholder="Título do serviço"
-              value={customService.title}
-              onChange={e => setCustomService({ ...customService, title: e.target.value })}
-              className="px-3 py-2 rounded-xl bg-stone-200 bg-opacity-20 text-gray-900 placeholder-gray-600 focus:ring-2 focus:ring-teal-600"
-            />
-            <input
-              type="text"
-              placeholder="Descrição"
-              value={customService.description}
-              onChange={e => setCustomService({ ...customService, description: e.target.value })}
-              className="px-3 py-2 rounded-xl bg-stone-200 bg-opacity-20 text-gray-900 placeholder-gray-600 focus:ring-2 focus:ring-teal-600"
-            />
-            <input
-              type="text"
-              placeholder="Valor (R$)"
-              value={`R$ ${customService.unitValue}`}
-              onChange={e => {
-                const onlyNumbers = e.target.value.replace(/[^\d]/g, '');
-                const formatted = (parseInt(onlyNumbers || '0') / 100).toFixed(2).replace('.', ',');
-                setCustomService({ ...customService, unitValue: formatted });
-              }}
-              className="px-3 py-2 rounded-xl bg-stone-200 bg-opacity-20 text-gray-900 placeholder-gray-600 focus:ring-2 focus:ring-teal-600"
-            />
-            <label className="flex items-center gap-2 text-orange-100">
-              <input
-                type="checkbox"
-                checked={customService.isMonthly}
-                onChange={e => setCustomService({ ...customService, isMonthly: e.target.checked })}
-              /> Mensal?
-            </label>
+            ))}
           </div>
-          <button
-            onClick={handleAddCustomService}
-            className="bg-gradient-to-r from-teal-600 to-teal-700 hover:from-orange-500 hover:to-orange-600 text-white px-6 py-2 rounded-3xl shadow-md transition"
-          >
-            + Adicionar Serviço
-          </button>
-        </div>
 
-        <div className="mt-10 flex flex-col md:flex-row justify-between gap-4">
-          <button
-            onClick={handlePrev}
-            className="group relative flex items-center justify-center overflow-hidden cursor-pointer rounded-3xl bg-neutral-800 w-full md:w-40 py-2 text-white shadow-lg transition-all hover:shadow-neutral-700/25"
-          >
-            <span className="relative z-10 font-medium">
-              {typeIndex > 0 ? '◄ Anterior' : '◄ Voltar'}
-            </span>
-            <span className="absolute inset-y-0 right-0 h-full w-0 bg-gradient-to-r from-orange-600 to-orange-500 transition-all duration-300 ease-out group-hover:w-full" />
-          </button>
+          <div className="mt-8 bg-black/30 border border-teal-700/40 p-6 rounded-3xl space-y-4">
+            <h3 className="text-lg font-semibold text-white">Adicionar Serviço Personalizado</h3>
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+              <input
+                type="text"
+                placeholder="Título do serviço"
+                value={customService.title}
+                onChange={e => setCustomService({ ...customService, title: e.target.value })}
+                className="px-3 py-2 rounded-xl bg-stone-200 bg-opacity-20 text-gray-900 placeholder-gray-600 focus:ring-2 focus:ring-teal-600"
+              />
+              <input
+                type="text"
+                placeholder="Descrição"
+                value={customService.description}
+                onChange={e => setCustomService({ ...customService, description: e.target.value })}
+                className="px-3 py-2 rounded-xl bg-stone-200 bg-opacity-20 text-gray-900 placeholder-gray-600 focus:ring-2 focus:ring-teal-600"
+              />
+              <input
+                type="text"
+                placeholder="Valor (R$)"
+                value={`R$ ${customService.unitValue}`}
+                onChange={e => {
+                  const onlyNumbers = e.target.value.replace(/[^\d]/g, '');
+                  const formatted = (parseInt(onlyNumbers || '0') / 100).toFixed(2).replace('.', ',');
+                  setCustomService({ ...customService, unitValue: formatted });
+                }}
+                className="px-3 py-2 rounded-xl bg-stone-200 bg-opacity-20 text-gray-900 placeholder-gray-600 focus:ring-2 focus:ring-teal-600"
+              />
+              <label className="flex items-center gap-2 text-orange-100">
+                <input
+                  type="checkbox"
+                  checked={customService.isMonthly}
+                  onChange={e => setCustomService({ ...customService, isMonthly: e.target.checked })}
+                /> Mensal?
+              </label>
+            </div>
+            <button
+              onClick={handleAddCustomService}
+              className="bg-gradient-to-r from-teal-600 to-teal-700 hover:from-orange-500 hover:to-orange-600 text-white px-6 py-2 rounded-3xl shadow-md transition"
+            >
+              + Adicionar Serviço
+            </button>
+          </div>
 
-          <button
-            onClick={handleNext}
-            className="group relative flex items-center justify-center overflow-hidden cursor-pointer rounded-3xl bg-gradient-to-r from-teal-600 to-teal-600 w-full md:w-40 py-2 text-white shadow-lg transition-all hover:shadow-orange-500/25"
-          >
-            <span className="relative z-10 font-medium">
-              {typeIndex < totalTypes - 1 ? 'Próximo ►' : 'Continuar ►'}
-            </span>
-            <span className="absolute inset-0 h-full w-0 bg-gradient-to-r from-orange-500 to-orange-600 transition-all duration-300 ease-out group-hover:w-full" />
-          </button>
+          <div className="mt-10 flex flex-col md:flex-row justify-between gap-4">
+            <button
+              onClick={handlePrev}
+              className="group relative flex items-center justify-center overflow-hidden cursor-pointer rounded-3xl bg-neutral-800 w-full md:w-40 py-2 text-white shadow-lg transition-all hover:shadow-neutral-700/25"
+            >
+              <span className="relative z-10 font-medium">
+                {typeIndex > 0 ? '◄ Anterior' : '◄ Voltar'}
+              </span>
+              <span className="absolute inset-y-0 right-0 h-full w-0 bg-gradient-to-r from-orange-600 to-orange-500 transition-all duration-300 ease-out group-hover:w-full" />
+            </button>
+
+            <button
+              onClick={handleNext}
+              className="group relative flex items-center justify-center overflow-hidden cursor-pointer rounded-3xl bg-gradient-to-r from-teal-600 to-teal-600 w-full md:w-40 py-2 text-white shadow-lg transition-all hover:shadow-orange-500/25"
+            >
+              <span className="relative z-10 font-medium">
+                {typeIndex < totalTypes - 1 ? 'Próximo ►' : 'Continuar ►'}
+              </span>
+              <span className="absolute inset-0 h-full w-0 bg-gradient-to-r from-orange-500 to-orange-600 transition-all duration-300 ease-out group-hover:w-full" />
+            </button>
+          </div>
         </div>
       </div>
     </div>
-  </div>
-);
+  );
 
 };
 

@@ -67,7 +67,7 @@ const StepCliente = ({ data = {}, onChange, onNext }) => {
     <div className="flex items-center justify-center pt-0 sm:pt-24 bg-transparent">
 
       <div className="relative max-w-4xl w-full mx-auto ">
-        <div className="relative backdrop-blur-sm bg-white/5 border border-teal-700/40 rounded-lg p-12 overflow-hidden">
+        <div className="relative backdrop-blur-md bg-white/5 border border-teal-600/60 rounded-lg p-12 overflow-hidden">
           <div className="absolute top-0 left-0 w-full h-px bg-gradient-to-r from-transparent via-teal-700 to-transparent opacity-60" />
 
           <div className="mb-10">

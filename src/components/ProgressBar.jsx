@@ -23,11 +23,17 @@ export default function ProgressBar({ currentStep, onStepClick }) {
   };
 
   return (
-    <div className="fixed top-0 left-0 w-full backdrop-blur-sm bg-white/20 shadow z-50">
+    <div className="fixed top-0 left-0 w-full backdrop-blur-md bg-white/20 shadow z-50">
       <div className="relative max-w-8xl mx-auto px-4 md:px-6 py-3 md:py-4 flex justify-center items-center">
 
         {/* linha de conexão */}
-        <div className="absolute top-1/2 left-4 md:left-6 right-4 md:right-6 h-[2px] bg-neutral-600 transform -translate-y-1/2" />
+        <div
+          className="
+    absolute top-1/2 h-[2px] bg-teal-600 transform -translate-y-1/2
+    left-12 right-32
+    md:left-80 md:right-80 md:top-1/3
+  "
+        />
 
         {/* botões de etapas */}
         <div className="relative flex justify-between items-center w-full max-w-4xl px-2">
@@ -78,21 +84,21 @@ export default function ProgressBar({ currentStep, onStepClick }) {
 
         {/* botão Nova Proposta */}
         <button
-  onClick={handleNew}
-  className="hidden md:block absolute right-4 top-3 md:top-4 bg-orange-500 text-white text-xs md:text-sm px-4 py-1 rounded-full shadow hover:bg-orange-600"
->
-  Nova Proposta
-</button>
+          onClick={handleNew}
+          className="hidden md:block absolute cursor-pointer right-4 top-3 md:top-4 bg-orange-500 text-white text-xs md:text-sm px-4 py-1 rounded-full shadow hover:bg-orange-600"
+        >
+          Nova Proposta
+        </button>
 
-{/* botão Nova Proposta (mobile - abaixo da barra) */}
-<div className="block md:hidden mt-2 text-center">
-  <button
-    onClick={handleNew}
-    className="bg-orange-500 text-white text-sm px-4 py-1 rounded-full shadow hover:bg-orange-600"
-  >
-    Nova Proposta
-  </button>
-</div>
+        {/* botão Nova Proposta (mobile - abaixo da barra) */}
+        <div className="block md:hidden mt-2 text-center">
+          <button
+            onClick={handleNew}
+            className="bg-orange-500 text-white text-sm px-4 py-1 rounded-full shadow hover:bg-orange-600"
+          >
+            Nova Proposta
+          </button>
+        </div>
       </div>
     </div>
   );
