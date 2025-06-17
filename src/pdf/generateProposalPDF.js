@@ -95,9 +95,18 @@ export async function generateProposalPDF(data, template = '/MODELO-PROPOSTA.pdf
   let y = 780;
 
   /* Cabeçalho principal */
-  tx(page, 'Proposta Comercial', { x: M, y, f: helv, s: 32 }); y -= 32;
-  tx(page, `Cliente: ${data.client.company}`, { x: M, y, f: helv, s: 14 }); y -= 14;
-  tx(page, `ID: ${data.proposalId}    Data: ${data.today}`, { x: M, y, f: helv, s: 12 }); y -= 42;
+  tx(page, 'Proposta Comercial', { x: M, y, f: bold, s: 32 }); y -= 32;
+
+
+// Informações do cliente
+tx(page, `Cliente: ${data.client.company}`, { x: M, y, f: helv, s: 13, });
+y -= 16;
+
+tx(page, `ID da Proposta: ${data.proposalId}`, { x: M, y, f: helv, s: 12,});
+y -= 14;
+
+tx(page, `Data de Emissão: ${data.today}`, { x: M, y, f: helv, s: 12, });
+y -= 36;
 
   /* 7. blocos de pacotes ---------------------------------------------- */
   for (const pkg of packages) {
