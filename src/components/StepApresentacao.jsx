@@ -1,6 +1,7 @@
 import { useMemo, useState, useEffect } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import { useNavigate } from 'react-router-dom';
+import { FileText } from 'lucide-react';
 
 /* ------- React-PDF configurado para Vite ------- */
 import { Document, Page, pdfjs } from 'react-pdf';
@@ -30,6 +31,8 @@ export default function StepApresentacao({ onBack }) {
 
   const [pdfUrl, setPdfUrl] = useState('');
   const [numPages, setNumPages] = useState(1);
+
+  const [isLoading, setIsLoading] = useState(true);
 
   /* ---------- dados p/ PDF ---------- */
   const dataForPdf = useMemo(() => {
@@ -82,14 +85,17 @@ export default function StepApresentacao({ onBack }) {
 
   /* ---------- gera PDF ---------- */
   useEffect(() => {
-    let url;
-    (async () => {
-      const blob = await generateProposalPDF(dataForPdf);
-      url = URL.createObjectURL(blob);
-      setPdfUrl(url);
-    })();
-    return () => url && URL.revokeObjectURL(url);
-  }, [dataForPdf]);
+  let url;
+  (async () => {
+    const blob = await generateProposalPDF(dataForPdf);
+    url = URL.createObjectURL(blob);
+    setPdfUrl(url);
+
+    // delay para exibir o PDF
+    setTimeout(() => setIsLoading(false), 1500);
+  })();
+  return () => url && URL.revokeObjectURL(url);
+}, [dataForPdf]);
 
   /* ---------- handlers ---------- */
   const handleNew = () => {
@@ -102,9 +108,17 @@ export default function StepApresentacao({ onBack }) {
 
   /* ---------- UI ---------- */
   return (
-    <section className="flex flex-col items-center px-4 py-8 ">
-      {pdfUrl && (
-        <div className="w-full max-w-fit h-[85vh] overflow-auto rounded shadow mx-auto">
+  <section className="flex flex-col items-center px-4 py-8">
+    {isLoading ? (
+      <div className="h-[85vh] flex items-center justify-center">
+        <div className="flex flex-col items-center justify-center gap-2 text-orange-500 animate-pulse">
+  <FileText className="w-8 h-8" />
+  <span className="text-lg font-medium">Gerando sua proposta...</span>
+</div>
+      </div>
+    ) : (
+      <>
+        <div className="w-full max-w-fit h-[85vh] mt-2 overflow-auto rounded shadow mx-auto">
           <Document file={pdfUrl} onLoadSuccess={({ numPages }) => setNumPages(numPages)}>
             {Array.from({ length: numPages }).map((_, i) => (
               <Page
@@ -117,25 +131,26 @@ export default function StepApresentacao({ onBack }) {
             ))}
           </Document>
         </div>
-      )}
 
-      <div className="flex flex-col sm:flex-row gap-3 w-full max-w-5xl mt-4">
-        <ButtonDark onClick={onBack}>◄ Voltar</ButtonDark>
+        <div className="flex flex-col sm:flex-row gap-3 w-full max-w-5xl mt-4">
+          <ButtonDark onClick={onBack}>◄ Voltar</ButtonDark>
 
-        <ButtonGrad
-          onClick={handleDownload}
-          disabled={!pdfUrl}
-          colors="from-teal-600 to-teal-600"
-        >
-          Baixar PDF
-        </ButtonGrad>
+          <ButtonGrad
+            onClick={handleDownload}
+            disabled={!pdfUrl}
+            colors="from-teal-600 to-teal-600"
+          >
+            Baixar PDF
+          </ButtonGrad>
 
-        <ButtonGrad onClick={handleNew} colors="from-orange-500 to-orange-500">
-          Nova Proposta
-        </ButtonGrad>
-      </div>
-    </section>
-  );
+          <ButtonGrad onClick={handleNew} colors="from-orange-500 to-orange-500">
+            Nova Proposta
+          </ButtonGrad>
+        </div>
+      </>
+    )}
+  </section>
+);
 }
 
 /* ---- Botões reutilizáveis ---- */

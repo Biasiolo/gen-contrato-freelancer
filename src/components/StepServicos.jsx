@@ -93,9 +93,9 @@ const StepServicos = ({ onBack, onNext }) => {
   };
 
   return (
-    <div className="flex items-center justify-center pt-0 sm:pt-24 bg-transparent">
+    <div className="flex items-center justify-center pt-0 sm:pt-12 pb-6 bg-transparent">
       <div className="relative w-full max-w-4xl mx-auto">
-        <div className="relative backdrop-blur-sm bg-white/5 border border-teal-700/40 rounded-lg p-10 overflow-hidden">
+        <div className="relative backdrop-blur-[10px] bg-neutral-300/10 rounded-3xl p-12 overflow-hidden border border-gray-300/20 shadow-[inset_0_2px_2px_rgba(255,255,255,0.3),0_4px_20px_rgba(0,128,128,0.3)] ring-1 ring-white/10 transition-all">
           <div className="absolute top-0 left-0 w-full h-px bg-gradient-to-r from-transparent via-teal-700 to-transparent opacity-60" />
 
           <h2 className="text-3xl sm:text-4xl text-center font-semibold text-orange-100 mb-2 rounded-t-3xl p-2">
@@ -197,7 +197,7 @@ const StepServicos = ({ onBack, onNext }) => {
             </div>
             <button
               onClick={handleAddCustomService}
-              className="bg-gradient-to-r from-teal-600 to-teal-700 hover:from-orange-500 hover:to-orange-600 text-white px-6 py-2 rounded-3xl shadow-md transition"
+              className=" cursor-pointer bg-teal-600/20 hover:bg-orange-500  text-white px-6 py-2 rounded-3xl shadow-[inset_0_1px_1px_rgba(255,255,255,0.3),0_4px_20px_rgba(0,128,128,0.2)] ring-2 ring-white/10 transition-all "
             >
               + Adicionar Serviço
             </button>
@@ -206,7 +206,7 @@ const StepServicos = ({ onBack, onNext }) => {
           <div className="mt-10 flex flex-col md:flex-row justify-between gap-4">
             <button
               onClick={handlePrev}
-              className="group relative flex items-center justify-center overflow-hidden cursor-pointer rounded-3xl bg-neutral-800 w-full md:w-40 py-2 text-white shadow-lg transition-all hover:shadow-neutral-700/25"
+              className="group relative flex items-center justify-center overflow-hidden cursor-pointer rounded-3xl bg-neutral-800/20 w-full md:w-40 py-2 text-white shadow-[inset_0_1px_1px_rgba(255,255,255,0.3),0_4px_20px_rgba(0,128,128,0.1)] ring-2 ring-white/10 transition-all hover:shadow-neutral-700/25"
             >
               <span className="relative z-10 font-medium">
                 {typeIndex > 0 ? '◄ Anterior' : '◄ Voltar'}
@@ -216,7 +216,7 @@ const StepServicos = ({ onBack, onNext }) => {
 
             <button
               onClick={handleNext}
-              className="group relative flex items-center justify-center overflow-hidden cursor-pointer rounded-3xl bg-gradient-to-r from-teal-600 to-teal-600 w-full md:w-40 py-2 text-white shadow-lg transition-all hover:shadow-orange-500/25"
+              className="group relative flex items-center justify-center overflow-hidden cursor-pointer rounded-3xl bg-teal-600/20 w-full md:w-40 py-2 text-white shadow-[inset_0_1px_1px_rgba(255,255,255,0.3),0_4px_20px_rgba(0,128,128,0.2)] ring-2 ring-white/10 transition-all hover:shadow-orange-400/25"
             >
               <span className="relative z-10 font-medium">
                 {typeIndex < totalTypes - 1 ? 'Próximo ►' : 'Continuar ►'}

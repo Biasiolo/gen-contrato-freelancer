@@ -23,13 +23,13 @@ export default function ProgressBar({ currentStep, onStepClick }) {
   };
 
   return (
-    <div className="fixed top-0 left-0 w-full backdrop-blur-md bg-white/20 shadow z-50">
+    <div className="fixed top-0 left-0 w-full z-50 backdrop-blur-[10px] bg-white/10 shadow-[inset_0_1px_1px_rgba(255,255,255,0.3),0_4px_10px_rgba(0,128,128,0.2)] ring-1 ring-white/10 border border-teal-300/20 transition-all">
       <div className="relative max-w-8xl mx-auto px-4 md:px-6 py-3 md:py-4 flex justify-center items-center">
 
         {/* linha de conexão */}
         <div
           className="
-    absolute top-1/2 h-[2px] bg-teal-600 transform -translate-y-1/2
+    absolute top-1/2 h-[2px] bg-teal-600/40 transform -translate-y-1/2
     left-12 right-32
     md:left-80 md:right-80 md:top-1/3
   "
@@ -45,12 +45,12 @@ export default function ProgressBar({ currentStep, onStepClick }) {
               <div key={step.key} className="flex-1 flex flex-col items-center">
                 <button
                   onClick={() => onStepClick(step.key)}
-                  className={`flex items-center justify-center rounded-full z-10 transition cursor-pointer
-                    ${isCompleted
-                      ? 'bg-teal-600 w-8 h-8 md:w-10 md:h-10 hover:scale-110'
-                      : isActive
-                        ? 'bg-white border-2 border-teal-600 w-8 h-8 md:w-10 md:h-10 hover:scale-110'
-                        : 'bg-neutral-800 w-8 h-8 md:w-10 md:h-10 hover:scale-110'}`}
+                  className={`flex items-center justify-center w-8 h-8 md:w-10 md:h-10 rounded-full transition-all z-10 shadow-[inset_0_1px_1px_rgba(255,255,255,0.3)] ring-1 ring-white/10 backdrop-blur-[4px] border border-teal-300/30 hover:scale-110
+  ${isCompleted
+    ? 'bg-teal-600 text-orange-100'
+    : isActive
+      ? 'bg-white text-teal-800 border-teal-600'
+      : 'bg-stone-900/40 text-orange-100'}`}
                   title={`Ir para ${step.label}`}
                 >
                   <span

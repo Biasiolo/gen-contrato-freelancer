@@ -95,6 +95,7 @@ export async function generateProposalPDF(data, template = '/MODELO-PROPOSTA.pdf
   let y = 780;
 
   /* Cabeçalho principal */
+  
   tx(page, 'Proposta Comercial', { x: M, y, f: bold, s: 32 }); y -= 32;
 
 
@@ -170,19 +171,19 @@ y -= 36;
     }
 
     /* condições do pacote */
-    const BOX = 32;
+    const BOX = 30;
     rect(page, { x: M, y: y - BOX, w: PAGE[0] - M * 2, h: BOX, fill: C_GRAY, r: 6 });
 
     const txtCond =
       
       (pkg.cond.parcelas ? ` ${pkg.cond.parcelas}x de ${fmt(pkg.cond.parcela)}` : '');
 
-    const fontSize = 9;
+    const fontSize = 8;
     const textWidth = helv.widthOfTextAtSize(txtCond, fontSize);
     const centerX = (PAGE[0] - textWidth) / 2;
 
-    tx(page, txtCond, { x: centerX, y: y - 20, f: helv, s: fontSize });
-    y -= BOX + 32;
+    tx(page, txtCond, { x: centerX, y: y - 18, f: bold, s: fontSize });
+    y -= BOX + 30;
   }
 
 
@@ -218,7 +219,7 @@ tx(page, resumo, {
   s: 11,
   c: rgb(0.2, 0.2, 0.2),
 });
-y -= RES_H + 20;
+y -= RES_H + 16;
 
   /* parcelas */
   data.parcelasAgrupadas.forEach((p) => {
@@ -244,7 +245,7 @@ if (data.details) {
     y = 780;
   }
 
-  const blocoH = 80;
+  const blocoH = 72;
   rect(page, {
     x: M,
     y: y - blocoH,
