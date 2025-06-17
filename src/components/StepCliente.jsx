@@ -5,17 +5,17 @@ import { setClientField } from '../store/slices/proposalSlice';
 import { User, Building2, Mail, Phone, ChevronRight } from 'lucide-react';
 
 const fields = [
-  { key: 'name',    label: 'Nome do Contato', placeholder: 'Nome completo',      type: 'text',  icon: User      },
-  { key: 'company', label: 'Empresa',         placeholder: 'Nome da empresa',     type: 'text',  icon: Building2 },
-  { key: 'email',   label: 'Email',           placeholder: 'email@exemplo.com',  type: 'email', icon: Mail      },
-  { key: 'phone',   label: 'Telefone',        placeholder: '(00) 00000-0000',    type: 'tel',   icon: Phone     },
+  { key: 'name', label: 'Nome do Contato', placeholder: 'Nome completo', type: 'text', icon: User },
+  { key: 'company', label: 'Empresa', placeholder: 'Nome da empresa', type: 'text', icon: Building2 },
+  { key: 'email', label: 'Email', placeholder: 'email@exemplo.com', type: 'email', icon: Mail },
+  { key: 'phone', label: 'Telefone', placeholder: '(00) 00000-0000', type: 'tel', icon: Phone },
 ];
 
 // Função para aplicar a máscara de telefone
 const applyPhoneMask = (value) => {
   // Remove todos os caracteres não numéricos
   const numbers = value.replace(/\D/g, '');
-  
+
   // Aplica a máscara baseada no tamanho
   if (numbers.length <= 2) {
     return numbers.length === 0 ? '' : `(${numbers}`;
@@ -40,12 +40,12 @@ const StepCliente = ({ data = {}, onChange, onNext }) => {
 
   const handleChange = (key, value) => {
     let processedValue = value;
-    
+
     // Aplica máscara apenas para o campo de telefone
     if (key === 'phone') {
       processedValue = applyPhoneMask(value);
     }
-    
+
     if (typeof onChange === 'function') {
       onChange(key, processedValue);
     }
@@ -83,11 +83,11 @@ const StepCliente = ({ data = {}, onChange, onNext }) => {
               return (
                 <div key={field.key} className="group">
                   <label className="flex items-center text-neutral-200 font-medium mb-3">
-  <div className="flex items-center justify-center w-10 h-10 mr-3 rounded-xl bg-teal-500/10 shadow-[inset_0_1px_2px_rgba(255,255,255,0.2)] backdrop-blur-[8px] ring-1 ring-white/20 transition-all group-hover:bg-orange-500 group-hover:scale-105">
-    <Icon size={18} className="text-orange-100 group-hover:text-white drop-shadow-sm" />
-  </div>
-  {field.label}
-</label>
+                    <div className="flex items-center justify-center w-10 h-10 mr-3 rounded-xl bg-teal-500/10 shadow-[inset_0_2px_2px_rgba(255,255,255,0.2)] backdrop-blur-[8px] ring-1 ring-white/20 transition-all group-hover:bg-orange-500 group-hover:scale-105">
+                      <Icon size={18} className="text-orange-100 group-hover:text-white drop-shadow-sm" />
+                    </div>
+                    {field.label}
+                  </label>
                   <input
                     type={field.type}
                     className="w-full px-5 py-4 bg-stone-200 bg-opacity-20 rounded-xl text-neutral-900 placeholder-gray-600 placeholder-opacity-50 focus:outline-none focus:ring-2 focus:ring-teal-600 transition-all"
@@ -107,7 +107,7 @@ const StepCliente = ({ data = {}, onChange, onNext }) => {
             </div>
             <button
               onClick={handleNext}
-              className="group relative flex items-center justify-center w-44 overflow-hidden rounded-3xl bg-teal-500/20 px-8 py-2 text-orange-100 shadow-[inset_0_1px_1px_rgba(255,255,255,0.3),0_4px_20px_rgba(0,128,128,0.2)] ring-2 ring-white/10 transition-all hover:shadow-orange-400/25 cursor-pointer "
+              className="group relative flex items-center justify-center w-44 overflow-hidden rounded-3xl bg-teal-500/20 px-8 py-2 text-orange-100 shadow-[inset_0_2px_2px_rgba(255,255,255,0.3),0_4px_20px_rgba(0,128,128,0.2)] ring-3 ring-white/10 transition-all hover:shadow-orange-400/25 cursor-pointer "
             >
               <span className="relative z-10 font-medium">Continuar ►</span>
 

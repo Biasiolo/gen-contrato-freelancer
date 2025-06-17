@@ -45,12 +45,12 @@ export default function ProgressBar({ currentStep, onStepClick }) {
               <div key={step.key} className="flex-1 flex flex-col items-center">
                 <button
                   onClick={() => onStepClick(step.key)}
-                  className={`flex items-center justify-center w-8 h-8 md:w-10 md:h-10 rounded-full transition-all z-10 shadow-[inset_0_1px_1px_rgba(255,255,255,0.3)] ring-1 ring-white/10 backdrop-blur-[4px] border border-teal-300/30 hover:scale-110
+                  className={`flex cursor-pointer items-center justify-center w-8 h-8 md:w-10 md:h-10 rounded-full transition-all z-10 shadow-[inset_0_1px_1px_rgba(255,255,255,0.3)] ring-1 ring-white/10 backdrop-blur-[4px] border border-teal-300/30 hover:scale-110
   ${isCompleted
     ? 'bg-teal-600 text-orange-100'
     : isActive
       ? 'bg-white text-teal-800 border-teal-600'
-      : 'bg-stone-900/40 text-orange-100'}`}
+      : 'bg-stone-950 text-orange-100'}`}
                   title={`Ir para ${step.label}`}
                 >
                   <span
