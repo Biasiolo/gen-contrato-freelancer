@@ -23,7 +23,7 @@ export default function ProgressBar({ currentStep, onStepClick }) {
   };
 
   return (
-    <div className="fixed top-0 left-0 w-full z-50 backdrop-blur-[10px] bg-white/10 shadow-[inset_0_1px_1px_rgba(255,255,255,0.3),0_4px_10px_rgba(0,128,128,0.2)] ring-1 ring-white/10 border-b-2 border-teal-300/20 transition-all">
+    <div className="fixed top-0 left-0 w-full z-50 backdrop-blur-[10px] bg-white/10 shadow-[inset_0_1px_1px_rgba(255,255,255,0.3),0_2px_6px_rgba(0,128,128,0.3)] ring-1 ring-white/10 border-b-1 border-teal-300/20 transition-all">
       <div className="relative max-w-8xl mx-auto px-4 md:px-6 py-3 md:py-4 flex justify-center items-center">
 
         {/* linha de conexão */}

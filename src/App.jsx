@@ -23,7 +23,7 @@ function WizardFlow() {
     setClientData(prev => ({ ...prev, [field]: value }));
 
   return (
-    <div className="min-h-screen bg-gradient-to-r from-neutral-800 via-zinc-950 to-stone-800 ">
+    <div className="min-h-screen bg-gradient-to-r from-neutral-800 via-neutral-850 to-neutral-800 ">
 
       <div className="no-print">
         {/* Passa onStepClick para habilitar navegação via ProgressBar */}

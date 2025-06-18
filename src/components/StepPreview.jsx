@@ -210,6 +210,9 @@ const StepPreview = ({ onBack, onNext }) => {
   return (
     <div className="flex items-center justify-center min-h-screen bg-transparent pt-0 sm:pt-10 px-0">
       <div className="relative max-w-4xl w-full mx-auto">
+        <h2 className="text-4xl text-center font-semibold text-orange-100 mb-2 rounded-t-3xl p-2">
+          Confira as Condições Gerais
+        </h2>
         <div 
           ref={previewRef} 
           className="relative backdrop-blur-sm bg-neutral-50 bg-opacity-10 rounded-2xl shadow-2xl border border-white border-opacity-20 p-4 sm:p-10 overflow-auto"

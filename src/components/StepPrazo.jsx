@@ -21,7 +21,7 @@ const StepPrazo = ({ onBack, onNext }) => {
   return (
     <div className="flex items-center justify-center pt-0 sm:pt-16 bg-transparent">
       <div className="relative max-w-4xl w-full mx-auto">
-        <div className="relative backdrop-blur-[10px] bg-neutral-300/10 rounded-3xl p-12 overflow-hidden border border-gray-300/20 shadow-[inset_0_2px_2px_rgba(255,255,255,0.3),0_4px_20px_rgba(0,128,128,0.3)] ring-1 ring-white/10 transition-all">
+        <div className="relative backdrop-blur-[10px] bg-neutral-300/10 rounded-3xl p-12 overflow-hidden border border-gray-300/20 shadow-[inset_0_2px_2px_rgba(255,255,255,0.3),0_2px_8px_rgba(0,128,128,0.3)] ring-1 ring-white/10 transition-all">
           <div className="absolute top-0 left-0 w-full h-px bg-gradient-to-r from-transparent via-teal-700 to-transparent opacity-60" />
 
           <h2 className="text-3xl sm:text-4xl text-center font-semibold text-orange-100 mb-2 rounded-t-3xl p-2">

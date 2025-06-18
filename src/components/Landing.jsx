@@ -7,7 +7,7 @@ const Landing = () => {
   const navigate = useNavigate();
 
   useEffect(() => {
-    const timer = setTimeout(() => setShowButton(true), 1500);
+    const timer = setTimeout(() => setShowButton(true), 1000);
     return () => clearTimeout(timer);
   }, []);
 
