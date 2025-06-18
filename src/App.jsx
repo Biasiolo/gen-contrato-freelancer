@@ -23,7 +23,8 @@ function WizardFlow() {
     setClientData(prev => ({ ...prev, [field]: value }));
 
   return (
-    <div className="min-h-screen bg-black">
+    <div className="min-h-screen bg-gradient-to-r from-neutral-900 via-zinc-950 to-stone-900 text-white">
+
       <div className="no-print">
         {/* Passa onStepClick para habilitar navegação via ProgressBar */}
         <ProgressBar currentStep={step} onStepClick={setStep} />

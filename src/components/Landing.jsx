@@ -7,7 +7,7 @@ const Landing = () => {
   const navigate = useNavigate();
 
   useEffect(() => {
-    const timer = setTimeout(() => setShowButton(true), 2000);
+    const timer = setTimeout(() => setShowButton(true), 1500);
     return () => clearTimeout(timer);
   }, []);
 
@@ -22,7 +22,7 @@ const Landing = () => {
   };
 
   return (
-    <div className="relative w-full h-screen overflow-hidden bg-black">
+    <div className="relative w-full h-screen overflow-hidden bg-gradient-to-r from-neutral-900 via-zinc-950 to-stone-900">
       <div className="relative z-10 h-full flex flex-col items-center justify-center text-center">
         
         {/* Logo centralizado acima do título */}
@@ -35,21 +35,26 @@ const Landing = () => {
 
         {/* Botão com efeito */}
         <button
-          onClick={handleNavigate}
-          className={`
-            group relative flex items-center justify-center overflow-hidden cursor-pointer
-            rounded-none p-4 text-2xl font-bold border-white border 
-            bg-transparent shadow-lg
-            transform transition-all ease-in duration-[300ms]
-            ${showButton ? 'opacity-100 scale-100' : 'opacity-0 scale-50'}
-          `}
-        >
-          <span className="relative z-10 text-5xl font-light text-neutral-50">Gerar Proposta</span>
-          <span
-            className="absolute inset-0 w-0 h-full bg-orange-500 
-              transition-all duration-1000 ease-out group-hover:w-full z-0"
-          />
-        </button>
+  onClick={handleNavigate}
+  className={`
+    group relative flex items-center justify-center overflow-hidden
+    cursor-pointer rounded-3xl px-8 py-5
+    shadow-[inset_0_2px_2px_rgba(255,255,255,0.3),0_4px_10px_rgba(0,128,128,0.1)]
+    border border-white/20 ring-2 ring-white/10
+    backdrop-blur-[20px] bg-black/5
+    transition-all duration-800 ease-in-out
+    hover:shadow-orange-500/30 hover:scale-105
+    ${showButton ? 'opacity-100 scale-100' : 'opacity-0 scale-50'}
+  `}
+>
+  <span className="relative z-10 text-3xl sm:text-4xl font-light text-white drop-shadow-md">
+    Gerar Proposta
+  </span>
+  <span
+    className="absolute inset-0 h-full w-0 bg-gradient-to-r from-orange-500 to-orange-600
+      transition-all duration-800 ease-out group-hover:w-full z-0"
+  />
+</button>
       </div>
     </div>
   );
