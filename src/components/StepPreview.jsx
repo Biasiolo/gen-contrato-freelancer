@@ -208,7 +208,7 @@ const StepPreview = ({ onBack, onNext }) => {
   };
 
   return (
-    <div className="flex items-center justify-center min-h-screen bg-gradient-to-br from-black via-stone-950 to-black pt-0 sm:pt-10 px-0">
+    <div className="flex items-center justify-center min-h-screen bg-transparent pt-0 sm:pt-10 px-0">
       <div className="relative max-w-4xl w-full mx-auto">
         <div 
           ref={previewRef} 

@@ -219,7 +219,7 @@ tx(page, resumo, {
   s: 11,
   c: rgb(0.2, 0.2, 0.2),
 });
-y -= RES_H + 16;
+y -= RES_H + 12;
 
   /* parcelas */
   data.parcelasAgrupadas.forEach((p) => {
@@ -239,22 +239,29 @@ y -= RES_H + 16;
 
   // 9.5 – Detalhes adicionais
 if (data.details) {
-  if (y < 120) {
+  // Cálculo de altura estimada do bloco de detalhes
+  const maxTextWidth = PAGE[0] - M * 2 - 20;
+  const detailLines = wrapText(data.details, helv, 9, maxTextWidth);
+  const blocoAltura = 36 + detailLines.length * 12 + 16;
+
+  // Se faltar espaço, abre nova página
+  if (y - blocoAltura < 80) {
     page = pdf.addPage(PAGE);
     drawWM(page);
     y = 780;
   }
 
-  const blocoH = 72;
+  // Desenho do bloco de fundo
   rect(page, {
     x: M,
-    y: y - blocoH,
+    y: y - blocoAltura,
     w: PAGE[0] - M * 2,
-    h: blocoH,
+    h: blocoAltura,
     fill: rgb(0.98, 0.98, 0.98),
     r: 8
   });
 
+  // Título centralizado
   const title = 'Detalhes Adicionais';
   const titleWidth = bold.widthOfTextAtSize(title, 12);
   tx(page, title, {
@@ -265,22 +272,16 @@ if (data.details) {
     c: C_TEXT
   });
 
-  const maxTextWidth = PAGE[0] - M * 2 - 20;
-  const detailLines = wrapText(data.details, helv, 9, maxTextWidth);
-
+  // Linhas de texto
   let lineY = y - 36;
   for (const line of detailLines) {
-    if (lineY < 60) {
-      page = pdf.addPage(PAGE);
-      drawWM(page);
-      lineY = 780;
-    }
     tx(page, line, { x: M + 10, y: lineY, f: helv, s: 9, c: C_DESC });
     lineY -= 12;
   }
 
-  y = lineY - 24;
+  y = lineY - 12;
 }
+
 
 
   /* 10. rodapé (última página) ---------------------------------------- */
