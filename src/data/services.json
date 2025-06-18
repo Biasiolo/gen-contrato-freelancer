@@ -255,7 +255,7 @@
         },
         {
           "id": "google_ads",
-          "title": "Gestão de Ads",
+          "title": "Google Ads",
           "description": "Criação e gerenciamento de campanhas de anúncios no Google, direcionando tráfego qualificado.",
           "isMonthly": true,
           "defaultUnitValue": 1200
