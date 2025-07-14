@@ -275,6 +275,13 @@
           "defaultUnitValue": 1200
         },
         {
+          "id": "linkedin_ads",
+          "title": "Linkedin Ads",
+          "description": "Criação e gerenciamento de campanhas de anúncios no Linkedin, direcionando tráfego qualificado.",
+          "isMonthly": true,
+          "defaultUnitValue": 1200
+        },
+        {
           "id": "relatorios",
           "title": "Relatórios",
           "description": "Geração de relatórios periódicos com métricas de desempenho das campanhas.",

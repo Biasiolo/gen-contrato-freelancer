@@ -106,7 +106,7 @@ y -= 16;
 tx(page, `ID da Proposta: ${data.proposalId}`, { x: M, y, f: helv, s: 12,});
 y -= 14;
 
-tx(page, `Data de Emissão: ${data.today}`, { x: M, y, f: helv, s: 12, });
+tx(page, `Data de Emissão: ${data.today} | Validade 30 dias`, { x: M, y, f: helv, s: 12, });
 y -= 36;
 
   /* 7. blocos de pacotes ---------------------------------------------- */
