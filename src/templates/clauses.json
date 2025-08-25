@@ -1,0 +1,105 @@
+{
+  "version": "1.0.0",
+  "base": {
+    "cabecalho": "CONTRATO DE PRESTAÇÃO DE SERVIÇOS",
+    "identificacaoPartes": "Pelo presente instrumento e na melhor forma de direito, as partes acima, devidamente identificadas e qualificadas, têm entre si ajustado e contratado a PRESTAÇÃO DE SERVIÇOS de {{SERVICO_TITULO}}, que se regerá de conformidade com as cláusulas e condições abaixo. Entre {{CONTRATANTE_RAZAO}}, inscrita no CNPJ sob nº {{CONTRATANTE_CNPJ}}, com endereço em {{CONTRATANTE_ENDERECO}} (\"CONTRATANTE\"), e {{PRESTADOR_NOME}}, CPF nº {{PRESTADOR_CPF}}, endereço {{PRESTADOR_ENDERECO}}, e-mail {{PRESTADOR_EMAIL}} (\"CONTRATADA\").",
+    "objeto": "A CONTRATADA prestará à CONTRATANTE os serviços de {{SERVICO_TITULO}}, conforme escopo descrito nesta avença.",
+    "objetoParagrafos": [
+      "§1º: Eventuais serviços adicionais não previstos neste contrato deverão ser negociados entre as partes. A CONTRATADA apresentará cotação específica compatível com as condições deste contrato e de mercado, a ser aprovada por escrito mediante Termo Aditivo, previamente à sua execução.",
+      "§2º: O serviço será prestado com total autonomia, liberdade de horário, sem pessoalidade e sem qualquer subordinação à CONTRATANTE."
+    ],
+    "vigencia": "Este contrato terá vigência de {{VIGENCIA_DIAS}} dia(s), iniciando-se em {{DATA_INICIO}} e finalizando-se em {{DATA_FIM}}, podendo ser renovado por igual ou inferior período mediante acordo entre as partes. §1º: O contrato será automaticamente rescindido no término da prestação do serviço, dispensado aviso prévio.",
+    "pagamento": "Em contrapartida aos serviços prestados, a CONTRATADA receberá a quantia de R$ {{VALOR_TOTAL}}, a ser paga após o término deste contrato em até {{PRAZO_PAGAMENTO_DIAS}} dia(s), por meio de depósito/transferência na conta Banco {{BANCO}} (cód.), Agência {{AGENCIA}}, Conta {{CONTA}}, e/ou PIX {{PIX}}.",
+    "obrigacoesContratada": [
+      "Prestar, com a devida dedicação e seriedade, os serviços descritos neste contrato, da forma e modo ajustados.",
+      "Respeitar normas, especificações técnicas e condições de segurança aplicáveis ao serviço.",
+      "Responder por atos e omissões próprios ou de seus subordinados, inclusive por danos causados à CONTRATANTE ou a terceiros.",
+      "Arcar com remuneração e verbas trabalhistas de seus subordinados, inclusive encargos fiscais e previdenciários.",
+      "Arcar com todas as despesas de natureza tributária decorrentes dos serviços.",
+      "Nenhuma responsabilidade civil, penal, trabalhista ou de qualquer natureza caberá à CONTRATANTE em caso de acidentes de trabalho ou moléstias. Obriga-se a CONTRATADA a suportar eventuais condenações e custos de defesa, inclusive honorários advocatícios de 20% (vinte por cento) sobre o valor da causa ou condenação, em 10 (dez) dias úteis, podendo a CONTRATANTE compensar tais valores.",
+      "Cumprir determinações das autoridades públicas competentes relativas aos serviços.",
+      "Manter sigilo, mesmo após o término do contrato, sobre informações privilegiadas a que tenha acesso.",
+      "Providenciar todos os meios e equipamentos necessários à correta execução do serviço, ainda que a CONTRATANTE disponibilize local e equipamentos em sua sede."
+    ],
+    "obrigacoesContratante": [
+      "Fornecer as informações necessárias à realização dos serviços, inclusive especificações e forma de entrega.",
+      "Efetuar o pagamento nas datas e nos termos definidos neste contrato.",
+      "Comunicar imediatamente à CONTRATADA eventuais reclamações contra seus subordinados e danos por eles causados.",
+      "Acompanhar o andamento dos serviços e avaliar o cumprimento de prazos e qualidade técnica, sem que isso implique responsabilidade da CONTRATANTE, tampouco exonere a CONTRATADA de suas obrigações."
+    ],
+    "forcaMaior": "As obrigações da parte atingida por caso fortuito ou força maior poderão ser suspensas, sem ônus, até a cessação de seus efeitos. Persistindo por mais de {{FORCA_MAIOR_DIAS}} ({{FORCA_MAIOR_DIAS}}) dias, a parte não atingida poderá rescindir este contrato, sem prejuízo de outros direitos. Parágrafo único: Somente serão considerados eventos efetivamente imprevisíveis nos termos da lei; não se incluem atrasos de fornecedores/subcontratados, greves previsíveis, quebras de equipamento, interrupções programadas, entre outros.",
+    "confidencialidadeLgpd": "A CONTRATADA compromete-se a tratar como estritamente confidenciais todas as informações e dados a que tenha acesso em razão deste contrato, abstendo-se de divulgá-los a terceiros, salvo por determinação judicial ou da autoridade competente, ou por determinação da CONTRATANTE, inclusive após a rescisão. O descumprimento sujeitará a CONTRATADA a multa equivalente a 10 (dez) vezes o valor da última remuneração, sem prejuízo de perdas e danos e penalidades cabíveis. A CONTRATADA deverá: (i) manter soluções de segurança atualizadas (firewalls, antivírus originais), (ii) efetuar backup periódico em mídias/serviços indicados pela CONTRATANTE, vedados backups em mídias pessoais sem autorização, (iii) comunicar imediatamente à CONTRATANTE incidentes de segurança ou vazamento de dados, e (iv) não utilizar dados pessoais para finalidades diversas do estipulado.",
+    "usoImagemVoz": "A CONTRATADA autoriza o uso da imagem e da voz de seus sócios e empregados, em materiais de fotos, vídeos, áudios, documentos e outros meios de comunicação, para campanhas promocionais e institucionais destinadas à divulgação ao público em geral, desde que não haja desvirtuamento da finalidade. Parágrafo único: A CONTRATANTE poderá reproduzir e divulgar tais materiais em redes sociais e meios correlatos (Facebook, LinkedIn, Twitter, Instagram, WhatsApp, TikTok, site institucional, apresentações e materiais de divulgação, impressos ou digitais).",
+    "propriedadeIntelectual": "A CONTRATADA cede e transfere, em caráter definitivo, à CONTRATANTE a titularidade dos direitos de propriedade intelectual resultantes dos serviços ou a eles relacionados, podendo a CONTRATANTE deles fruir e dispor, inclusive ceder a terceiros, no Brasil e no exterior, pelo prazo legal de proteção. Parágrafo único: A CONTRATADA declara deter os direitos necessários ou licenças das ferramentas empregadas e que não violará direitos de terceiros. Em caso de violação, a CONTRATANTE estará isenta de responsabilidade, cabendo à CONTRATADA o ressarcimento integral das perdas e danos que der causa.",
+    "naoConcorrencia": "Durante a vigência e pelo período de {{NAO_CONCORRENCIA_MESES}} ({{NAO_CONCORRENCIA_MESES}}) meses após a rescisão, a CONTRATADA compromete-se a não realizar negócios com clientes da carteira da CONTRATANTE, sob pena de multa de R$ {{NAO_CONCORRENCIA_MULTA_VALOR}}, sem prejuízo de perdas e danos e demais responsabilizações.",
+    "rescisao": "As partes poderão rescindir este contrato a qualquer tempo, mediante aviso à outra parte com antecedência mínima de {{AVISO_PREVIO_DIAS}} dia(s). §1º: Rescisão sem justa causa pela CONTRATANTE: pagamento integral das retribuições já vencidas, pelos serviços efetivamente prestados. §2º: Rescisão pela CONTRATANTE por sua conveniência: devolução pela CONTRATADA dos valores pagos relativos a serviços ainda não prestados. §3º: Não se aplica aviso prévio em caso de justa causa. §4º: A rescisão por justa causa, por qualquer das partes, não exime a CONTRATANTE do pagamento das retribuições já vencidas pelos serviços prestados.",
+    "extincao": [
+      "Conclusão do serviço ou término do prazo de vigência.",
+      "Rescisão mediante aviso prévio de {{AVISO_PREVIO_DIAS}} dia(s) por qualquer das partes.",
+      "Justa causa por inadimplemento de qualquer das partes.",
+      "Extinção/falência de qualquer das partes.",
+      "Impossibilidade de continuação por caso fortuito ou força maior."
+    ],
+    "multa": "O descumprimento de quaisquer obrigações ou cláusulas fixadas neste contrato sujeitará o infrator ao pagamento de multa correspondente a {{MULTA_PERCENTUAL}}% da retribuição total, podendo ensejar rescisão por justa causa.",
+    "disposicoesGerais": [
+      "Não poderá a CONTRATANTE transferir a terceiros o direito aos serviços ajustados, nem a CONTRATADA, sem anuência, indicar substituto.",
+      "A mera tolerância quanto a descumprimentos não implicará renúncia de direitos.",
+      "Este contrato não gera exclusividade entre as partes.",
+      "Desde que não haja incompatibilidade de horários/interesses, a CONTRATADA poderá atuar para terceiros.",
+      "A CONTRATANTE poderá contratar terceiros para serviços equivalentes, a título de complementaridade.",
+      "Publicidade: qualquer campanha/material de divulgação que mencione a outra parte exigirá autorização prévia e expressa.",
+      "Alterações contratuais apenas por termo aditivo assinado pelas partes e 2 (duas) testemunhas.",
+      "Cada prestador será responsável por um grupo de clientes definido pela CONTRATANTE; ajustes de carteira serão formalizados por aditivo.",
+      "Não sendo aprovados os serviços, a CONTRATANTE comunicará por escrito os motivos e concederá prazo para saneamento, sem prejuízo de apurar perdas e danos.",
+      "Ao término das etapas programadas, a CONTRATADA, em 5 (cinco) dias, emitirá relatório das atividades executadas para avaliação.",
+      "Aprovados os serviços, a CONTRATANTE autorizará a emissão da Nota Fiscal de Serviços."
+    ],
+    "foro": "As partes elegem o foro de {{FORO_CIDADE}}/{{FORO_UF}} para dirimir controvérsias relativas a este contrato."
+  },
+  "servicos": {
+    "web_designer": {
+      "titulo": "Web Designer",
+      "escopo": [
+        "Criação e desenvolvimento de layouts para sites, landing pages e blogs.",
+        "Garantia de design responsivo e adaptável a diferentes dispositivos.",
+        "Design de elementos gráficos para web: banners, botões, ícones e afins, seguindo a identidade visual da marca.",
+        "Edição e otimização de imagens para web (tamanho, resolução e qualidade).",
+        "Criação de gráficos personalizados para campanhas e redes sociais.",
+        "Desenvolvimento de wireframes e protótipos para demonstrar a estrutura antes da implementação.",
+        "Uso de ferramentas como Figma, Adobe XD ou equivalentes.",
+        "Criação e implementação de interfaces UI/UX focadas em navegabilidade e usabilidade.",
+        "Integração com equipes de programação para correta implementação do design, fornecendo assets e diretrizes.",
+        "Otimização de sites para SEO e performance básica (on-page e carregamento).",
+        "Criação de materiais para campanhas digitais: e-mail marketing, anúncios e banners.",
+        "Manutenção e atualização de sites com base em métricas e feedbacks.",
+        "Pesquisa contínua de tendências e inovações em design web."
+      ],
+      "parametros": {
+        "REVISOES_QTD": 2,
+        "ACEITE_CRITERIOS": "validação visual e responsiva em breakpoints acordados"
+      },
+      "clausulasEspecificas": [
+        "Revisões inclusas: {{REVISOES_QTD}} rodadas.",
+        "Critérios de aceite: {{ACEITE_CRITERIOS}}."
+      ]
+    },
+    "designer": { "titulo": "Designer Gráfico", "escopo": ["Criação de peças estáticas e materiais institucionais.","Adequação de peças aos formatos de mídia."], "parametros": {}, "clausulasEspecificas": [] },
+    "copywriter": { "titulo": "Copywriter", "escopo": ["Redação persuasiva para páginas, anúncios e e-mails.","Ajustes de tom de voz e coerência com a marca."], "parametros": { "REVISOES_QTD": 2 }, "clausulasEspecificas": ["Revisões de texto inclusas: {{REVISOES_QTD}} rodadas sem alteração de escopo."] },
+    "rh": { "titulo": "Recursos Humanos", "escopo": ["Triagem de currículos e entrevistas.","Suporte a rotinas de admissão e integração."], "parametros": {}, "clausulasEspecificas": [] },
+    "assistente_adm": { "titulo": "Assistente Administrativo", "escopo": ["Rotinas administrativas e cadastros.","Organização de documentos e controles operacionais."], "parametros": {}, "clausulasEspecificas": [] },
+    "vendas": { "titulo": "Vendas / Comercial", "escopo": ["Prospecção de clientes, gestão de pipeline e CRM.","Apoio em propostas e fechamento de oportunidades."], "parametros": { "META_MENSAL": "{{META_MENSAL}}" }, "clausulasEspecificas": ["Remuneração variável conforme metas e anexo específico, quando aplicável."] },
+    "social_media": { "titulo": "Social Media", "escopo": ["Planejamento editorial, copy e publicação.","Interação básica e acompanhamento de métricas."], "parametros": {}, "clausulasEspecificas": [] },
+    "trafego_pago": { "titulo": "Gestão de Tráfego Pago", "escopo": ["Planejamento, setup e otimização de campanhas.","Relatórios de desempenho e recomendações."], "parametros": { "ORCAMENTO_MENSAL_MIDIA": "{{ORCAMENTO_MENSAL_MIDIA}}" }, "clausulasEspecificas": ["Investimento de mídia é de responsabilidade da CONTRATANTE."] },
+    "video": { "titulo": "Vídeo / Audiovisual", "escopo": ["Captação, edição e finalização conforme roteiro.","Entrega nos formatos acordados."], "parametros": { "REVISOES_QTD": 1 }, "clausulasEspecificas": ["Revisões inclusas: {{REVISOES_QTD}} rodada."] },
+    "custom": { "titulo": "{{SERVICO_CUSTOM_TITULO}}", "escopo": "{{SERVICO_CUSTOM_ESCOPO_RICH}}", "parametros": {}, "clausulasEspecificas": "{{SERVICO_CUSTOM_CLAUSULAS_RICH}}" }
+  },
+  "distrato": {
+    "titulo": "TERMO DE RESCISÃO DE CONTRATO DE PRESTAÇÃO DE SERVIÇOS",
+    "clausulas": {
+      "DO OBJETO": "O presente termo tem por objeto a rescisão do Contrato de Prestação de Serviços de {{SERVICO_TITULO}} celebrado entre as partes, com fundamento na cláusula 9ª, § 3º do contrato originário.",
+      "DA RESCISÃO": "§ 1º Em razão da rescisão contratual, deverá ser enviado ao drive VOIA todas as informações, artes e materiais pertinentes aos serviços prestados até o momento desta rescisão, que a partir deste momento será de total propriedade da CONTRATANTE.\n§ 2º Após a realização do determinado no § 1º, a CONTRATANTE realizará o pagamento dos serviços prestados proporcional no mês corrente, em até 10 (dez) dias da presente rescisão, no valor de R$ {{VALOR_ACERTO}}, a ser pago até {{DATA_ACERTO}}.\n§ 3º Por força da presente rescisão as partes dão por terminado o Contrato de Prestação de Serviços de {{SERVICO_TITULO}} que trata a Cláusula Primeira, nada mais tendo a reclamar uma da outra, a qualquer título, época ou tribunal, relativamente às obrigações assumidas no referido contrato, tendo em vista que se torna plenamente cumprido e quitado.",
+      "DO SIGILO": "A cláusula de sigilo disposta no contrato originário, na sua cláusula sétima, permanecerá em vigência por se tratar de obrigação de caráter perpétuo. Tal cláusula possui a seguinte redação:\n\"A CONTRATADA compromete-se a tratar o conteúdo de todas as informações e dados a que venha a ter acesso em razão do presente Contrato como estritamente confidenciais e sigilosas, obrigando-se a não divulgá-los, no todo ou em parte, a quaisquer terceiros, seja por qualquer meio, exceto em razão de determinação judicial, de autoridade administrativa competente ou por determinação da CONTRATANTE, inclusive após a rescisão ou extinção do presente contrato, sob pena de incorrer em multa correspondente a 10 (dez) vezes o valor da última remuneração, sem prejuízo da reparação em perdas e danos a que der causa, assim como as cominações penais cabíveis.\"",
+      "DO FORO": "As partes elegem o Foro de {{FORO_CIDADE}}/{{FORO_UF}} para dirimir judicialmente as controvérsias inerentes do presente instrumento."
+    }
+  }
+}
