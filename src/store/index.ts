@@ -12,9 +12,9 @@ const clampStep = (n: number) => Math.max(0, Math.min(3, n));
 
 const initialForm: ContractFormData = {
   // contratante (fixo por enquanto)
-  contratanteRazao: "VOIA AGENCY PUBLICIDADE LTDA",
-  contratanteCnpj: "00.000.000/0000-00",
-  contratanteEndereco: "Rua Exemplo, 123 - São José dos Campos/SP",
+  contratanteRazao: "D HOUSE AGÊNCIA DE PUBLICIDADE LTDA",
+  contratanteCnpj: "18.319.139/0001-68",
+  contratanteEndereco: "Rua Teopompo de Vasconcelos, 161 ap 22-Vila Adyana-São José dos Campos/SP",
   // prestador
   prestadorNome: "",
   prestadorCpf: "",
