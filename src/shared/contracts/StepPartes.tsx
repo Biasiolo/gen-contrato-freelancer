@@ -15,41 +15,41 @@ export default function StepPartes() {
 
   return (
     <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-      <fieldset className="md:col-span-2 border p-3 rounded">
-  <legend className="text-sm font-medium">Contratante (fixo)</legend>
+      <fieldset className="md:col-span-2 border-none p-3 rounded bg-neutral-200">
+        <legend className="text-sm font-medium">Contratante (fixo)</legend>
 
-  {/* linha 1: razão, cnpj, endereço */}
-  <div className="grid md:grid-cols-3 gap-3">
-    <input className="border p-2 rounded" value={form.contratanteRazao} readOnly />
-    <input className="border p-2 rounded" value={form.contratanteCnpj} readOnly />
-    <input className="border p-2 rounded" value={form.contratanteEndereco} readOnly />
-  </div>
+        {/* linha 1: razão, cnpj, endereço */}
+        <div className="grid md:grid-cols-3 gap-3">
+          <input className="border p-2 rounded bg-white" value={form.contratanteRazao} readOnly />
+          <input className="border p-2 rounded bg-white" value={form.contratanteCnpj} readOnly />
+          <input className="border p-2 rounded bg-white" value={form.contratanteEndereco} readOnly />
+        </div>
 
-  {/* ✅ linha 2: representante legal */}
-  <div className="grid md:grid-cols-3 gap-3 mt-3">
-    <input
-      className="border p-2 rounded"
-      value={form.contratanteRepresentanteNome || "Daniele Reily da Silva Souza"}
-      readOnly
-      title="Representante legal"
-    />
-    <input
-      className="border p-2 rounded"
-      value={form.contratanteRepresentanteCpf || "218.047.008-86"}
-      readOnly
-      title="CPF do representante legal"
-    />
-    <div /> {/* espaçador para fechar 3 colunas */}
-  </div>
+        {/* ✅ linha 2: representante legal */}
+        <div className="grid md:grid-cols-3 gap-3 mt-3">
+          <input
+            className="border p-2 rounded bg-white"
+            value={form.contratanteRepresentanteNome || "Daniele Reily da Silva Souza"}
+            readOnly
+            title="Representante legal"
+          />
+          <input
+            className="border p-2 rounded bg-white"
+            value={form.contratanteRepresentanteCpf || "218.047.008-86"}
+            readOnly
+            title="CPF do representante legal"
+          />
+          <div /> {/* espaçador para fechar 3 colunas */}
+        </div>
 
 
-</fieldset>
+      </fieldset>
 
-      <fieldset className="md:col-span-2 border p-3 rounded">
+      <fieldset className="md:col-span-2 border-none p-3 rounded bg-neutral-200">
         <legend className="text-sm font-medium">Prestador (Contratada)</legend>
         <div className="grid md:grid-cols-2 gap-3">
           <input
-            className="border p-2 rounded"
+            className="border p-2 rounded bg-white"
             placeholder="Nome completo"
             value={form.prestadorNome}
             onChange={(e) => dispatch(patchForm({ prestadorNome: e.target.value }))}
@@ -60,7 +60,7 @@ export default function StepPartes() {
             mask="000.000.000-00"
             value={form.prestadorCpf || ""}
             onAccept={(val: string) => dispatch(patchForm({ prestadorCpf: val }))}
-            className="border p-2 rounded"
+            className="border p-2 rounded bg-white"
             placeholder="CPF"
             inputMode="numeric"
           />
@@ -71,12 +71,12 @@ export default function StepPartes() {
             definitions={{ "#": /[0-9A-Za-z]/ }}
             value={form.prestadorRg || ""}
             onAccept={(val: string) => dispatch(patchForm({ prestadorRg: val }))}
-            className="border p-2 rounded"
+            className="border p-2 rounded bg-white"
             placeholder="RG (opcional)"
           />
 
           <input
-            className="border p-2 rounded"
+            className="border p-2 rounded bg-white"
             placeholder="E-mail"
             value={form.prestadorEmail}
             onChange={(e) => dispatch(patchForm({ prestadorEmail: e.target.value }))}
@@ -91,7 +91,7 @@ export default function StepPartes() {
             }}
             value={form.prestadorTelefone || ""}
             onAccept={(val: string) => dispatch(patchForm({ prestadorTelefone: val }))}
-            className="border p-2 rounded"
+            className="border p-2 rounded bg-white"
             placeholder="Telefone (opcional)"
             inputMode="tel"
           />
@@ -100,31 +100,31 @@ export default function StepPartes() {
         {/* ENDEREÇO (granular) */}
         <div className="grid md:grid-cols-5 gap-3 mt-3">
           <input
-            className="border p-2 rounded md:col-span-2"
+            className="border p-2 rounded md:col-span-2 bg-white"
             placeholder="Endereço (logradouro: rua, av., etc.)"
             value={form.prestadorEnderecoLogradouro || ""}
             onChange={(e) => dispatch(patchForm({ prestadorEnderecoLogradouro: e.target.value }))}
           />
           <input
-            className="border p-2 rounded"
+            className="border p-2 rounded bg-white"
             placeholder="Número"
             value={form.prestadorEnderecoNumero || ""}
             onChange={(e) => dispatch(patchForm({ prestadorEnderecoNumero: e.target.value }))}
           />
           <input
-            className="border p-2 rounded"
+            className="border p-2 rounded bg-white"
             placeholder="Bairro"
             value={form.prestadorEnderecoBairro || ""}
             onChange={(e) => dispatch(patchForm({ prestadorEnderecoBairro: e.target.value }))}
           />
           <input
-            className="border p-2 rounded"
+            className="border p-2 rounded bg-white"
             placeholder="Cidade"
             value={form.prestadorEnderecoCidade || ""}
             onChange={(e) => dispatch(patchForm({ prestadorEnderecoCidade: e.target.value }))}
           />
           <input
-            className="border p-2 rounded"
+            className="border p-2 rounded bg-white"
             placeholder="UF"
             maxLength={2}
             value={form.prestadorEnderecoUf || ""}
