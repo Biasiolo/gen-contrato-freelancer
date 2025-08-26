@@ -1,13 +1,13 @@
-// src/pdf/ContractDocument.tsx
+// /src/pdf/ContractDocument.tsx
 import React from "react";
 import { Document, Page, Text, View, StyleSheet } from "@react-pdf/renderer";
 import { ContractFormData, ContractTemplates, ServiceTemplate } from "@/types/contracts";
-import { interpolate, interpolateArray } from "@/utils/mergePlaceholders";
+import { interpolate, interpolateObject } from "@/utils/mergePlaceholders";
 
 type Props = {
   form: ContractFormData;
   templates: ContractTemplates;
-  service?: ServiceTemplate | null;
+  service: ServiceTemplate | null;
   map: Record<string, unknown>;
 };
 
@@ -17,103 +17,175 @@ const styles = StyleSheet.create({
   h2: { fontSize: 12, marginTop: 10, marginBottom: 6, fontWeight: 700 },
   p: { marginBottom: 6, textAlign: "justify" },
   li: { marginLeft: 12, marginBottom: 4 },
-  divider: { marginVertical: 10, borderBottomWidth: 1, borderBottomColor: "#999", borderBottomStyle: "solid" },
   signBlock: { marginTop: 36, flexDirection: "row", justifyContent: "space-between" },
   signCol: { width: "48%" },
-  signLine: { marginTop: 28, borderTopWidth: 1, borderTopColor: "#000", borderTopStyle: "solid", paddingTop: 4, textAlign: "center" }
+  signLine: { marginTop: 28, borderTopWidth: 1, borderTopColor: "#000", borderTopStyle: "solid", paddingTop: 4, textAlign: "center" },
 });
 
+function List({ items }: { items?: string[] }) {
+  if (!items?.length) return null;
+  return (
+    <View style={{ marginTop: 2, marginBottom: 6 }}>
+      {items.map((it, i) => (
+        <Text key={i} style={styles.li}>• {it}</Text>
+      ))}
+    </View>
+  );
+}
+
 export default function ContractDocument({ form, templates, service, map }: Props) {
-  const base = templates.base;
+  const b = templates.base;
+  const s = service as any;
 
-  // Escopo e cláusulas específicas
-  const isCustom = form.servicoChave === "custom";
-  const escopoList = !isCustom
-    ? interpolateArray((service as any)?.escopo || [], map)
-    : (form.servicoCustomEscopo || "").split("\n").map((s) => s.trim()).filter(Boolean);
+  // strings e listas interpoladas
+  const identificacao = interpolate(b.identificacaoPartes, map);
+  const objeto = interpolate(b.objeto, map);
+  const objetoParagrafos = (b.objetoParagrafos || []).map((t) => interpolate(t, map));
 
-  const clausulasSpecific =
-    isCustom
-      ? (form.servicoCustomClausulas || "").split("\n").map((s) => s.trim()).filter(Boolean)
-      : interpolateArray(((service as any)?.clausulasEspecificas || []) as string[], map);
+  const vigencia = interpolate(b.vigencia, map);
+  const pagamento = interpolate(b.pagamento, map);
+
+  const obrigacoesContratada = (b.obrigacoesContratada || []).map((t) => interpolate(t, map));
+  const obrigacoesContratante = (b.obrigacoesContratante || []).map((t) => interpolate(t, map));
+
+  const forcaMaior = b.forcaMaior ? interpolate(b.forcaMaior, map) : null;
+  const confidencialidade = interpolate(b.confidencialidadeLgpd, map);
+  const usoImagemVoz = b.usoImagemVoz ? interpolate(b.usoImagemVoz, map) : null;
+  const propriedadeIntelectual = interpolate(b.propriedadeIntelectual, map);
+  const naoConcorrencia = interpolate(b.naoConcorrencia, map);
+  const rescisao = interpolate(b.rescisao, map);
+
+  const extincao = (b.extincao || []).map((t) => interpolate(t, map));
+  const multa = b.multa ? interpolate(b.multa, map) : null;
+  const disposicoesGerais = (b.disposicoesGerais || []).map((t) => interpolate(t, map));
+  const foro = interpolate(b.foro, map);
+
+  // escopo e cláusulas específicas do serviço
+  const escopoList: string[] =
+    typeof s?.escopo === "string" ? [interpolate(s.escopo, map)] :
+    Array.isArray(s?.escopo) ? s.escopo.map((t: string) => interpolate(t, map)) : [];
+
+  const especificasList: string[] =
+    typeof s?.clausulasEspecificas === "string" ? [interpolate(s.clausulasEspecificas, map)] :
+    Array.isArray(s?.clausulasEspecificas) ? s.clausulasEspecificas.map((t: string) => interpolate(t, map)) : [];
 
   return (
     <Document>
       <Page size="A4" style={styles.page}>
-        <Text style={styles.h1}>{interpolate(base.cabecalho, map)}</Text>
+        {/* Cabeçalho */}
+        <Text style={styles.h1}>{interpolate(b.cabecalho, map)}</Text>
 
-        <View>
-          <Text style={styles.p}>{interpolate(base.identificacaoPartes, map)}</Text>
-        </View>
+        {/* Identificação das partes */}
+        <Text style={styles.p}>{identificacao}</Text>
 
-        <View>
-          <Text style={styles.h2}>CLÁUSULA 1ª — DO OBJETO</Text>
-          <Text style={styles.p}>{interpolate(base.objeto, map)}</Text>
-        </View>
+        {/* Objeto */}
+        <Text style={styles.h2}>Cláusula 1ª — DO OBJETO</Text>
+        <Text style={styles.p}>{objeto}</Text>
+        {objetoParagrafos.map((p, i) => (
+          <Text key={i} style={styles.p}>{p}</Text>
+        ))}
 
-        {/* Escopo */}
-        {escopoList?.length > 0 && (
-          <View>
-            <Text style={styles.h2}>CLÁUSULA 2ª — DO ESCOPO</Text>
-            {escopoList.map((item, idx) => (
-              <Text key={idx} style={styles.li}>• {item}</Text>
-            ))}
-          </View>
+        {/* Escopo do serviço (se houver) */}
+        {escopoList.length > 0 && (
+          <>
+            <Text style={styles.h2}>Escopo do Serviço</Text>
+            <List items={escopoList} />
+          </>
         )}
 
-        {/* Vigência e Pagamento */}
-        <View>
-          <Text style={styles.h2}>CLÁUSULA 3ª — DA VIGÊNCIA</Text>
-          <Text style={styles.p}>{interpolate(base.vigencia, map)}</Text>
-        </View>
-        <View>
-          <Text style={styles.h2}>CLÁUSULA 4ª — DO PAGAMENTO</Text>
-          <Text style={styles.p}>{interpolate(base.pagamento, map)}</Text>
-        </View>
+        {/* Vigência */}
+        <Text style={styles.h2}>Cláusula 2ª — DA VIGÊNCIA</Text>
+        <Text style={styles.p}>{vigencia}</Text>
 
-        {/* Cláusulas Específicas do Serviço */}
-        {clausulasSpecific?.length > 0 && (
-          <View>
-            <Text style={styles.h2}>CLÁUSULA 5ª — CONDIÇÕES ESPECÍFICAS</Text>
-            {clausulasSpecific.map((c, idx) => (
-              <Text key={idx} style={styles.p}>• {c}</Text>
-            ))}
-          </View>
+        {/* Pagamento */}
+        <Text style={styles.h2}>Cláusula 3ª — DO PAGAMENTO</Text>
+        <Text style={styles.p}>{pagamento}</Text>
+
+        {/* Obrigações da Contratada */}
+        {obrigacoesContratada.length > 0 && (
+          <>
+            <Text style={styles.h2}>Cláusula 4ª — DAS OBRIGAÇÕES DA CONTRATADA</Text>
+            <List items={obrigacoesContratada} />
+          </>
         )}
 
-        {/* Cláusulas Gerais */}
-        <View>
-          <Text style={styles.h2}>CLÁUSULA 6ª — CONFIDENCIALIDADE E LGPD</Text>
-          <Text style={styles.p}>{interpolate(base.confidencialidadeLgpd, map)}</Text>
-        </View>
-        <View>
-          <Text style={styles.h2}>CLÁUSULA 7ª — PROPRIEDADE INTELECTUAL</Text>
-          <Text style={styles.p}>{interpolate(base.propriedadeIntelectual, map)}</Text>
-        </View>
-        <View>
-          <Text style={styles.h2}>CLÁUSULA 8ª — NÃO CONCORRÊNCIA</Text>
-          <Text style={styles.p}>{interpolate(base.naoConcorrencia, map)}</Text>
-        </View>
-        <View>
-          <Text style={styles.h2}>CLÁUSULA 9ª — RESCISÃO</Text>
-          <Text style={styles.p}>{interpolate(base.rescisao, map)}</Text>
-        </View>
-        <View>
-          <Text style={styles.h2}>CLÁUSULA 10ª — FORO</Text>
-          <Text style={styles.p}>{interpolate(base.foro, map)}</Text>
-        </View>
+        {/* Obrigações da Contratante */}
+        {obrigacoesContratante.length > 0 && (
+          <>
+            <Text style={styles.h2}>Cláusula 5ª — DAS OBRIGAÇÕES DA CONTRATANTE</Text>
+            <List items={obrigacoesContratante} />
+          </>
+        )}
 
-        <View style={styles.divider} />
+        {/* Caso fortuito e força maior */}
+        {forcaMaior && (
+          <>
+            <Text style={styles.h2}>Cláusula 6ª — DO CASO FORTUITO E FORÇA MAIOR</Text>
+            <Text style={styles.p}>{forcaMaior}</Text>
+          </>
+        )}
 
-        <View>
-          <Text style={styles.p}>
-            E, por estarem justas e contratadas, firmam o presente instrumento.
-          </Text>
-          <Text style={styles.p}>
-            {form.foroCidade}, ____/____/________.
-          </Text>
-        </View>
+        {/* Confidencialidade / LGPD */}
+        <Text style={styles.h2}>Cláusula 7ª — DA CONFIDENCIALIDADE E PROTEÇÃO DE DADOS</Text>
+        <Text style={styles.p}>{confidencialidade}</Text>
 
+        {/* Uso de imagem e voz */}
+        {usoImagemVoz && (
+          <>
+            <Text style={styles.h2}>Cláusula 8ª — DA AUTORIZAÇÃO DE USO DE IMAGEM E VOZ</Text>
+            <Text style={styles.p}>{usoImagemVoz}</Text>
+          </>
+        )}
+
+        {/* Propriedade Intelectual */}
+        <Text style={styles.h2}>Cláusula 9ª — DOS DIREITOS DE PROPRIEDADE INTELECTUAL</Text>
+        <Text style={styles.p}>{propriedadeIntelectual}</Text>
+
+        {/* Não concorrência */}
+        <Text style={styles.h2}>Cláusula 10ª — NÃO CONCORRÊNCIA</Text>
+        <Text style={styles.p}>{naoConcorrencia}</Text>
+
+        {/* Rescisão */}
+        <Text style={styles.h2}>Cláusula 11ª — DA RESCISÃO</Text>
+        <Text style={styles.p}>{rescisao}</Text>
+
+        {/* Extinção */}
+        {extincao.length > 0 && (
+          <>
+            <Text style={styles.h2}>Cláusula 12ª — DA EXTINÇÃO</Text>
+            <List items={extincao} />
+          </>
+        )}
+
+        {/* Multa */}
+        {multa && (
+          <>
+            <Text style={styles.h2}>Cláusula 13ª — DA MULTA</Text>
+            <Text style={styles.p}>{multa}</Text>
+          </>
+        )}
+
+        {/* Disposições gerais */}
+        {disposicoesGerais.length > 0 && (
+          <>
+            <Text style={styles.h2}>Cláusula 14ª — DAS DISPOSIÇÕES GERAIS</Text>
+            <List items={disposicoesGerais} />
+          </>
+        )}
+
+        {/* Cláusulas específicas do serviço */}
+        {especificasList.length > 0 && (
+          <>
+            <Text style={styles.h2}>Cláusulas Específicas do Serviço</Text>
+            <List items={especificasList} />
+          </>
+        )}
+
+        {/* Foro */}
+        <Text style={styles.h2}>Cláusula 15ª — DO FORO</Text>
+        <Text style={styles.p}>{foro}</Text>
+
+        {/* Assinaturas */}
         <View style={styles.signBlock}>
           <View style={styles.signCol}>
             <Text style={styles.signLine}>{form.contratanteRazao}</Text>
