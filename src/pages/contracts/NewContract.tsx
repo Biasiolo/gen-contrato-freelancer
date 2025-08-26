@@ -91,7 +91,7 @@ export default function NewContract() {
           })}
         </ol>
 
-        <section className="relative rounded-2xl p-6 md:p-8 bg-white/10 backdrop-blur-xl backdrop-saturate-150 border border-white/20 shadow-[0_10px_30px_rgba(0,0,0,0.15)]">
+        <section className="relative rounded-2xl p-6 md:p-8 bg-white/20 backdrop-blur-xl backdrop-saturate-150 border border-white/20 shadow-[0_10px_30px_rgba(0,0,0,0.15)]">
   {/* highlight/vidro */}
   <div className="pointer-events-none absolute inset-0 rounded-2xl bg-gradient-to-br from-white/40 via-white/10 to-transparent opacity-70" />
   {/* brilho de borda */}
