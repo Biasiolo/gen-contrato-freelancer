@@ -22,6 +22,11 @@ const initialForm: ContractFormData = {
   prestadorEmail: "",
   prestadorTelefone: "",
   prestadorEndereco: "",
+    prestadorEnderecoLogradouro: "",
+    prestadorEnderecoNumero: "",
+    prestadorEnderecoBairro: "",
+    prestadorEnderecoCidade: "",
+    prestadorEnderecoUf: "",
   // parâmetros gerais
   dataInicio: "",
   dataFim: "",

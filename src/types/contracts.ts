@@ -83,14 +83,23 @@ export type ContractFormData = {
   prestadorRg?: string;
   prestadorEmail: string;
   prestadorTelefone?: string;
+
+  // 🔽 Endereço granular do prestador (NOVO)
+  prestadorEnderecoLogradouro?: string;
+  prestadorEnderecoNumero?: string;
+  prestadorEnderecoBairro?: string;
+  prestadorEnderecoCidade?: string;
+  prestadorEnderecoUf?: string;
+
+  // (compat/fallback)
   prestadorEndereco: string;
 
   // parâmetros gerais
-  dataInicio: string; // ISO date (yyyy-mm-dd)
-  dataFim?: string;   // opcional para contratos por prazo indeterminado
+  dataInicio: string;
+  dataFim?: string;
   valorTotal: MoneyLike;
   formaPagamento: "PIX" | "Transferência" | "Boleto" | "Outro";
-  diaVencimento?: string; // ex.: "10"
+  diaVencimento?: string;
   banco?: string;
   agencia?: string;
   conta?: string;
@@ -103,16 +112,15 @@ export type ContractFormData = {
   tipoDocumento: "contrato" | "distrato";
 
   // serviço
-  servicoChave?: ServiceKey; // se contrato
+  servicoChave?: ServiceKey;
   servicoCustomTitulo?: string;
-  servicoCustomEscopo?: string; // markdown
-  servicoCustomClausulas?: string; // markdown
+  servicoCustomEscopo?: string;
+  servicoCustomClausulas?: string;
 
-  // parâmetros específicos por serviço (dinâmico)
   params?: Record<string, unknown>;
 
   // distrato
-    dataDistrato?: string;
+  dataDistrato?: string;
   valorAcerto?: MoneyLike;
   prazoDevolucao?: string;
   dataAcerto?: string;
