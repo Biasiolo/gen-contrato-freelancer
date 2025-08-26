@@ -100,7 +100,7 @@ export type ContractFormData = {
   // parâmetros gerais
   dataInicio: string;
   dataFim?: string;
-  valorTotal: MoneyLike;
+  valorTotal: string;
   formaPagamento: "PIX" | "Transferência" | "Boleto" | "Outro";
   diaVencimento?: string;
   banco?: string;
