@@ -33,9 +33,12 @@ export default function DistratoDocument({ form, templates, map }: Props) {
 
         <View>
           <Text style={styles.p}>
-            Pelo presente instrumento, as partes abaixo identificadas — {form.contratanteRazao}, {form.contratanteCnpj} e {form.prestadorNome}, RG {form.prestadorRg} e CPF {form.prestadorCpf} —
-            resolvem formalizar o distrato do contrato anteriormente firmado, nos seguintes termos:
-          </Text>
+  Pelo presente instrumento, as partes abaixo identificadas — {form.contratanteRazao} (CNPJ {form.contratanteCnpj}),
+  neste ato representada por {form.contratanteRepresentanteNome || "Daniele Reily da Silva Souza"}
+  (CPF {form.contratanteRepresentanteCpf || "218.047.008-86"}), e {form.prestadorNome}
+  {form.prestadorRg ? `, RG ${form.prestadorRg}` : ""} (CPF {form.prestadorCpf}) —
+  resolvem formalizar o distrato do contrato anteriormente firmado, nos seguintes termos:
+</Text>
         </View>
 
         {Object.entries(clauses).map(([key, text], idx) => (

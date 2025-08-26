@@ -13,13 +13,13 @@ export default function NewContract() {
   return (
     <div className="max-w-4xl mx-auto p-6 space-y-6">
       <header className="space-y-1">
-        <h1 className="text-2xl font-semibold">Novo Documento</h1>
-        <p className="text-sm text-gray-600">Contrato / Distrato — Gerador de PDFs</p>
+        <h1 className="text-2xl font-semibold text-gray-100">Novo Documento</h1>
+        <p className="text-sm text-gray-100">Contrato / Distrato — Gerador de PDFs</p>
       </header>
 
-      <ol className="flex items-center justify-between text-xs text-gray-600">
+      <ol className="flex items-center justify-between text-xs text-gray-200">
         {["Partes", "Parâmetros", "Serviço / Distrato", "Prévia"].map((label, i) => (
-          <li key={label} className={`flex-1 text-center ${step === i ? "font-bold text-gray-900" : ""}`}>
+          <li key={label} className={`flex-1 text-center ${step === i ? "font-bold text-orange-500" : ""}`}>
             {i + 1}. {label}
           </li>
         ))}
@@ -36,7 +36,7 @@ export default function NewContract() {
         <button onClick={() => dispatch(prev())} className="px-4 py-2 rounded border bg-white hover:bg-gray-50">
           Voltar
         </button>
-        <button onClick={() => dispatch(next())} className="px-4 py-2 rounded bg-black text-white hover:opacity-90">
+        <button onClick={() => dispatch(next())} className="px-4 py-2 rounded bg-orange-500 text-white hover:opacity-90">
           Avançar
         </button>
       </footer>

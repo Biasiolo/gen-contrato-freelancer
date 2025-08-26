@@ -16,13 +16,34 @@ export default function StepPartes() {
   return (
     <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
       <fieldset className="md:col-span-2 border p-3 rounded">
-        <legend className="text-sm font-medium">Contratante (fixo)</legend>
-        <div className="grid md:grid-cols-3 gap-3">
-          <input className="border p-2 rounded" value={form.contratanteRazao} readOnly />
-          <input className="border p-2 rounded" value={form.contratanteCnpj} readOnly />
-          <input className="border p-2 rounded" value={form.contratanteEndereco} readOnly />
-        </div>
-      </fieldset>
+  <legend className="text-sm font-medium">Contratante (fixo)</legend>
+
+  {/* linha 1: razão, cnpj, endereço */}
+  <div className="grid md:grid-cols-3 gap-3">
+    <input className="border p-2 rounded" value={form.contratanteRazao} readOnly />
+    <input className="border p-2 rounded" value={form.contratanteCnpj} readOnly />
+    <input className="border p-2 rounded" value={form.contratanteEndereco} readOnly />
+  </div>
+
+  {/* ✅ linha 2: representante legal */}
+  <div className="grid md:grid-cols-3 gap-3 mt-3">
+    <input
+      className="border p-2 rounded"
+      value={form.contratanteRepresentanteNome || "Daniele Reily da Silva Souza"}
+      readOnly
+      title="Representante legal"
+    />
+    <input
+      className="border p-2 rounded"
+      value={form.contratanteRepresentanteCpf || "218.047.008-86"}
+      readOnly
+      title="CPF do representante legal"
+    />
+    <div /> {/* espaçador para fechar 3 colunas */}
+  </div>
+
+
+</fieldset>
 
       <fieldset className="md:col-span-2 border p-3 rounded">
         <legend className="text-sm font-medium">Prestador (Contratada)</legend>

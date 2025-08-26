@@ -54,6 +54,9 @@ export function buildPlaceholderMap(
     CONTRATANTE_RAZAO: form.contratanteRazao,
     CONTRATANTE_CNPJ: form.contratanteCnpj,
     CONTRATANTE_ENDERECO: form.contratanteEndereco,
+    CONTRATANTE_REPRESENTANTE_NOME: form.contratanteRepresentanteNome,
+    CONTRATANTE_REPRESENTANTE_CPF: form.contratanteRepresentanteCpf,
+    
 
     PRESTADOR_NOME: form.prestadorNome,
     PRESTADOR_CPF: form.prestadorCpf,

@@ -78,6 +78,9 @@ export type ContractFormData = {
   contratanteCnpj: string;
   contratanteEndereco: string;
 
+  contratanteRepresentanteNome: string;
+  contratanteRepresentanteCpf: string;
+
   prestadorNome: string;
   prestadorCpf: string;
   prestadorRg?: string;
