@@ -92,18 +92,18 @@ export default function NewContract() {
         </ol>
 
         <section className="relative rounded-2xl p-6 md:p-8 bg-white/10 backdrop-blur-xl backdrop-saturate-150 border border-white/20 shadow-[0_10px_30px_rgba(0,0,0,0.15)]">
-  {/* highlight/vidro */}
-  <div className="pointer-events-none absolute inset-0 rounded-2xl bg-gradient-to-br from-white/40 via-white/10 to-transparent opacity-70" />
-  {/* brilho de borda */}
-  <div className="pointer-events-none absolute -inset-px rounded-2xl ring-1 ring-white/10" />
-  
-  <div className="relative z-10">
-    {step === 0 && <StepPartes />}
-    {step === 1 && <StepParametros />}
-    {step === 2 && <StepServico />}
-    {step === 3 && <StepPreview />}
-  </div>
-</section>
+          {/* highlight/vidro */}
+          <div className="pointer-events-none absolute inset-0 rounded-2xl bg-gradient-to-br from-white/40 via-white/10 to-transparent opacity-70" />
+          {/* brilho de borda */}
+          <div className="pointer-events-none absolute -inset-px rounded-2xl ring-1 ring-white/10" />
+
+          <div className="relative z-10">
+            {step === 0 && <StepPartes />}
+            {step === 1 && <StepParametros />}
+            {step === 2 && <StepServico />}
+            {step === 3 && <StepPreview />}
+          </div>
+        </section>
 
         <footer className="flex justify-between">
           <button

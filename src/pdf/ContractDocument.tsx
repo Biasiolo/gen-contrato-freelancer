@@ -14,11 +14,13 @@ type Props = {
 };
 
 const styles = StyleSheet.create({
-  page: { padding: 32,
+  page: {
+    padding: 32,
     paddingBottom: FOOTER_HEIGHT + 24, // ← espaço pro rodapé
     fontSize: 11,
     lineHeight: 1.4,
-    fontFamily: "Helvetica", },
+    fontFamily: "Helvetica",
+  },
   h1: { fontSize: 14, textAlign: "center", marginBottom: 12, fontWeight: 700 },
   h2: { fontSize: 12, marginTop: 10, marginBottom: 6, fontWeight: 700 },
   p: { marginBottom: 6, textAlign: "justify" },
@@ -69,17 +71,17 @@ export default function ContractDocument({ form, templates, service, map }: Prop
   // escopo e cláusulas específicas do serviço
   const escopoList: string[] =
     typeof s?.escopo === "string" ? [interpolate(s.escopo, map)] :
-    Array.isArray(s?.escopo) ? s.escopo.map((t: string) => interpolate(t, map)) : [];
+      Array.isArray(s?.escopo) ? s.escopo.map((t: string) => interpolate(t, map)) : [];
 
   const especificasList: string[] =
     typeof s?.clausulasEspecificas === "string" ? [interpolate(s.clausulasEspecificas, map)] :
-    Array.isArray(s?.clausulasEspecificas) ? s.clausulasEspecificas.map((t: string) => interpolate(t, map)) : [];
+      Array.isArray(s?.clausulasEspecificas) ? s.clausulasEspecificas.map((t: string) => interpolate(t, map)) : [];
 
   return (
     <Document>
       <Page size="A4" style={styles.page}>
         <Watermark />
-        
+
         {/* Cabeçalho */}
         <Text style={styles.h1}>{interpolate(b.cabecalho, map)}</Text>
 
@@ -204,7 +206,7 @@ export default function ContractDocument({ form, templates, service, map }: Prop
             <Text style={{ textAlign: "center" }}>CONTRATADA</Text>
           </View>
         </View>
-         <Footer />
+        <Footer />
       </Page>
     </Document>
   );

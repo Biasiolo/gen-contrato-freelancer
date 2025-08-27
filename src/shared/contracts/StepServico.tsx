@@ -33,9 +33,8 @@ export default function StepServico() {
         <legend className="text-sm font-semibold text-white/90 mb-3">Tipo de Documento</legend>
         <div className="flex flex-wrap gap-3">
           <label
-            className={`inline-flex items-center gap-2 px-3 py-2 rounded-lg border border-white/20 cursor-pointer ${
-              form.tipoDocumento === "contrato" ? "bg-white/70" : "bg-white/10 hover:bg-white/20"
-            }`}
+            className={`inline-flex items-center gap-2 px-3 py-2 rounded-lg border border-white/20 cursor-pointer ${form.tipoDocumento === "contrato" ? "bg-white/70" : "bg-white/10 hover:bg-white/20"
+              }`}
           >
             <input
               type="radio"
@@ -47,9 +46,8 @@ export default function StepServico() {
           </label>
 
           <label
-            className={`inline-flex items-center gap-2 px-3 py-2 rounded-lg border border-white/20 cursor-pointer ${
-              form.tipoDocumento === "distrato" ? "bg-white/70" : "bg-white/10 hover:bg-white/20"
-            }`}
+            className={`inline-flex items-center gap-2 px-3 py-2 rounded-lg border border-white/20 cursor-pointer ${form.tipoDocumento === "distrato" ? "bg-white/70" : "bg-white/10 hover:bg-white/20"
+              }`}
           >
             <input
               type="radio"

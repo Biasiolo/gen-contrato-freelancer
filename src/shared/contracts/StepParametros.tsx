@@ -38,24 +38,24 @@ export default function StepParametros() {
         <legend className="text-sm font-semibold text-white/90 mb-3">Pagamento</legend>
         <div className="grid md:grid-cols-2 gap-3">
           <IMaskInput
-  mask={Number}
-  scale={2}
-  thousandsSeparator="."
-  radix=","
-  mapToRadix={["."]}
-  normalizeZeros
-  padFractionalZeros
-  prefix="R$ "
-  unmask={true}
-  value={(form.valorTotal ?? "").toString()}   // ✅ força string
-  onAccept={(val) => {
-    const str = typeof val === "number" ? String(val).replace(".", ",") : (val ?? "");
-    dispatch(patchForm({ valorTotal: str }));  // ✅ salva string “limpa” (sem R$)
-  }}
-  className={input}
-  placeholder="Valor total (R$)"
-  inputMode="decimal"
-/>
+            mask={Number}
+            scale={2}
+            thousandsSeparator="."
+            radix=","
+            mapToRadix={["."]}
+            normalizeZeros
+            padFractionalZeros
+            prefix="R$ "
+            unmask={true}
+            value={(form.valorTotal ?? "").toString()}   // ✅ força string
+            onAccept={(val) => {
+              const str = typeof val === "number" ? String(val).replace(".", ",") : (val ?? "");
+              dispatch(patchForm({ valorTotal: str }));  // ✅ salva string “limpa” (sem R$)
+            }}
+            className={input}
+            placeholder="Valor total (R$)"
+            inputMode="decimal"
+          />
 
           <select
             className={input}
@@ -69,6 +69,7 @@ export default function StepParametros() {
           </select>
 
           <input
+            type="date"
             className={input}
             placeholder="Dia do vencimento"
             value={form.diaVencimento || ""}
