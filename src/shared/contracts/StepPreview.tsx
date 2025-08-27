@@ -57,7 +57,7 @@ export default function StepPreview() {
         <PDFDownloadLink document={docNode as any} fileName={filename}>
           {({ loading }) => (
             <button
-              className="px-4 py-2 rounded bg-black text-white hover:opacity-90 disabled:opacity-50 cursor-pointer"
+              className="px-4 py-2 rounded bg-emerald-700 text-white hover:opacity-90 disabled:opacity-50 cursor-pointer"
               disabled={loading || busy}
             >
               {loading ? "Gerando PDF…" : "Baixar PDF"}
@@ -68,14 +68,14 @@ export default function StepPreview() {
         <button
           onClick={handlePrint}
           disabled={busy}
-          className="px-4 py-2 rounded border bg-white hover:bg-gray-50 disabled:opacity-50 cursor-pointer"
+          className="px-4 py-2 rounded border-none bg-white hover:bg-gray-50 disabled:opacity-50 cursor-pointer"
         >
           {busy ? "Preparando…" : "Imprimir"}
         </button>
 
         <button
           onClick={handleRestart}
-          className="px-4 py-2 rounded border bg-white hover:bg-gray-50 cursor-pointer"
+          className="px-4 py-2 rounded border-none bg-red-600 hover:bg-gray-50 cursor-pointer text-white"
         >
           Reiniciar
         </button>

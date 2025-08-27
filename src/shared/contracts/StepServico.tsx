@@ -24,7 +24,7 @@ export default function StepServico() {
   // estilos alinhados aos outros steps (sem camadas extras)
   const card = "rounded-2xl p-5 md:p-6";
   const input =
-    "border border-white/30 bg-white/70 focus:bg-white/90 rounded px-3 py-2 outline-none focus:ring-2 focus:ring-white/40 transition";
+    "border border-white/30 bg-white/90 focus:bg-white rounded px-3 py-2 outline-none focus:ring-2 focus:ring-orange-500/50 transition";
 
   return (
     <div className="space-y-6">
@@ -34,7 +34,7 @@ export default function StepServico() {
         <div className="flex flex-wrap gap-3">
           <label
             className={`inline-flex items-center gap-2 px-3 py-2 rounded-lg border border-white/20 cursor-pointer ${
-              form.tipoDocumento === "contrato" ? "bg-white/30" : "bg-white/10 hover:bg-white/20"
+              form.tipoDocumento === "contrato" ? "bg-white/70" : "bg-white/10 hover:bg-white/20"
             }`}
           >
             <input
@@ -48,7 +48,7 @@ export default function StepServico() {
 
           <label
             className={`inline-flex items-center gap-2 px-3 py-2 rounded-lg border border-white/20 cursor-pointer ${
-              form.tipoDocumento === "distrato" ? "bg-white/30" : "bg-white/10 hover:bg-white/20"
+              form.tipoDocumento === "distrato" ? "bg-white/70" : "bg-white/10 hover:bg-white/20"
             }`}
           >
             <input

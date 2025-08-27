@@ -3,6 +3,7 @@ import React from "react";
 import { Document, Page, Text, View, StyleSheet } from "@react-pdf/renderer";
 import { ContractFormData, ContractTemplates, ServiceTemplate } from "@/types/contracts";
 import { interpolate, interpolateObject } from "@/utils/mergePlaceholders";
+import Watermark from "./Watermark";
 
 type Props = {
   form: ContractFormData;
@@ -72,6 +73,7 @@ export default function ContractDocument({ form, templates, service, map }: Prop
   return (
     <Document>
       <Page size="A4" style={styles.page}>
+        <Watermark />
         {/* Cabeçalho */}
         <Text style={styles.h1}>{interpolate(b.cabecalho, map)}</Text>
 
