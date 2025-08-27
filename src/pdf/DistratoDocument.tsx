@@ -3,6 +3,7 @@ import React from "react";
 import { Document, Page, Text, View, StyleSheet } from "@react-pdf/renderer";
 import { ContractFormData, ContractTemplates } from "@/types/contracts";
 import { interpolate, interpolateObject } from "@/utils/mergePlaceholders";
+import Watermark from "./Watermark";
 
 type Props = {
   form: ContractFormData;
@@ -29,6 +30,7 @@ export default function DistratoDocument({ form, templates, map }: Props) {
   return (
     <Document>
       <Page size="A4" style={styles.page}>
+        <Watermark />
         <Text style={styles.h1}>{interpolate(d.titulo, map)}</Text>
 
         <View>

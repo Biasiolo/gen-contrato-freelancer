@@ -4,6 +4,7 @@ import { Document, Page, Text, View, StyleSheet } from "@react-pdf/renderer";
 import { ContractFormData, ContractTemplates, ServiceTemplate } from "@/types/contracts";
 import { interpolate, interpolateObject } from "@/utils/mergePlaceholders";
 import Watermark from "./Watermark";
+import Footer, { FOOTER_HEIGHT } from "./Footer";
 
 type Props = {
   form: ContractFormData;
@@ -13,7 +14,11 @@ type Props = {
 };
 
 const styles = StyleSheet.create({
-  page: { padding: 32, fontSize: 11, lineHeight: 1.4, fontFamily: "Helvetica" },
+  page: { padding: 32,
+    paddingBottom: FOOTER_HEIGHT + 24, // ← espaço pro rodapé
+    fontSize: 11,
+    lineHeight: 1.4,
+    fontFamily: "Helvetica", },
   h1: { fontSize: 14, textAlign: "center", marginBottom: 12, fontWeight: 700 },
   h2: { fontSize: 12, marginTop: 10, marginBottom: 6, fontWeight: 700 },
   p: { marginBottom: 6, textAlign: "justify" },
@@ -74,6 +79,7 @@ export default function ContractDocument({ form, templates, service, map }: Prop
     <Document>
       <Page size="A4" style={styles.page}>
         <Watermark />
+        
         {/* Cabeçalho */}
         <Text style={styles.h1}>{interpolate(b.cabecalho, map)}</Text>
 
@@ -198,6 +204,7 @@ export default function ContractDocument({ form, templates, service, map }: Prop
             <Text style={{ textAlign: "center" }}>CONTRATADA</Text>
           </View>
         </View>
+         <Footer />
       </Page>
     </Document>
   );
