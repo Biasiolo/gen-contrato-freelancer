@@ -37,7 +37,7 @@ export default function Footer() {
             <View style={styles.divider} />
             <View style={styles.row}>
                 <View style={styles.col}>
-                    <Text style={styles.subtle}>R. Síria, 71 – Sala 45 e 44</Text>
+                    <Text style={styles.subtle}>R. Síria, 71 – Salas 44 e 45</Text>
                     <Text style={styles.subtle}>Jardim Oswaldo Cruz, SJC – SP</Text>
                 </View>
 

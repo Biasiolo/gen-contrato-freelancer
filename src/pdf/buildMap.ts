@@ -71,7 +71,7 @@ export function buildPlaceholderMap(
     DATA_FIM: form.dataFim,
     VALOR_TOTAL: form.valorTotal,
     FORMA_PAGAMENTO: form.formaPagamento,
-    DIA_VENCIMENTO: form.diaVencimento,
+    DATA_VENCIMENTO: form.diaVencimento,
     BANCO: form.banco,
     AGENCIA: form.agencia,
     CONTA: form.conta,

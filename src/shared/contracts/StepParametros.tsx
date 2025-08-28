@@ -71,7 +71,6 @@ export default function StepParametros() {
           <input
             type="date"
             className={input}
-            placeholder="Dia do vencimento"
             value={form.diaVencimento || ""}
             onChange={(e) => dispatch(patchForm({ diaVencimento: e.target.value }))}
           />
