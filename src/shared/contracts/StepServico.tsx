@@ -158,52 +158,66 @@ export default function StepServico() {
           </fieldset>
 
           {/* ===== Campos do Distrato ===== */}
-          <fieldset className={`${card} grid md:grid-cols-2 gap-3`}>
+          <fieldset className={card}>
             <legend className="text-sm font-semibold text-white/90 mb-3">Distrato</legend>
 
-            <input
-              type="date"
-              className={input}
-              placeholder="Data do distrato"
-              value={form.dataDistrato || ""}
-              onChange={(e) => dispatch(patchForm({ dataDistrato: e.target.value }))}
-            />
+            <div className="grid md:grid-cols-2 gap-3">
+              {/* Data do contrato original (DATA_DISTRATO) */}
+              <label className="flex flex-col gap-1">
+                <span className="text-xs font-medium text-white/90">Data do contrato original</span>
+                <input
+                  type="date"
+                  className={input}
+                  value={form.dataDistrato || ""}
+                  onChange={(e) => dispatch(patchForm({ dataDistrato: e.target.value }))}
+                />
+              </label>
 
-            {/* Valor do acerto (R$) com máscara */}
-            <IMaskInput
-              mask={Number}
-              scale={2}
-              thousandsSeparator="."
-              radix=","
-              mapToRadix={["."]}
-              normalizeZeros
-              padFractionalZeros
-              prefix="R$ "
-              unmask={true}
-              value={(form.valorAcerto ?? "").toString()}
-              onAccept={(val: string | number) => {
-                const str = typeof val === "number" ? String(val).replace(".", ",") : (val ?? "");
-                dispatch(patchForm({ valorAcerto: str }));
-              }}
-              className={input}
-              placeholder="Valor do acerto (R$)"
-              inputMode="decimal"
-            />
+              {/* Valor do acerto (R$) */}
+              <label className="flex flex-col gap-1">
+                <span className="text-xs font-medium text-white/90">Valor do acerto (R$)</span>
+                <IMaskInput
+                  mask={Number}
+                  scale={2}
+                  thousandsSeparator="."
+                  radix=","
+                  mapToRadix={["."]}
+                  normalizeZeros
+                  padFractionalZeros
+                  prefix="R$ "
+                  unmask={true}
+                  value={(form.valorAcerto ?? "").toString()}
+                  onAccept={(val: string | number) => {
+                    const str = typeof val === "number" ? String(val).replace(".", ",") : (val ?? "");
+                    dispatch(patchForm({ valorAcerto: str }));
+                  }}
+                  className={input}
+                  inputMode="decimal"
+                />
+              </label>
 
-            <input
-              type="date"
-              className={input}
-              placeholder="Data do acerto final"
-              value={form.dataAcerto || ""}
-              onChange={(e) => dispatch(patchForm({ dataAcerto: e.target.value }))}
-            />
+              {/* Data de pagamento (DATA_ACERTO) */}
+              <label className="flex flex-col gap-1">
+                <span className="text-xs font-medium text-white/90">Data de pagamento</span>
+                <input
+                  type="date"
+                  className={input}
+                  value={form.dataAcerto || ""}
+                  onChange={(e) => dispatch(patchForm({ dataAcerto: e.target.value }))}
+                />
+              </label>
 
-            <input
-              className={`${input} md:col-span-2`}
-              placeholder="Prazo de devolução de materiais/acessos"
-              value={form.prazoDevolucao || ""}
-              onChange={(e) => dispatch(patchForm({ prazoDevolucao: e.target.value }))}
-            />
+              {/* Prazo de devolução */}
+              <label className="md:col-span-2 flex flex-col gap-1">
+                <span className="text-xs font-medium text-white/90">Prazo de devolução de materiais/acessos</span>
+                <input
+                  className={input}
+                  value={form.prazoDevolucao || ""}
+                  onChange={(e) => dispatch(patchForm({ prazoDevolucao: e.target.value }))}
+                  placeholder="Ex.: até 5 dias úteis"
+                />
+              </label>
+            </div>
           </fieldset>
         </>
       )}

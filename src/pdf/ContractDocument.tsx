@@ -28,6 +28,8 @@ const styles = StyleSheet.create({
   signBlock: { marginTop: 36, flexDirection: "row", justifyContent: "space-between" },
   signCol: { width: "48%" },
   signLine: { marginTop: 28, borderTopWidth: 1, borderTopColor: "#000", borderTopStyle: "solid", paddingTop: 4, textAlign: "center" },
+  meta: { fontSize: 9, textAlign: "center", color: "#444", marginTop: 2 },
+  witnessCol: { width: "48%" },
 });
 
 function List({ items }: { items?: string[] }) {
@@ -197,15 +199,45 @@ export default function ContractDocument({ form, templates, service, map }: Prop
 
         {/* Assinaturas */}
         <View style={styles.signBlock}>
-          <View style={styles.signCol}>
-            <Text style={styles.signLine}>{form.contratanteRazao}</Text>
-            <Text style={{ textAlign: "center" }}>CONTRATANTE</Text>
-          </View>
-          <View style={styles.signCol}>
-            <Text style={styles.signLine}>{form.prestadorNome}</Text>
-            <Text style={{ textAlign: "center" }}>CONTRATADA</Text>
-          </View>
-        </View>
+  {/* CONTRATANTE */}
+  <View style={styles.signCol}>
+    <Text style={styles.signLine}> </Text>
+    <Text style={{ textAlign: "center", fontWeight: 700 }}>{form.contratanteRazao}</Text>
+    <Text style={styles.meta}>CNPJ: {form.contratanteCnpj}</Text>
+    <Text style={styles.meta}>
+      Representante: {form.contratanteRepresentanteNome} — CPF {form.contratanteRepresentanteCpf}
+    </Text>
+    <Text style={{ textAlign: "center", marginTop: 4 }}>CONTRATANTE</Text>
+  </View>
+
+  {/* CONTRATADA */}
+  <View style={styles.signCol}>
+    <Text style={styles.signLine}> </Text>
+    <Text style={{ textAlign: "center", fontWeight: 700 }}>{form.prestadorNome}</Text>
+    <Text style={styles.meta}>
+      CPF: {form.prestadorCpf}{form.prestadorRg ? ` — RG ${form.prestadorRg}` : ""}
+    </Text>
+    <Text style={{ textAlign: "center", marginTop: 4 }}>CONTRATADA</Text>
+  </View>
+</View>
+
+{/* Testemunhas */}
+<View style={{ marginTop: 24, flexDirection: "row", justifyContent: "space-between" }}>
+  <View style={styles.witnessCol}>
+    <Text style={styles.signLine}> </Text>
+    <Text style={{ textAlign: "center" }}>Testemunha 1</Text>
+    <Text style={styles.meta}>Nome: ________________________________</Text>
+    <Text style={styles.meta}>CPF: ___ . ___ . ___ - __</Text>
+  </View>
+
+  <View style={styles.witnessCol}>
+    <Text style={styles.signLine}> </Text>
+    <Text style={{ textAlign: "center" }}>Testemunha 2</Text>
+    <Text style={styles.meta}>Nome: ________________________________</Text>
+    <Text style={styles.meta}>CPF: ___ . ___ . ___ - __</Text>
+  </View>
+</View>
+
         <Footer />
       </Page>
     </Document>
