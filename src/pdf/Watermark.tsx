@@ -13,16 +13,17 @@ const styles = StyleSheet.create({
         top: 0,
         bottom: 0,
         width: 100,                     // “trilho” à esquerda
-        opacity: 0.5,                  // opacidade da marca d’água
+        opacity: 0.1,                  // opacidade da marca d’água
         justifyContent: "space-around", // repete verticalmente
         alignItems: "flex-start",
         paddingTop: 8,
     },
     item: {
         width: 160,                     // ajuste conforme sua arte
-        height: 60,                     // ajuste conforme sua arte
+        height: 100,                     // ajuste conforme sua arte
         transform: "rotate(-90deg)",    // deixa “de lado”
-        marginLeft: -60,                // puxa a arte para a margem esquerda
+        marginLeft: -50,  
+        opacity: 0.2,              // puxa a arte para a margem esquerda
     },
 });
 

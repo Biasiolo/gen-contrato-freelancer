@@ -54,7 +54,7 @@
       "Ao término das etapas programadas, a CONTRATADA, em 5 (cinco) dias, emitirá relatório das atividades executadas para avaliação.",
       "Aprovados os serviços, a CONTRATANTE autorizará a emissão da Nota Fiscal de Serviços."
     ],
-    "foro": "As partes elegem o foro de {{FORO_CIDADE}}/{{FORO_UF}} para dirimir controvérsias relativas a este contrato."
+    "foro": "As partes elegem o foro de {{FORO_CIDADE}}/{{FORO_UF}} para dirimir controvérsias relativas a este contrato.\nE por estarem, assim, de comum acordo, as partes assinam este instrumento em 02 (duas) vias de idêntica conteúdo e forma, na presença de 02 (duas) testemunhas, abaixo arrolada."
   },
   "servicos": {
     "web_designer": {
