@@ -10,12 +10,14 @@ function joinCompact(parts: Array<string | undefined>, sep: string) {
 }
 
 function formatPrestadorEndereco(form: ContractFormData) {
-  const hasGranular =
+  const hasGranular = !!(
     form.prestadorEnderecoLogradouro ||
     form.prestadorEnderecoNumero ||
     form.prestadorEnderecoBairro ||
     form.prestadorEnderecoCidade ||
-    form.prestadorEnderecoUf;
+    form.prestadorEnderecoUf ||
+    form.prestadorEnderecoCep // ← inclui CEP para considerar granular
+  );
 
   if (!hasGranular) {
     // fallback: campo antigo (livre)
@@ -26,6 +28,7 @@ function formatPrestadorEndereco(form: ContractFormData) {
     [form.prestadorEnderecoLogradouro, form.prestadorEnderecoNumero],
     ", "
   );
+
   const cidadeUf = joinCompact(
     [
       form.prestadorEnderecoCidade,
@@ -36,8 +39,13 @@ function formatPrestadorEndereco(form: ContractFormData) {
     "/"
   );
 
-  // Ex.: "Rua X, 123 - Centro - São José dos Campos/SP"
-  return joinCompact([linha1, form.prestadorEnderecoBairro, cidadeUf], " - ");
+  // Base: "Rua X, 123 - Centro - São José dos Campos/SP"
+  const base = joinCompact([linha1, form.prestadorEnderecoBairro, cidadeUf], " - ");
+
+  // Se houver CEP, acrescenta ao final: " ... - CEP 12345-678"
+  return form.prestadorEnderecoCep
+    ? `${base} - CEP ${form.prestadorEnderecoCep}`
+    : base;
 }
 
 export function buildPlaceholderMap(
@@ -57,12 +65,11 @@ export function buildPlaceholderMap(
     CONTRATANTE_REPRESENTANTE_NOME: form.contratanteRepresentanteNome,
     CONTRATANTE_REPRESENTANTE_CPF: form.contratanteRepresentanteCpf,
 
-
     PRESTADOR_NOME: form.prestadorNome,
     PRESTADOR_CPF: form.prestadorCpf,
     PRESTADOR_RG: form.prestadorRg,
     PRESTADOR_EMAIL: form.prestadorEmail,
-    PRESTADOR_ENDERECO: formatPrestadorEndereco(form), // ✅ agora vem dos campos granularizados
+    PRESTADOR_ENDERECO: formatPrestadorEndereco(form), // ✅ agora inclui CEP quando informado
     PRESTADOR_TELEFONE: form.prestadorTelefone,
 
     // parâmetros gerais
@@ -71,7 +78,7 @@ export function buildPlaceholderMap(
     DATA_FIM: form.dataFim,
     VALOR_TOTAL: form.valorTotal,
     FORMA_PAGAMENTO: form.formaPagamento,
-    DATA_VENCIMENTO: form.diaVencimento,
+    DATA_VENCIMENTO: form.diaVencimento, // (mantive como você enviou)
     BANCO: form.banco,
     AGENCIA: form.agencia,
     CONTA: form.conta,

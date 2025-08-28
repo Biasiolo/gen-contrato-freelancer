@@ -117,6 +117,7 @@ export type ContractFormData = {
   prestadorEnderecoBairro?: string;
   prestadorEnderecoCidade?: string;
   prestadorEnderecoUf?: string;
+  prestadorEnderecoCep?: string;
 
   // (compat/fallback)
   prestadorEndereco: string;

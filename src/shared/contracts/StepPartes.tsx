@@ -105,41 +105,46 @@ export default function StepPartes() {
         </div>
 
         {/* Endereço (granular) */}
-        <div className="grid md:grid-cols-5 gap-3 mt-3">
+
+           <div className="grid md:grid-cols-6 gap-3 mt-3">
           <input
-            className={`${input} md:col-span-2`}
+            className={`${input} md:col-span-3`}
             placeholder="Endereço (logradouro: rua, av., etc.)"
             value={form.prestadorEnderecoLogradouro || ""}
             onChange={(e) =>
               dispatch(patchForm({ prestadorEnderecoLogradouro: e.target.value }))
             }
           />
+
           <input
-            className={input}
+            className={`${input} md:col-span-1`}
             placeholder="Número"
             value={form.prestadorEnderecoNumero || ""}
             onChange={(e) =>
               dispatch(patchForm({ prestadorEnderecoNumero: e.target.value }))
             }
           />
+
           <input
-            className={input}
+            className={`${input} md:col-span-2`}
             placeholder="Bairro"
             value={form.prestadorEnderecoBairro || ""}
             onChange={(e) =>
               dispatch(patchForm({ prestadorEnderecoBairro: e.target.value }))
             }
           />
+
           <input
-            className={input}
+            className={`${input} md:col-span-3`}
             placeholder="Cidade"
             value={form.prestadorEnderecoCidade || ""}
             onChange={(e) =>
               dispatch(patchForm({ prestadorEnderecoCidade: e.target.value }))
             }
           />
+
           <input
-            className={input}
+            className={`${input} md:col-span-1`}
             placeholder="UF"
             maxLength={2}
             value={form.prestadorEnderecoUf || ""}
@@ -147,7 +152,18 @@ export default function StepPartes() {
               dispatch(patchForm({ prestadorEnderecoUf: e.target.value.toUpperCase() }))
             }
           />
+
+          {/* CEP */}
+          <IMaskInput
+            mask="00000-000"
+            value={form.prestadorEnderecoCep || ""}
+            onAccept={(val: string) => dispatch(patchForm({ prestadorEnderecoCep: val }))}
+            className={`${input} md:col-span-2`}
+            placeholder="CEP"
+            inputMode="numeric"
+          />
         </div>
+
       </fieldset>
     </div>
   );
