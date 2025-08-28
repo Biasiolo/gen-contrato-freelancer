@@ -2,7 +2,7 @@
 import React from "react";
 import { Document, Page, Text, View, StyleSheet } from "@react-pdf/renderer";
 import { ContractFormData, ContractTemplates, ServiceTemplate } from "@/types/contracts";
-import { interpolate, interpolateObject } from "@/utils/mergePlaceholders";
+import { interpolate } from "@/utils/mergePlaceholders";
 import Watermark from "./Watermark";
 import Footer, { FOOTER_HEIGHT } from "./Footer";
 
@@ -16,7 +16,7 @@ type Props = {
 const styles = StyleSheet.create({
   page: {
     padding: 32,
-    paddingBottom: FOOTER_HEIGHT + 24, // ← espaço pro rodapé
+    paddingBottom: FOOTER_HEIGHT + 24,
     fontSize: 11,
     lineHeight: 1.4,
     fontFamily: "Helvetica",
@@ -45,7 +45,7 @@ function List({ items }: { items?: string[] }) {
 
 export default function ContractDocument({ form, templates, service, map }: Props) {
   const b = templates.base;
-  const s = service as any;
+  const s: any = service || {};
 
   // strings e listas interpoladas
   const identificacao = interpolate(b.identificacaoPartes, map);
@@ -70,14 +70,31 @@ export default function ContractDocument({ form, templates, service, map }: Prop
   const disposicoesGerais = (b.disposicoesGerais || []).map((t) => interpolate(t, map));
   const foro = interpolate(b.foro, map);
 
-  // escopo e cláusulas específicas do serviço
-  const escopoList: string[] =
-    typeof s?.escopo === "string" ? [interpolate(s.escopo, map)] :
-      Array.isArray(s?.escopo) ? s.escopo.map((t: string) => interpolate(t, map)) : [];
+  // ===== Escopo do serviço =====
+  // Novo: seções numeradas (escopoSecoes)
+  const escopoSecoes: Array<{ titulo: string; itens: string[] }> =
+    Array.isArray(s?.escopoSecoes)
+      ? s.escopoSecoes.map((sec: any) => ({
+          titulo: interpolate(sec.titulo, map),
+          itens: (sec.itens || []).map((i: string) => interpolate(i, map)),
+        }))
+      : [];
 
+  // Fallback antigo: lista simples (escopo)
+  const escopoList: string[] =
+    typeof s?.escopo === "string"
+      ? [interpolate(s.escopo, map)]
+      : Array.isArray(s?.escopo)
+      ? s.escopo.map((t: string) => interpolate(t, map))
+      : [];
+
+  // Cláusulas específicas do serviço
   const especificasList: string[] =
-    typeof s?.clausulasEspecificas === "string" ? [interpolate(s.clausulasEspecificas, map)] :
-      Array.isArray(s?.clausulasEspecificas) ? s.clausulasEspecificas.map((t: string) => interpolate(t, map)) : [];
+    typeof s?.clausulasEspecificas === "string"
+      ? [interpolate(s.clausulasEspecificas, map)]
+      : Array.isArray(s?.clausulasEspecificas)
+      ? s.clausulasEspecificas.map((t: string) => interpolate(t, map))
+      : [];
 
   return (
     <Document>
@@ -97,11 +114,29 @@ export default function ContractDocument({ form, templates, service, map }: Prop
           <Text key={i} style={styles.p}>{p}</Text>
         ))}
 
-        {/* Escopo do serviço (se houver) */}
-        {escopoList.length > 0 && (
+        {/* Escopo do serviço */}
+        {(escopoSecoes.length > 0 || escopoList.length > 0) && (
           <>
             <Text style={styles.h2}>Escopo do Serviço</Text>
-            <List items={escopoList} />
+
+            {/* Preferência: seções numeradas */}
+            {escopoSecoes.length > 0 ? (
+              <View style={{ marginTop: 2 }}>
+                {escopoSecoes.map((sec, idx) => (
+                  <View key={idx} style={{ marginBottom: 8 }}>
+                    <Text style={{ ...styles.p, fontWeight: 700 }}>
+                      {idx + 1} {sec.titulo}
+                    </Text>
+                    {sec.itens.map((it, i) => (
+                      <Text key={i} style={styles.li}>- {it}</Text>
+                    ))}
+                  </View>
+                ))}
+              </View>
+            ) : (
+              // Fallback: lista simples antiga
+              <List items={escopoList} />
+            )}
           </>
         )}
 
@@ -199,44 +234,44 @@ export default function ContractDocument({ form, templates, service, map }: Prop
 
         {/* Assinaturas */}
         <View style={styles.signBlock}>
-  {/* CONTRATANTE */}
-  <View style={styles.signCol}>
-    <Text style={styles.signLine}> </Text>
-    <Text style={{ textAlign: "center", fontWeight: 700 }}>{form.contratanteRazao}</Text>
-    <Text style={styles.meta}>CNPJ: {form.contratanteCnpj}</Text>
-    <Text style={styles.meta}>
-      Representante: {form.contratanteRepresentanteNome} — CPF {form.contratanteRepresentanteCpf}
-    </Text>
-    <Text style={{ textAlign: "center", marginTop: 4 }}>CONTRATANTE</Text>
-  </View>
+          {/* CONTRATANTE */}
+          <View style={styles.signCol}>
+            <Text style={styles.signLine}> </Text>
+            <Text style={{ textAlign: "center", fontWeight: 700 }}>{form.contratanteRazao}</Text>
+            <Text style={styles.meta}>CNPJ: {form.contratanteCnpj}</Text>
+            <Text style={styles.meta}>
+              Representante: {form.contratanteRepresentanteNome} — CPF {form.contratanteRepresentanteCpf}
+            </Text>
+            <Text style={{ textAlign: "center", marginTop: 4 }}>CONTRATANTE</Text>
+          </View>
 
-  {/* CONTRATADA */}
-  <View style={styles.signCol}>
-    <Text style={styles.signLine}> </Text>
-    <Text style={{ textAlign: "center", fontWeight: 700 }}>{form.prestadorNome}</Text>
-    <Text style={styles.meta}>
-      CPF: {form.prestadorCpf}{form.prestadorRg ? ` — RG ${form.prestadorRg}` : ""}
-    </Text>
-    <Text style={{ textAlign: "center", marginTop: 4 }}>CONTRATADA</Text>
-  </View>
-</View>
+          {/* CONTRATADA */}
+          <View style={styles.signCol}>
+            <Text style={styles.signLine}> </Text>
+            <Text style={{ textAlign: "center", fontWeight: 700 }}>{form.prestadorNome}</Text>
+            <Text style={styles.meta}>
+              CPF: {form.prestadorCpf}{form.prestadorRg ? ` — RG ${form.prestadorRg}` : ""}
+            </Text>
+            <Text style={{ textAlign: "center", marginTop: 4 }}>CONTRATADA</Text>
+          </View>
+        </View>
 
-{/* Testemunhas */}
-<View style={{ marginTop: 24, flexDirection: "row", justifyContent: "space-between" }}>
-  <View style={styles.witnessCol}>
-    <Text style={styles.signLine}> </Text>
-    <Text style={{ textAlign: "center" }}>Testemunha 1</Text>
-    <Text style={styles.meta}>Nome: ________________________________</Text>
-    <Text style={styles.meta}>CPF: ___ . ___ . ___ - __</Text>
-  </View>
+        {/* Testemunhas */}
+        <View style={{ marginTop: 24, flexDirection: "row", justifyContent: "space-between" }}>
+          <View style={styles.witnessCol}>
+            <Text style={styles.signLine}> </Text>
+            <Text style={{ textAlign: "center" }}>Testemunha 1</Text>
+            <Text style={styles.meta}>Nome: ________________________________</Text>
+            <Text style={styles.meta}>CPF: ___ . ___ . ___ - __</Text>
+          </View>
 
-  <View style={styles.witnessCol}>
-    <Text style={styles.signLine}> </Text>
-    <Text style={{ textAlign: "center" }}>Testemunha 2</Text>
-    <Text style={styles.meta}>Nome: ________________________________</Text>
-    <Text style={styles.meta}>CPF: ___ . ___ . ___ - __</Text>
-  </View>
-</View>
+          <View style={styles.witnessCol}>
+            <Text style={styles.signLine}> </Text>
+            <Text style={{ textAlign: "center" }}>Testemunha 2</Text>
+            <Text style={styles.meta}>Nome: ________________________________</Text>
+            <Text style={styles.meta}>CPF: ___ . ___ . ___ - __</Text>
+          </View>
+        </View>
 
         <Footer />
       </Page>

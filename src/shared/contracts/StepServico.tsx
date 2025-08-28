@@ -26,6 +26,14 @@ export default function StepServico() {
   const input =
     "border border-white/30 bg-white/90 focus:bg-white rounded px-3 py-2 outline-none focus:ring-2 focus:ring-orange-500/50 transition";
 
+  // serviço selecionado
+  const selected: any = form.servicoChave
+    ? (templates.servicos as any)[form.servicoChave]
+    : null;
+
+  const hasSections = Array.isArray(selected?.escopoSecoes) && selected.escopoSecoes.length > 0;
+  const hasSimpleScope = Array.isArray(selected?.escopo) && selected.escopo.length > 0;
+
   return (
     <div className="space-y-6">
       {/* ===== Tipo de Documento ===== */}
@@ -33,8 +41,7 @@ export default function StepServico() {
         <legend className="text-sm font-semibold text-white/90 mb-3">Tipo de Documento</legend>
         <div className="flex flex-wrap gap-3">
           <label
-            className={`inline-flex items-center gap-2 px-3 py-2 rounded-lg border border-white/20 cursor-pointer ${form.tipoDocumento === "contrato" ? "bg-white/70" : "bg-white/10 hover:bg-white/20"
-              }`}
+            className={`inline-flex items-center gap-2 px-3 py-2 rounded-lg border border-white/20 cursor-pointer ${form.tipoDocumento === "contrato" ? "bg-white/70" : "bg-white/10 hover:bg-white/20"}`}
           >
             <input
               type="radio"
@@ -46,8 +53,7 @@ export default function StepServico() {
           </label>
 
           <label
-            className={`inline-flex items-center gap-2 px-3 py-2 rounded-lg border border-white/20 cursor-pointer ${form.tipoDocumento === "distrato" ? "bg-white/70" : "bg-white/10 hover:bg-white/20"
-              }`}
+            className={`inline-flex items-center gap-2 px-3 py-2 rounded-lg border border-white/20 cursor-pointer ${form.tipoDocumento === "distrato" ? "bg-white/70" : "bg-white/10 hover:bg-white/20"}`}
           >
             <input
               type="radio"
@@ -79,21 +85,45 @@ export default function StepServico() {
             </select>
           </fieldset>
 
-          {form.servicoChave && form.servicoChave !== "custom" && (
+          {/* ===== Escopo (com seções numeradas se existir) ===== */}
+          {form.servicoChave && form.servicoChave !== "custom" && (hasSections || hasSimpleScope) && (
             <fieldset className={card}>
               <legend className="text-sm font-semibold text-white/90 mb-3">
                 Escopo (padrão do serviço)
               </legend>
-              <div className="rounded border border-white/30 bg-white/60 p-4">
-                <ul className="list-disc pl-5 text-sm">
-                  {(templates.servicos as any)[form.servicoChave]?.escopo?.map((i: string, idx: number) => (
-                    <li key={idx}>{i}</li>
-                  ))}
-                </ul>
-              </div>
+
+              {/* Preferência: escopoSecoes → mostra “1 Título” + itens “- …” */}
+              {hasSections ? (
+                <div className="space-y-4 rounded border border-white/30 bg-white/60 p-4">
+                  {selected.escopoSecoes.map(
+                    (sec: { titulo: string; itens: string[] }, idx: number) => (
+                      <div key={idx}>
+                        <div className="font-semibold mb-1">
+                          {idx + 1} {sec.titulo}
+                        </div>
+                        <ul className="list-disc pl-5 text-sm">
+                          {sec.itens?.map((it: string, i: number) => (
+                            <li key={i}>{it}</li>
+                          ))}
+                        </ul>
+                      </div>
+                    )
+                  )}
+                </div>
+              ) : (
+                // Fallback: lista simples
+                <div className="rounded border border-white/30 bg-white/60 p-4">
+                  <ul className="list-disc pl-5 text-sm">
+                    {selected.escopo.map((i: string, idx: number) => (
+                      <li key={idx}>{i}</li>
+                    ))}
+                  </ul>
+                </div>
+              )}
             </fieldset>
           )}
 
+          {/* ===== Serviço Custom ===== */}
           {form.servicoChave === "custom" && (
             <fieldset className={card}>
               <legend className="text-sm font-semibold text-white/90 mb-3">

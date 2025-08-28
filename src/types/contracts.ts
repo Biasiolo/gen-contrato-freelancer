@@ -2,30 +2,31 @@
 
 export type MoneyLike = number | string;
 
+/** Estrutura base do contrato (cláusulas comuns) */
 export type BaseTemplate = {
   cabecalho: string;
   identificacaoPartes: string;
 
   // Objeto + parágrafos (ex.: serviços adicionais, autonomia)
   objeto: string;
-  objetoParagrafos?: string[];     // << NOVO
+  objetoParagrafos?: string[];
 
   // Vigência e pagamento
   vigencia: string;
   pagamento: string;
 
   // Listas e textos gerais
-  obrigacoesContratada?: string[];   // << NOVO
-  obrigacoesContratante?: string[];  // << NOVO
-  forcaMaior?: string;               // << NOVO
+  obrigacoesContratada?: string[];
+  obrigacoesContratante?: string[];
+  forcaMaior?: string;
   confidencialidadeLgpd: string;
-  usoImagemVoz?: string;             // << NOVO
+  usoImagemVoz?: string;
   propriedadeIntelectual: string;
   naoConcorrencia: string;
   rescisao: string;
-  extincao?: string[];               // << NOVO
-  multa?: string;                    // << NOVO
-  disposicoesGerais?: string[];      // << NOVO
+  extincao?: string[];
+  multa?: string;
+  disposicoesGerais?: string[];
 
   foro: string;
 };
@@ -42,15 +43,35 @@ export type ServiceKey =
   | "video"
   | "custom";
 
-export type PredefinedServiceTemplate = {
+/** Seção numerada do escopo (opcional para serviços pré-definidos) */
+export type EscopoSecao = {
   titulo: string;
-  escopo: string[]; // itens de escopo exibidos como lista
-  parametros?: Record<string, unknown>;
-  clausulasEspecificas?: string[]; // cláusulas que entram após as bases
+  itens: string[];
 };
 
+/** Template de serviço pré-definido (padrão) */
+export type PredefinedServiceTemplate = {
+  titulo: string;
+
+  /**
+   * Escopo simples (lista de itens) — compat com versão antiga
+   * Pode ser string[] (lista) ou string (texto único já interpolado).
+   * Tornado opcional para permitir uso exclusivo de `escopoSecoes`.
+   */
+  escopo?: string[] | string;
+
+  /**
+   * Escopo em seções numeradas (novo)
+   * Se presente, o PDF prioriza este formato (1. Título + itens com “-”).
+   */
+  escopoSecoes?: EscopoSecao[];
+
+  parametros?: Record<string, unknown>;
+  clausulasEspecificas?: string[] | string;
+};
+
+/** Template de serviço custom (campos livres via placeholders) */
 export type CustomServiceTemplate = {
-  // estes campos são preenchidos pelo admin no modo "em branco"
   titulo: "{{SERVICO_CUSTOM_TITULO}}";
   escopo: "{{SERVICO_CUSTOM_ESCOPO_RICH}}"; // texto rico/markdown
   parametros?: Record<string, unknown>;
@@ -59,11 +80,13 @@ export type CustomServiceTemplate = {
 
 export type ServiceTemplate = PredefinedServiceTemplate | CustomServiceTemplate;
 
+/** Template de Distrato */
 export type DistratoTemplate = {
   titulo: string;
   clausulas: Record<string, string>; // chave -> texto com placeholders
 };
 
+/** Conjunto completo de templates */
 export type ContractTemplates = {
   version: string;
   base: BaseTemplate;
@@ -71,9 +94,9 @@ export type ContractTemplates = {
   distrato: DistratoTemplate;
 };
 
-// Dados coletados no formulário (wizard)
+/** Dados coletados no formulário (wizard) */
 export type ContractFormData = {
-  // partes
+  // partes (contratante fixo)
   contratanteRazao: string;
   contratanteCnpj: string;
   contratanteEndereco: string;
@@ -81,13 +104,14 @@ export type ContractFormData = {
   contratanteRepresentanteNome: string;
   contratanteRepresentanteCpf: string;
 
+  // prestador
   prestadorNome: string;
   prestadorCpf: string;
   prestadorRg?: string;
   prestadorEmail: string;
   prestadorTelefone?: string;
 
-  // 🔽 Endereço granular do prestador (NOVO)
+  // Endereço granular do prestador
   prestadorEnderecoLogradouro?: string;
   prestadorEnderecoNumero?: string;
   prestadorEnderecoBairro?: string;
@@ -100,9 +124,9 @@ export type ContractFormData = {
   // parâmetros gerais
   dataInicio: string;
   dataFim?: string;
-  valorTotal: string;
+  valorTotal: string; // mantido como string para integração com máscara
   formaPagamento: "PIX" | "Transferência" | "Boleto" | "Outro";
-  diaVencimento?: string;
+  diaVencimento?: string; // YYYY-MM-DD na UI; formatado no buildMap
   banco?: string;
   agencia?: string;
   conta?: string;
@@ -123,8 +147,8 @@ export type ContractFormData = {
   params?: Record<string, unknown>;
 
   // distrato
-  dataDistrato?: string;
+  dataDistrato?: string; // Data do contrato original
   valorAcerto?: MoneyLike;
   prazoDevolucao?: string;
-  dataAcerto?: string;
+  dataAcerto?: string; // Data de pagamento
 };
