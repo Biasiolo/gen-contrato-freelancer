@@ -14,7 +14,7 @@ const initialForm: ContractFormData = {
   // contratante (fixo por enquanto)
   contratanteRazao: "D HOUSE AGÊNCIA DE PUBLICIDADE LTDA",
   contratanteCnpj: "18.319.139/0001-68",
-  contratanteEndereco: "Rua Teopompo de Vasconcelos, 161 ap 22-Vila Adyana-São José dos Campos/SP",
+  contratanteEndereco: "Rua Teopompo de Vasconcelos, 161 - ap 22 - Vila Adyana - São José dos Campos/SP",
   contratanteRepresentanteNome: "Daniele Reily da Silva Souza",
   contratanteRepresentanteCpf: "218.047.008-86",
   // prestador
