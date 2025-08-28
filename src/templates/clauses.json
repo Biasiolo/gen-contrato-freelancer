@@ -84,20 +84,29 @@
       ]
     },
     "designer": {
-      "titulo": "Designer Gráfico",
-      "escopo": [
-        "Criação e produção de animações para o meio digital.",
-        "Planejamento e produção de comunicação visual para projetos editoriais (livros, revistas, jornais), materiais promocionais (banners, cartazes, adesivos, panfletos), peças têxteis (camisetas), papelaria em geral, sinalização e logotipos/símbolos.",
-        "Criações visuais para sites (banners e peças audiovisuais).",
-        "Desenvolvimento de e-books (conceito, diagramação e finalização).",
-        "Desenvolvimento de vinhetas para TV.",
-        "Elaboração de identidade visual para empresas.",
-        "Criação de marca e aplicações (uniformes, cartões de visita e demais materiais impressos ou digitais).",
-        "Participação em reuniões de brainstorm e construção de briefings com o cliente."
-      ],
-      "parametros": {},
-      "clausulasEspecificas": []
-    },
+  "titulo": "Designer Gráfico",
+  "escopo": [
+    "Desenvolver identidades visuais (logotipo, paleta, tipografia, grid e manual de marca).",
+    "Criar sistemas de marca e aplicações em materiais digitais e impressos.",
+    "Produzir peças para performance e social (posts, carrosséis, stories, reels, anúncios estáticos e animados).",
+    "Criar criativos para mídia paga (Meta, Google, LinkedIn, TikTok) seguindo especificações de veiculação.",
+    "Diagramar e finalizar e-books, whitepapers, apresentações e propostas comerciais.",
+    "Desenhar banners, hotsites/landing pages (layout visual, UI estática, componentes e estados) — sem programação.",
+    "Elaborar peças institucionais: papelaria, folders, catálogos, sinalização e materiais de PDV.",
+    "Desenvolver templates editáveis (Canva/Figma) para uso recorrente pela equipe/cliente.",
+    "Produzir animações leves/motion graphics para social e ads (vinhetas curtas, transições, lower thirds).",
+    "Preparar e exportar artes em múltiplos formatos e resoluções (print/web), com organização de assets.",
+    "Realizar tratamento e composição de imagens (recorte, correção, mockups).",
+    "Garantir qualidade e consistência visual alinhadas ao posicionamento da marca e ao brand book.",
+    "Atuar em conjunto com times de conteúdo, mídia e tecnologia para briefing, ideação e validação.",
+    "Adequar peças a diferentes formatos e variações (adaptações de tamanho, idioma e plataforma).",
+    "Realizar controle de versão e organização de arquivos (nomenclatura, pastas e arquivos-fonte).",
+    "Preparar arquivos para impressão (sangrias, marcas de corte, perfis CMYK, provas)."
+  ],
+  "parametros": {},
+  "clausulasEspecificas": []
+},
+
     "copywriter": {
       "titulo": "Copywriter",
       "escopo": [
@@ -119,71 +128,161 @@
       ]
     },
     "rh": {
-      "titulo": "Recursos Humanos",
-      "escopo": [
-        "Triagem de currículos e entrevistas.",
-        "Suporte a rotinas de admissão e integração."
-      ],
-      "parametros": {},
-      "clausulasEspecificas": []
-    },
+  "titulo": "Recursos Humanos",
+  "escopo": [
+    "Planejar e conduzir processos seletivos para vagas administrativas, marketing, mídia, criação e tecnologia.",
+    "Elaborar descrições de vaga, requisitos e critérios de avaliação alinhados ao negócio.",
+    "Sourcing de candidatos (job boards, LinkedIn, indicações) e triagem de currículos.",
+    "Aplicar testes práticos/cases e avaliações comportamentais conforme perfil da função.",
+    "Realizar entrevistas (remotas/presenciais) e consolidar pareceres para decisão.",
+    "Fazer checagem de referências e apoio na proposta/negociação com aprovados.",
+    "Conduzir onboarding: checklist de admissão, documentação, acessos e integração cultural.",
+    "Apoiar offboarding: devolução de acessos/materiais e registro de lições aprendidas.",
+    "Administrar benefícios e cadastros (quando aplicável), mantendo dados atualizados.",
+    "Organizar controles de ponto/entregas para prestadores e times híbridos/remotos.",
+    "Manter base de talentos e pipeline ativo para posições recorrentes da agência.",
+    "Apoiar avaliação de desempenho, feedbacks contínuos e planos de desenvolvimento (PDI).",
+    "Mapear necessidades de treinamento e promover trilhas de capacitação.",
+    "Implementar e atualizar políticas internas, códigos de conduta e manuais.",
+    "Medir clima/engajamento e propor ações de cultura, reconhecimento e bem-estar.",
+    "Apoiar mediação de conflitos e boas práticas de comunicação entre times.",
+    "Zelar pela conformidade no tratamento de dados de pessoas (LGPD) e pela confidencialidade.",
+    "Produzir relatórios e indicadores de RH (tempo de contratação, turnover, absenteísmo, etc.)."
+  ],
+  "parametros": {},
+  "clausulasEspecificas": []
+},
+
     "assistente_adm": {
-      "titulo": "Assistente Administrativo",
-      "escopo": [
-        "Rotinas administrativas e cadastros.",
-        "Organização de documentos e controles operacionais."
-      ],
-      "parametros": {},
-      "clausulasEspecificas": []
-    },
+  "titulo": "Assistente Administrativo",
+  "escopo": [
+    "Executar rotinas administrativas gerais, cadastros e atualização de dados em sistemas (ERP/CRM/planilhas).",
+    "Organizar e manter arquivos e documentos (físicos e digitais) com padronização de pastas e nomenclaturas.",
+    "Apoiar o financeiro com contas a pagar/receber, conciliação simples, emissão/lançamento de NFS-e e comprovantes.",
+    "Preparar e atualizar planilhas de controles operacionais (prazos, entregas, orçamentos, rateios).",
+    "Realizar follow-up de cobranças e registrar retornos, mantendo histórico atualizado.",
+    "Atender fornecedores e clientes para questões administrativas, encaminhando demandas aos responsáveis.",
+    "Dar suporte a compras e cotações, controle de pedidos e contratos de serviços recorrentes.",
+    "Controlar prazos, vencimentos e renovações de contratos/assinaturas, alertando responsáveis.",
+    "Apoiar a agenda de reuniões: convites, pautas, atas e acompanhamento de tarefas.",
+    "Dar suporte logístico a eventos, viagens e treinamentos (cotações, reservas, confirmações).",
+    "Gerir estoque de materiais de escritório e insumos, realizando reposições quando necessário.",
+    "Auxiliar no onboarding/offboarding administrativo (acessos, cadastros, checklists, devolução de materiais).",
+    "Coletar e consolidar indicadores administrativos para relatórios periódicos.",
+    "Executar protocolos de organização e segurança da informação, observando diretrizes de LGPD.",
+    "Apoiar fluxos de assinatura eletrônica de documentos (ex.: contratos, aditivos, recibos).",
+    "Colaborar com times de marketing, criação e vendas em demandas administrativas do dia a dia."
+  ],
+  "parametros": {},
+  "clausulasEspecificas": []
+},
+
     "vendas": {
-      "titulo": "Vendas / Comercial",
-      "escopo": [
-        "Prospecção de clientes, gestão de pipeline e CRM.",
-        "Apoio em propostas e fechamento de oportunidades."
-      ],
-      "parametros": {
-        "META_MENSAL": "{{META_MENSAL}}"
-      },
-      "clausulasEspecificas": [
-        "Remuneração variável conforme metas e anexo específico, quando aplicável."
-      ]
-    },
+  "titulo": "Vendas / Comercial",
+  "escopo": [
+    "Definir ICP/territórios e priorizar listas de prospecção.",
+    "Prospectar ativamente (outbound) e atender leads inbound, respeitando LGPD.",
+    "Executar cadências multicanal (e-mail, telefone, WhatsApp, social) com follow-up estruturado.",
+    "Qualificar oportunidades (ex.: BANT/SPIN) e realizar discovery de necessidades.",
+    "Agendar e conduzir apresentações/demos com apoio técnico quando necessário.",
+    "Preparar propostas comerciais, escopos e orçamentos conforme políticas de preço.",
+    "Negociar condições (prazo, preço, escopo) dentro das diretrizes internas.",
+    "Registrar todas as interações no CRM, manter pipeline atualizado e higiene de dados.",
+    "Atualizar forecast e probabilidades por etapa; reportar variações relevantes.",
+    "Fazer handoff claro para onboarding/CS após o fechamento (documentos e contexto).",
+    "Atuar em renovações, reativações, upsell e cross-sell conforme momento do cliente.",
+    "Colaborar com Marketing para alinhamento MQL/SQL e feedback de qualidade de leads.",
+    "Participar de eventos/parcerias e captar leads qualificados.",
+    "Monitorar concorrência e compartilhar insights de mercado.",
+    "Gerar relatórios semanais de KPIs (taxa de conversão, ciclo, ticket médio, receita).",
+    "Contribuir com playbooks, scripts e melhorias contínuas no funil de vendas."
+  ],
+  "parametros": {
+    "META_MENSAL": "{{META_MENSAL}}"
+  },
+  "clausulasEspecificas": [
+    "Remuneração variável conforme metas e anexo específico, quando aplicável.",
+    "Meta mensal de vendas/receita: {{META_MENSAL}}, passível de revisão por termo aditivo."
+  ]
+},
     "social_media": {
-      "titulo": "Social Media",
-      "escopo": [
-        "Planejamento editorial, copy e publicação.",
-        "Interação básica e acompanhamento de métricas."
-      ],
-      "parametros": {},
-      "clausulasEspecificas": []
-    },
+  "titulo": "Social Media",
+  "escopo": [
+    "Gerenciar e administrar contas nas principais plataformas digitais (Instagram, Facebook, LinkedIn, entre outras).",
+    "Planejar e criar conteúdo para redes sociais de clientes.",
+    "Desenvolver materiais criativos e envolventes (posts, stories, reels, vídeos e outros formatos).",
+    "Apoiar na produção e programação de conteúdos conforme cronograma.",
+    "Realizar curadoria de temas, referências e tendências.",
+    "Contribuir com ideias criativas para campanhas e ações.",
+    "Elaborar, organizar e manter calendário editorial alinhado ao posicionamento e objetivos da marca.",
+    "Produzir e revisar legendas com base em briefings.",
+    "Programar publicações em diferentes plataformas.",
+    "Acompanhar e responder comentários, mensagens e menções, fortalecendo o relacionamento com a audiência.",
+    "Monitorar comentários e mensagens e realizar interações com seguidores.",
+    "Desenvolver estratégias de conteúdo alinhadas ao funil de vendas.",
+    "Avaliar o desempenho de conteúdos e campanhas (Google Analytics, Meta Business Suite e insights nativos).",
+    "Criar relatórios periódicos com análises e insights acionáveis.",
+    "Realizar captação de imagens em eventos ou nas dependências do cliente e editar conteúdos conforme briefing."
+  ],
+  "parametros": {},
+  "clausulasEspecificas": []
+},
+
     "trafego_pago": {
-      "titulo": "Gestão de Tráfego Pago",
-      "escopo": [
-        "Planejamento, setup e otimização de campanhas.",
-        "Relatórios de desempenho e recomendações."
-      ],
-      "parametros": {
-        "ORCAMENTO_MENSAL_MIDIA": "{{ORCAMENTO_MENSAL_MIDIA}}"
-      },
-      "clausulasEspecificas": [
-        "Investimento de mídia é de responsabilidade da CONTRATANTE."
-      ]
-    },
+  "titulo": "Gestão de Tráfego Pago",
+  "escopo": [
+    "Diagnóstico inicial e definição de metas (ex.: CAC, ROAS, CPL) e indicadores de sucesso.",
+    "Setup/validação de mensuração: pixels, tags e eventos de conversão (ex.: GTM e GA4).",
+    "Estruturação de contas e campanhas (nomenclatura, UTMs, organização por funil e objetivos).",
+    "Pesquisa de públicos e palavras-chave; mapeamento de jornadas e segmentações.",
+    "Criação e configuração de campanhas nas plataformas aplicáveis (Google Ads, Meta Ads, LinkedIn Ads, TikTok Ads, YouTube).",
+    "Configuração de lances, orçamentos, posicionamentos e extensões; ajustes por dispositivo e localização.",
+    "Testes A/B de criativos, mensagens, públicos, lances e páginas de destino.",
+    "Rotina de otimizações (negativos/Exclusions, alocação de budget, bids, criativos e segmentações) baseada em performance.",
+    "Configuração e manutenção de audiências de remarketing e similares/lookalike.",
+    "Monitoramento de qualidade de tráfego (exclusão de IPs, placements e domínios inadequados; frequency capping quando aplicável).",
+    "Pacing e distribuição do orçamento para cumprir {{ORCAMENTO_MENSAL_MIDIA}} por mês.",
+    "Acompanhamento de políticas das plataformas e adequações necessárias.",
+    "Criação de dashboards/relatórios (ex.: GA4/Looker Studio) com insights e próximos passos.",
+    "Reuniões de alinhamento e planejamento com a equipe da CONTRATANTE."
+  ],
+  "parametros": {
+    "ORCAMENTO_MENSAL_MIDIA": "{{ORCAMENTO_MENSAL_MIDIA}}"
+  },
+  "clausulasEspecificas": [
+    "Investimento de mídia é de responsabilidade da CONTRATANTE e será alocado até o limite de {{ORCAMENTO_MENSAL_MIDIA}}/mês.",
+    "Resultados dependem de fatores externos (mercado, site/landing page, oferta, aprovação de anúncios e políticas das plataformas) e não são garantidos.",
+    "Ativos e contas de mídia (Business Manager, Google Ads, GA4, GTM, pixels, catálogos) pertencem à CONTRATANTE; a CONTRATADA atuará com acessos autorizados.",
+    "Produção de criativos (peças, vídeos, landings) não está inclusa, salvo se previsto em escopo específico.",
+    "Reprovações por política, instabilidades das plataformas ou indisponibilidade de terceiros podem impactar prazos sem responsabilidade da CONTRATADA."
+  ]
+},
+
     "video": {
-      "titulo": "Vídeo / Audiovisual",
-      "escopo": [
-        "Captação, edição e finalização conforme roteiro.",
-        "Entrega nos formatos acordados."
-      ],
-      "parametros": {
-        "REVISOES_QTD": 1
-      },
-      "clausulasEspecificas": [
-        "Revisões inclusas: {{REVISOES_QTD}} rodada."
-      ]
-    },
+  "titulo": "Vídeo / Audiovisual",
+  "escopo": [
+    "Pré-produção: briefing, roteiro/decupagem, cronograma e lista técnica.",
+    "Planejamento de locações, elenco/participantes e autorizações de uso de imagem/locação quando aplicável.",
+    "Captação: direção, câmera, áudio direto e iluminação em estúdio/locação/externa conforme briefing.",
+    "Edição: seleção de cenas, montagem, tratamento e mix de áudio, correção/ajuste de cor.",
+    "Motion graphics básico (vinhetas, lower thirds, telas de abertura/encerramento).",
+    "Versões e formatos para plataformas (16:9, 1:1, 9:16) e cortes por duração quando aplicável.",
+    "Legendas abertas/queimadas e criação de thumbnail/capa (quando previsto).",
+    "Exportação/entrega em formatos acordados (ex.: MP4 H.264) conforme especificações das plataformas.",
+    "Organização e transferência dos arquivos finais; guarda de backup por período razoável."
+  ],
+  "parametros": {
+    "REVISOES_QTD": 1
+  },
+  "clausulasEspecificas": [
+    "Revisões inclusas: {{REVISOES_QTD}} rodada.",
+    "Solicitações fora do escopo e alterações após as revisões inclusas serão orçadas à parte.",
+    "Licenças de trilhas/bancos de imagem/locações especiais são de responsabilidade da CONTRATANTE, salvo acordo específico.",
+    "Arquivos brutos e projetos editáveis não estão inclusos por padrão; poderão ser entregues mediante solicitação e custos adicionais.",
+    "Deslocamentos, diárias de equipe e locação de equipamentos especiais (se necessários) serão orçados à parte."
+  ]
+},
+
     "custom": {
       "titulo": "{{SERVICO_CUSTOM_TITULO}}",
       "escopo": "{{SERVICO_CUSTOM_ESCOPO_RICH}}",
