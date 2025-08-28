@@ -10,7 +10,7 @@ export default function StepParametros() {
   // estilos alinhados ao StepPartes (sem camadas extras)
   const card = "rounded-2xl p-5 md:p-6";
   const input =
-    "border border-white/30 bg-white/90 focus:bg-white rounded px-3 py-2 outline-none focus:ring-2 focus:ring-orange-500/50 transition";
+    "w-full min-w-0 border border-white/30 bg-white/90 focus:bg-white rounded px-3 py-2 outline-none focus:ring-2 focus:ring-orange-500/50 transition";
 
   return (
     <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
@@ -47,10 +47,10 @@ export default function StepParametros() {
             padFractionalZeros
             prefix="R$ "
             unmask={true}
-            value={(form.valorTotal ?? "").toString()}   // ✅ força string
+            value={(form.valorTotal ?? "").toString()}
             onAccept={(val) => {
               const str = typeof val === "number" ? String(val).replace(".", ",") : (val ?? "");
-              dispatch(patchForm({ valorTotal: str }));  // ✅ salva string “limpa” (sem R$)
+              dispatch(patchForm({ valorTotal: str }));
             }}
             className={input}
             placeholder="Valor total (R$)"

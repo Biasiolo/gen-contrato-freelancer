@@ -16,7 +16,8 @@ const styles = StyleSheet.create({
         opacity: 0.1,                  // opacidade da marca d’água
         justifyContent: "space-around", // repete verticalmente
         alignItems: "flex-start",
-        paddingTop: 8,
+        paddingTop: 20,
+
     },
     item: {
         width: 160,                     // ajuste conforme sua arte
@@ -24,6 +25,9 @@ const styles = StyleSheet.create({
         transform: "rotate(-90deg)",    // deixa “de lado”
         marginLeft: -50,  
         opacity: 0.2,              // puxa a arte para a margem esquerda
+        paddingLeft: 20,
+        paddingRigth: 20,
+
     },
 });
 

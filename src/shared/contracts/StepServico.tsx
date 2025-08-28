@@ -24,7 +24,9 @@ export default function StepServico() {
   // estilos alinhados aos outros steps (sem camadas extras)
   const card = "rounded-2xl p-5 md:p-6";
   const input =
-    "border border-white/30 bg-white/90 focus:bg-white rounded px-3 py-2 outline-none focus:ring-2 focus:ring-orange-500/50 transition";
+    "w-full min-w-0 border border-white/30 bg-white/90 focus:bg-white rounded px-3 py-2 outline-none focus:ring-2 focus:ring-orange-500/50 transition";
+  const textArea =
+    "w-full min-w-0 border border-white/30 bg-white/90 focus:bg-white rounded px-3 py-2 outline-none focus:ring-2 focus:ring-orange-500/50 transition min-h-[120px]";
 
   // serviço selecionado
   const selected: any = form.servicoChave
@@ -41,7 +43,9 @@ export default function StepServico() {
         <legend className="text-sm font-semibold text-white/90 mb-3">Tipo de Documento</legend>
         <div className="flex flex-wrap gap-3">
           <label
-            className={`inline-flex items-center gap-2 px-3 py-2 rounded-lg border border-white/20 cursor-pointer ${form.tipoDocumento === "contrato" ? "bg-white/70" : "bg-white/10 hover:bg-white/20"}`}
+            className={`inline-flex items-center gap-2 px-3 py-2 rounded-lg border border-white/20 cursor-pointer ${
+              form.tipoDocumento === "contrato" ? "bg-white/70" : "bg-white/10 hover:bg-white/20"
+            }`}
           >
             <input
               type="radio"
@@ -53,7 +57,9 @@ export default function StepServico() {
           </label>
 
           <label
-            className={`inline-flex items-center gap-2 px-3 py-2 rounded-lg border border-white/20 cursor-pointer ${form.tipoDocumento === "distrato" ? "bg-white/70" : "bg-white/10 hover:bg-white/20"}`}
+            className={`inline-flex items-center gap-2 px-3 py-2 rounded-lg border border-white/20 cursor-pointer ${
+              form.tipoDocumento === "distrato" ? "bg-white/70" : "bg-white/10 hover:bg-white/20"
+            }`}
           >
             <input
               type="radio"
@@ -74,7 +80,7 @@ export default function StepServico() {
           <fieldset className={card}>
             <legend className="text-sm font-semibold text-white/90 mb-3">Serviço</legend>
             <select
-              className={`${input} w-full`}
+              className={input}
               value={form.servicoChave || ""}
               onChange={(e) => dispatch(patchForm({ servicoChave: e.target.value as any }))}
             >
@@ -92,9 +98,8 @@ export default function StepServico() {
                 Escopo (padrão do serviço)
               </legend>
 
-              {/* Preferência: escopoSecoes → mostra “1 Título” + itens “- …” */}
               {hasSections ? (
-                <div className="space-y-4 rounded border border-white/30 bg-white/60 p-4">
+                <div className="space-y-4 rounded border border-white/30 bg-white/60 p-4 break-words leading-relaxed">
                   {selected.escopoSecoes.map(
                     (sec: { titulo: string; itens: string[] }, idx: number) => (
                       <div key={idx}>
@@ -103,7 +108,7 @@ export default function StepServico() {
                         </div>
                         <ul className="list-disc pl-5 text-sm">
                           {sec.itens?.map((it: string, i: number) => (
-                            <li key={i}>{it}</li>
+                            <li key={i} className="break-words">{it}</li>
                           ))}
                         </ul>
                       </div>
@@ -112,10 +117,10 @@ export default function StepServico() {
                 </div>
               ) : (
                 // Fallback: lista simples
-                <div className="rounded border border-white/30 bg-white/60 p-4">
+                <div className="rounded border border-white/30 bg-white/60 p-4 break-words leading-relaxed">
                   <ul className="list-disc pl-5 text-sm">
                     {selected.escopo.map((i: string, idx: number) => (
-                      <li key={idx}>{i}</li>
+                      <li key={idx} className="break-words">{i}</li>
                     ))}
                   </ul>
                 </div>
@@ -131,21 +136,21 @@ export default function StepServico() {
               </legend>
 
               <input
-                className={`${input} w-full mb-3`}
+                className={`${input} mb-3`}
                 placeholder="Título do serviço"
                 value={form.servicoCustomTitulo || ""}
                 onChange={(e) => dispatch(patchForm({ servicoCustomTitulo: e.target.value }))}
               />
 
               <textarea
-                className={`${input} w-full min-h-[120px] mb-3`}
+                className={`${textArea} mb-3`}
                 placeholder="Escopo (markdown ou texto livre)"
                 value={form.servicoCustomEscopo || ""}
                 onChange={(e) => dispatch(patchForm({ servicoCustomEscopo: e.target.value }))}
               />
 
               <textarea
-                className={`${input} w-full min-h-[120px]`}
+                className={textArea}
                 placeholder="Cláusulas específicas (opcional)"
                 value={form.servicoCustomClausulas || ""}
                 onChange={(e) => dispatch(patchForm({ servicoCustomClausulas: e.target.value }))}
@@ -162,7 +167,7 @@ export default function StepServico() {
             </legend>
 
             <select
-              className={`${input} w-full`}
+              className={input}
               value={form.servicoChave || ""}
               onChange={(e) => dispatch(patchForm({ servicoChave: e.target.value as any }))}
             >
@@ -175,7 +180,7 @@ export default function StepServico() {
             {form.servicoChave === "custom" && (
               <div className="mt-3">
                 <input
-                  className={`${input} w-full`}
+                  className={input}
                   placeholder="Título do serviço (ex.: Administrativo e Financeiro)"
                   value={form.servicoCustomTitulo || ""}
                   onChange={(e) => dispatch(patchForm({ servicoCustomTitulo: e.target.value }))}
