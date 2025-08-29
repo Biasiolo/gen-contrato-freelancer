@@ -1,9 +1,6 @@
 // src/pdf/Watermark.tsx
 import React from "react";
 import { View, Image, StyleSheet } from "@react-pdf/renderer";
-
-// ⚠️ Se o import direto não funcionar no seu bundler, use a alternativa abaixo:
-// const marca = new URL("@/assets/marca.png", import.meta.url).href;
 import marca from "@/assets/marca.png";
 
 const styles = StyleSheet.create({
@@ -23,7 +20,7 @@ const styles = StyleSheet.create({
         width: 160,                     // ajuste conforme sua arte
         height: 100,                     // ajuste conforme sua arte
         transform: "rotate(-90deg)",    // deixa “de lado”
-        marginLeft: -50,  
+        marginLeft: -50,
         opacity: 0.2,              // puxa a arte para a margem esquerda
         paddingLeft: 20,
         paddingRigth: 20,
