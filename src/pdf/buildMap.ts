@@ -16,7 +16,7 @@ function formatPrestadorEndereco(form: ContractFormData) {
     form.prestadorEnderecoBairro ||
     form.prestadorEnderecoCidade ||
     form.prestadorEnderecoUf ||
-    form.prestadorEnderecoCep // ← inclui CEP para considerar granular
+    form.prestadorEnderecoCep
   );
 
   if (!hasGranular) {
@@ -43,9 +43,27 @@ function formatPrestadorEndereco(form: ContractFormData) {
   const base = joinCompact([linha1, form.prestadorEnderecoBairro, cidadeUf], " - ");
 
   // Se houver CEP, acrescenta ao final: " ... - CEP 12345-678"
-  return form.prestadorEnderecoCep
-    ? `${base} - CEP ${form.prestadorEnderecoCep}`
-    : base;
+  return form.prestadorEnderecoCep ? `${base} - CEP ${form.prestadorEnderecoCep}` : base;
+}
+
+// Formata "YYYY-MM-DD" -> "DD/MM/YYYY"
+function formatDateBr(iso?: string): string {
+  if (!iso) return "";
+  const [y, m, d] = iso.split("-");
+  if (!y || !m || !d) return iso;
+  return `${d.padStart(2, "0")}/${m.padStart(2, "0")}/${y}`;
+}
+
+// Diferença de dias inclusiva entre duas datas "YYYY-MM-DD"
+function diffDaysInclusive(isoStart?: string, isoEnd?: string): string {
+  if (!isoStart || !isoEnd) return "";
+  const [ys, ms, ds] = isoStart.split("-").map(Number);
+  const [ye, me, de] = isoEnd.split("-").map(Number);
+  const start = new Date(ys, (ms || 1) - 1, ds || 1);
+  const end = new Date(ye, (me || 1) - 1, de || 1);
+  const msPerDay = 24 * 60 * 60 * 1000;
+  const diff = Math.round((end.getTime() - start.getTime()) / msPerDay) + 1;
+  return Number.isFinite(diff) && diff > 0 ? String(diff) : "";
 }
 
 export function buildPlaceholderMap(
@@ -56,6 +74,12 @@ export function buildPlaceholderMap(
     form.servicoChave === "custom"
       ? form.servicoCustomTitulo || "Serviço Customizado"
       : (service as any)?.titulo || "";
+
+  // VIGENCIA_DIAS: usa o preenchido; se vazio, calcula
+  const vigenciaDias =
+    (form as any).vigenciaDias && String((form as any).vigenciaDias).trim()
+      ? String((form as any).vigenciaDias).trim()
+      : diffDaysInclusive(form.dataInicio, form.dataFim);
 
   return {
     // partes
@@ -69,16 +93,17 @@ export function buildPlaceholderMap(
     PRESTADOR_CPF: form.prestadorCpf,
     PRESTADOR_RG: form.prestadorRg,
     PRESTADOR_EMAIL: form.prestadorEmail,
-    PRESTADOR_ENDERECO: formatPrestadorEndereco(form), // ✅ agora inclui CEP quando informado
+    PRESTADOR_ENDERECO: formatPrestadorEndereco(form),
     PRESTADOR_TELEFONE: form.prestadorTelefone,
 
     // parâmetros gerais
     SERVICO_TITULO: servicoTitulo,
     DATA_INICIO: form.dataInicio,
     DATA_FIM: form.dataFim,
+    VIGENCIA_DIAS: vigenciaDias,                 // ⬅️ NOVO (sem renomear placeholder)
     VALOR_TOTAL: form.valorTotal,
     FORMA_PAGAMENTO: form.formaPagamento,
-    DATA_VENCIMENTO: form.diaVencimento, // (mantive como você enviou)
+    DATA_VENCIMENTO: formatDateBr(form.diaVencimento), // ⬅️ BR-PT
     BANCO: form.banco,
     AGENCIA: form.agencia,
     CONTA: form.conta,

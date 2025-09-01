@@ -9,7 +9,7 @@
       "§2º: O serviço será prestado com total autonomia, liberdade de horário, sem pessoalidade e sem qualquer subordinação à CONTRATANTE."
     ],
     "vigencia": "Este contrato terá vigência de {{VIGENCIA_DIAS}} dia(s), iniciando-se em {{DATA_INICIO}} e finalizando-se em {{DATA_FIM}}, podendo ser renovado por igual ou inferior período mediante acordo entre as partes. §1º: O contrato será automaticamente rescindido no término da prestação do serviço, dispensado aviso prévio.",
-    "pagamento": "Em contrapartida aos serviços prestados, a CONTRATADA receberá a quantia de R$ {{VALOR_TOTAL}}, a ser paga após o término deste contrato em até {{DATA_VENCIMENTO}}, por meio de depósito/transferência na conta Banco {{BANCO}} (cód.), Agência {{AGENCIA}}, Conta {{CONTA}}, e/ou PIX {{PIX}}.",
+    "pagamento": "Em contrapartida aos serviços prestados, a CONTRATADA receberá a quantia de R$ {{VALOR_TOTAL}}, a ser paga após o término deste contrato em até 10 dias, por meio de depósito/transferência na conta Banco {{BANCO}} (cód.), Agência {{AGENCIA}}, Conta {{CONTA}}, e/ou PIX {{PIX}}.",
     "obrigacoesContratada": [
       "Prestar, com a devida dedicação e seriedade, os serviços descritos neste contrato, da forma e modo ajustados.",
       "Respeitar normas, especificações técnicas e condições de segurança aplicáveis ao serviço.",

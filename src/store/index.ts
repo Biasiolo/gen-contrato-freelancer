@@ -33,6 +33,7 @@ const initialForm: ContractFormData = {
   // parâmetros gerais
   dataInicio: "",
   dataFim: "",
+  vigenciaDias: "",
   valorTotal: "",
   formaPagamento: "PIX",
   diaVencimento: "",

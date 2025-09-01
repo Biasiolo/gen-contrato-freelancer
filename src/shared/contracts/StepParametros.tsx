@@ -7,7 +7,6 @@ export default function StepParametros() {
   const form = useAppSelector((s) => s.form);
   const dispatch = useAppDispatch();
 
-  // estilos alinhados ao StepPartes (sem camadas extras)
   const card = "rounded-2xl p-5 md:p-6";
   const input =
     "w-full min-w-0 border border-white/30 bg-white/90 focus:bg-white rounded px-3 py-2 outline-none focus:ring-2 focus:ring-orange-500/50 transition";
@@ -17,6 +16,8 @@ export default function StepParametros() {
       {/* === VIGÊNCIA === */}
       <fieldset className={card}>
         <legend className="text-sm font-semibold text-white/90 mb-3">Vigência</legend>
+
+        {/* Linha 1: datas */}
         <div className="grid md:grid-cols-2 gap-3">
           <input
             type="date"
@@ -30,6 +31,24 @@ export default function StepParametros() {
             value={form.dataFim || ""}
             onChange={(e) => dispatch(patchForm({ dataFim: e.target.value }))}
           />
+        </div>
+
+        {/* Linha 2: dias de vigência */}
+        <div className="grid md:grid-cols-2 gap-3 mt-3">
+          <label className="flex flex-col gap-1">
+            <span className="text-xs font-medium text-white/90">Vigência (dias)</span>
+            <input
+              type="number"
+              min={1}
+              step={1}
+              className={input}
+              placeholder="Ex.: 30"
+              value={form.vigenciaDias || ""}
+              onChange={(e) => dispatch(patchForm({ vigenciaDias: e.target.value }))}
+              inputMode="numeric"
+            />
+          </label>
+          <div />
         </div>
       </fieldset>
 
