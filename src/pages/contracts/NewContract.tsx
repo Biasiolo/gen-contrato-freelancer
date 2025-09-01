@@ -4,8 +4,8 @@ import StepParametros from "@/shared/contracts/StepParametros";
 import StepServico from "@/shared/contracts/StepServico";
 import StepPreview from "@/shared/contracts/StepPreview";
 import { useAppDispatch, useAppSelector } from "@/store/hooks";
-import { next, prev, goToStep, resetForm } from "@/store"; // ⬅️ inclui resetForm
-import voiaLogo from "@/assets/logo-header.png"; // ajuste o path se necessário
+import { next, prev, goToStep, resetForm } from "@/store"; 
+import voiaLogo from "@/assets/logo-header.png"; 
 
 export default function NewContract() {
   const step = useAppSelector((s) => s.ui.step);
