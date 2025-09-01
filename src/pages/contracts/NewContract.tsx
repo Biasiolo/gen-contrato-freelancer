@@ -4,9 +4,8 @@ import StepParametros from "@/shared/contracts/StepParametros";
 import StepServico from "@/shared/contracts/StepServico";
 import StepPreview from "@/shared/contracts/StepPreview";
 import { useAppDispatch, useAppSelector } from "@/store/hooks";
-import { next, prev, goToStep } from "@/store";
-import voiaLogo from "@/assets/logo-header.png"; // ⬅️ ajuste o path/arquivo se necessário
-
+import { next, prev, goToStep, resetForm } from "@/store"; // ⬅️ inclui resetForm
+import voiaLogo from "@/assets/logo-header.png"; // ajuste o path se necessário
 
 export default function NewContract() {
   const step = useAppSelector((s) => s.ui.step);
@@ -17,18 +16,18 @@ export default function NewContract() {
   const isLast = step === labels.length - 1; // 3
   const progress = (step / (labels.length - 1)) * 100;
 
+  function handleRestart() {
+    dispatch(resetForm());
+    dispatch(goToStep(0));
+  }
+
   return (
     <>
       {/* NAVBAR */}
       <nav className="sticky top-0 z-50 border-b border-white/10 bg-black/30 backdrop-blur">
         <div className="max-w-8xl mx-auto px-6 py-3 flex items-center justify-between">
           <div className="flex items-center gap-3">
-            <img
-              src={voiaLogo}
-              alt="Voia"
-              className="h-8 w-auto select-none"
-              draggable={false}
-            />
+            <img src={voiaLogo} alt="Voia" className="h-8 w-auto select-none" draggable={false} />
           </div>
           <span className="text-[11px] text-white/60">Contrato • Distrato</span>
         </div>
@@ -41,11 +40,11 @@ export default function NewContract() {
           <p className="text-sm text-gray-100">Contrato / Distrato — Gerador de PDFs</p>
         </header>
 
+        {/* STEPPER */}
         <ol className="relative z-10 grid grid-cols-4 gap-2">
           {labels.map((label, i) => {
             const isCompleted = i < step;
             const isActive = i === step;
-
             return (
               <li key={label} className="flex flex-col items-center gap-2">
                 <button
@@ -60,12 +59,11 @@ export default function NewContract() {
                       isActive
                         ? "bg-orange-500 border-orange-500 text-white scale-105 shadow-lg"
                         : isCompleted
-                          ? "bg-teal-600 border-teal-500 text-white"
-                          : "bg-white border-gray-200 text-gray-600"
+                        ? "bg-teal-600 border-teal-500 text-white"
+                        : "bg-white border-gray-200 text-gray-600",
                     ].join(" ")}
                   >
                     {isCompleted ? (
-                      // check
                       <svg viewBox="0 0 20 20" className="h-5 w-5" fill="currentColor" aria-hidden>
                         <path
                           fillRule="evenodd"
@@ -79,8 +77,8 @@ export default function NewContract() {
                   </span>
                   <span
                     className={[
-                      "text-[11px] tracking-wide transition-colors",
-                      isActive ? "text-orange-400" : isCompleted ? "text-teal-600" : "text-gray-200"
+                      "text-[11px] tracking-wide transition-colors text-center",
+                      isActive ? "text-orange-400" : isCompleted ? "text-teal-600" : "text-gray-200",
                     ].join(" ")}
                   >
                     {label}
@@ -91,12 +89,28 @@ export default function NewContract() {
           })}
         </ol>
 
-        <section className="relative rounded-2xl p-6 md:p-8 bg-white/10 backdrop-blur-xl backdrop-saturate-150 border border-white/20 shadow-[0_10px_30px_rgba(0,0,0,0.15)]">
-          {/* highlight/vidro */}
-          <div className="pointer-events-none absolute inset-0 rounded-2xl bg-gradient-to-br from-white/40 via-white/10 to-transparent opacity-70" />
-          {/* brilho de borda */}
-          <div className="pointer-events-none absolute -inset-px rounded-2xl ring-1 ring-white/10" />
+        {/* BARRA DE PROGRESSO + REINICIAR */}
+        <div className="flex items-center gap-3">
+          <div className="relative flex-1 h-2 rounded-full bg-white/20 overflow-hidden">
+            <div
+              className="absolute inset-y-0 left-0 bg-gradient-to-r from-orange-400 via-orange-500 to-orange-600"
+              style={{ width: `${Math.max(0, Math.min(100, progress))}%` }}
+            />
+          </div>
 
+          <button
+            onClick={handleRestart}
+            className="px-3 py-1.5 rounded bg-red-600 hover:bg-red-700 cursor-pointer text-white text-xs md:text-sm"
+            title="Limpar todos os dados e voltar para o início"
+          >
+            Reiniciar
+          </button>
+        </div>
+
+        {/* CONTEÚDO DAS ETAPAS */}
+        <section className="relative rounded-2xl p-6 md:p-8 bg-white/10 backdrop-blur-xl backdrop-saturate-150 border border-white/20 shadow-[0_10px_30px_rgba(0,0,0,0.15)]">
+          <div className="pointer-events-none absolute inset-0 rounded-2xl bg-gradient-to-br from-white/40 via-white/10 to-transparent opacity-70" />
+          <div className="pointer-events-none absolute -inset-px rounded-2xl ring-1 ring-white/10" />
           <div className="relative z-10">
             {step === 0 && <StepPartes />}
             {step === 1 && <StepParametros />}
@@ -105,6 +119,7 @@ export default function NewContract() {
           </div>
         </section>
 
+        {/* NAVEGAÇÃO */}
         <footer className="flex justify-between">
           <button
             onClick={() => dispatch(prev())}
@@ -114,7 +129,6 @@ export default function NewContract() {
             Voltar
           </button>
 
-          {/* Esconder o botão “Avançar” na última etapa */}
           {!isLast && (
             <button
               onClick={() => dispatch(next())}
