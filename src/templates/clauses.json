@@ -278,33 +278,62 @@
       "clausulasEspecificas": []
     },
     "vendas": {
-      "titulo": "Vendas / Comercial",
-      "escopo": [
-        "Definir ICP/territórios e priorizar listas de prospecção.",
-        "Prospectar ativamente (outbound) e atender leads inbound, respeitando LGPD.",
-        "Executar cadências multicanal (e-mail, telefone, WhatsApp, social) com follow-up estruturado.",
-        "Qualificar oportunidades (ex.: BANT/SPIN) e realizar discovery de necessidades.",
-        "Agendar e conduzir apresentações/demos com apoio técnico quando necessário.",
-        "Preparar propostas comerciais, escopos e orçamentos conforme políticas de preço.",
-        "Negociar condições (prazo, preço, escopo) dentro das diretrizes internas.",
-        "Registrar todas as interações no CRM, manter pipeline atualizado e higiene de dados.",
-        "Atualizar forecast e probabilidades por etapa; reportar variações relevantes.",
-        "Fazer handoff claro para onboarding/CS após o fechamento (documentos e contexto).",
-        "Atuar em renovações, reativações, upsell e cross-sell conforme momento do cliente.",
-        "Colaborar com Marketing para alinhamento MQL/SQL e feedback de qualidade de leads.",
-        "Participar de eventos/parcerias e captar leads qualificados.",
-        "Monitorar concorrência e compartilhar insights de mercado.",
-        "Gerar relatórios semanais de KPIs (taxa de conversão, ciclo, ticket médio, receita).",
-        "Contribuir com playbooks, scripts e melhorias contínuas no funil de vendas."
-      ],
-      "parametros": {
-        "META_MENSAL": "{{META_MENSAL}}"
-      },
-      "clausulasEspecificas": [
-        "Remuneração variável conforme metas e anexo específico, quando aplicável.",
-        "Meta mensal de vendas/receita: {{META_MENSAL}}, passível de revisão por termo aditivo."
+  "titulo": "Consultor Comercial",
+  "escopoSecoes": [
+    {
+      "titulo": "Atendimento ao Cliente",
+      "itens": [
+        "Receber e atender clientes presencialmente ou por telefone.",
+        "Fornecer informações sobre produtos e serviços.",
+        "Compreender as necessidades dos clientes e oferecer soluções adequadas.",
+        "Oferecer suporte pós-venda.",
+        "Cultivar relacionamentos de longo prazo com os clientes.",
+        "Fazer contatos regulares para fidelização."
       ]
     },
+    {
+      "titulo": "Vendas e Negociação",
+      "itens": [
+        "Promover e vender produtos ou serviços.",
+        "Apresentar propostas comerciais com foco consultivo.",
+        "Negociar contratos e acompanhar o fechamento.",
+        "Realizar follow-up com clientes potenciais."
+      ]
+    },
+    {
+      "titulo": "Prospecção e Qualificação de Leads",
+      "itens": [
+        "Realizar prospecção ativa (cold calls, e-mails, LinkedIn) e leads frios.",
+        "Qualificar leads via e-mail, WhatsApp e telefone.",
+        "Atualizar o CRM com informações básicas dos prospects.",
+        "Alimentar o CRM com dados relevantes do processo."
+      ]
+    },
+    {
+      "titulo": "Gestão de Relacionamento com Clientes (CRM)",
+      "itens": [
+        "Manter registros atualizados sobre clientes e vendas.",
+        "Atualizar e alimentar o CRM com informações relevantes.",
+        "Acompanhar funil e conversões com precisão."
+      ]
+    },
+    {
+      "titulo": "Análise e Relatórios",
+      "itens": [
+        "Elaborar relatórios sobre vendas e atendimento.",
+        "Analisar dados para identificar tendências e oportunidades de melhoria.",
+        "Acompanhar indicadores de conversão."
+      ]
+    }
+  ],
+  "parametros": {
+
+  },
+  "clausulasEspecificas": [
+    "Remuneração variável conforme metas e anexo específico, quando aplicável."
+  ]
+},
+
     "social_media": {
   "titulo": "Social Media",
   "escopoSecoes": [

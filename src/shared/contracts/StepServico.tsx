@@ -10,7 +10,7 @@ const SERVICE_OPTIONS = [
   { value: "copywriter", label: "Copywriter" },
   { value: "rh", label: "Recursos Humanos" },
   { value: "assistente_adm", label: "Assistente Administrativo" },
-  { value: "vendas", label: "Vendas / Comercial" },
+  { value: "vendas", label: "Consultor Comercial" },
   { value: "social_media", label: "Social Media" },
   { value: "trafego_pago", label: "Gestão de Tráfego Pago" },
   { value: "video", label: "Vídeo / Audiovisual" },
