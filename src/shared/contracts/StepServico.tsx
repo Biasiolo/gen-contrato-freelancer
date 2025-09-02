@@ -44,9 +44,8 @@ export default function StepServico() {
         <legend className="text-sm font-semibold text-white/90 mb-3">Tipo de Documento</legend>
         <div className="flex flex-wrap gap-3">
           <label
-            className={`inline-flex items-center gap-2 px-3 py-2 rounded-lg border border-white/20 cursor-pointer ${
-              form.tipoDocumento === "contrato" ? "bg-white/70" : "bg-white/10 hover:bg-white/20"
-            }`}
+            className={`inline-flex items-center gap-2 px-3 py-2 rounded-lg border border-white/20 cursor-pointer ${form.tipoDocumento === "contrato" ? "bg-white/70" : "bg-white/10 hover:bg-white/20"
+              }`}
           >
             <input
               type="radio"
@@ -58,9 +57,8 @@ export default function StepServico() {
           </label>
 
           <label
-            className={`inline-flex items-center gap-2 px-3 py-2 rounded-lg border border-white/20 cursor-pointer ${
-              form.tipoDocumento === "distrato" ? "bg-white/70" : "bg-white/10 hover:bg-white/20"
-            }`}
+            className={`inline-flex items-center gap-2 px-3 py-2 rounded-lg border border-white/20 cursor-pointer ${form.tipoDocumento === "distrato" ? "bg-white/70" : "bg-white/10 hover:bg-white/20"
+              }`}
           >
             <input
               type="radio"
@@ -232,14 +230,14 @@ export default function StepServico() {
                 />
               </label>
               <label className="md:col-span-2 flex flex-col gap-1">
-  <span className="text-xs font-medium text-white/90">Valor do acerto por extenso (opcional)</span>
-  <input
-    className={input}
-    placeholder="Deixe em branco para preencher automático"
-    value={form.valorAcertoExtenso ?? brlPorExtenso(form.valorAcerto as any)}
-    onChange={(e) => dispatch(patchForm({ valorAcertoExtenso: e.target.value }))}
-  />
-</label>
+                <span className="text-xs font-medium text-white/90">Valor do acerto por extenso (opcional)</span>
+                <input
+                  className={input}
+                  placeholder="Deixe em branco para preencher automático"
+                  value={form.valorAcertoExtenso ?? brlPorExtenso(form.valorAcerto as any)}
+                  onChange={(e) => dispatch(patchForm({ valorAcertoExtenso: e.target.value }))}
+                />
+              </label>
 
               {/* Data de pagamento (DATA_ACERTO) */}
               <label className="flex flex-col gap-1">

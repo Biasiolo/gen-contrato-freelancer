@@ -58,89 +58,88 @@
   },
   "servicos": {
     "web_designer": {
-  "titulo": "Web Designer",
-  "escopoSecoes": [
-    {
-      "titulo": "Criação e Desenvolvimento de Layouts para Sites",
-      "itens": [
-        "Projetar interfaces visuais interessantes e funcionais para sites, landing pages e blogs.",
-        "Garantir design responsivo e adaptável a diferentes dispositivos."
+      "titulo": "Web Designer",
+      "escopoSecoes": [
+        {
+          "titulo": "Criação e Desenvolvimento de Layouts para Sites",
+          "itens": [
+            "Projetar interfaces visuais interessantes e funcionais para sites, landing pages e blogs.",
+            "Garantir design responsivo e adaptável a diferentes dispositivos."
+          ]
+        },
+        {
+          "titulo": "Design de Elementos Gráficos para Web",
+          "itens": [
+            "Criar banners, botões, ícones e outros elementos visuais para sites e campanhas digitais.",
+            "Seguir a identidade visual das marcas atendidas pela agência."
+          ]
+        },
+        {
+          "titulo": "Edição e Otimização de Imagens para Web",
+          "itens": [
+            "Ajustar tamanho, resolução e qualidade de imagens para melhor desempenho online.",
+            "Criar gráficos personalizados para campanhas e redes sociais."
+          ]
+        },
+        {
+          "titulo": "Desenvolvimento de Prototipagem e Wireframes",
+          "itens": [
+            "Criar esboços e protótipos para apresentar a estrutura visual antes da implementação.",
+            "Utilizar ferramentas como Figma, Adobe XD ou Sketch."
+          ]
+        },
+        {
+          "titulo": "Criação e Implementação de Interfaces UI/UX",
+          "itens": [
+            "Desenvolver interfaces focadas na melhor experiência do usuário (UX).",
+            "Melhorar navegabilidade e usabilidade de sites e plataformas digitais."
+          ]
+        },
+        {
+          "titulo": "Integração com Equipes de Programação",
+          "itens": [
+            "Trabalhar em conjunto com desenvolvedores para garantir implementação correta do design.",
+            "Fornecer assets e diretrizes para a execução dos projetos."
+          ]
+        },
+        {
+          "titulo": "Otimização de Sites para SEO e Performance",
+          "itens": [
+            "Garantir designs otimizados para carregamento rápido e boa indexação.",
+            "Aplicar técnicas básicas de SEO on-page."
+          ]
+        },
+        {
+          "titulo": "Criação de Materiais para Campanhas Digitais",
+          "itens": [
+            "Desenvolver artes para e-mail marketing, anúncios e banners publicitários.",
+            "Adaptar layouts para diferentes formatos e plataformas."
+          ]
+        },
+        {
+          "titulo": "Manutenção e Atualização de Sites",
+          "itens": [
+            "Atualizar conteúdos visuais e corrigir problemas de design.",
+            "Aprimorar a interface com base em métricas e feedbacks dos clientes."
+          ]
+        },
+        {
+          "titulo": "Pesquisa de Tendências e Inovação",
+          "itens": [
+            "Acompanhar tendências de design web e novas tecnologias.",
+            "Testar ferramentas e técnicas para aprimorar as entregas."
+          ]
+        }
+      ],
+      "parametros": {
+        "REVISOES_QTD": 2,
+        "ACEITE_CRITERIOS": "validação visual e responsiva em breakpoints acordados"
+      },
+      "clausulasEspecificas": [
+        "Revisões inclusas: {{REVISOES_QTD}} rodadas.",
+        "Critérios de aceite: {{ACEITE_CRITERIOS}}."
       ]
     },
-    {
-      "titulo": "Design de Elementos Gráficos para Web",
-      "itens": [
-        "Criar banners, botões, ícones e outros elementos visuais para sites e campanhas digitais.",
-        "Seguir a identidade visual das marcas atendidas pela agência."
-      ]
-    },
-    {
-      "titulo": "Edição e Otimização de Imagens para Web",
-      "itens": [
-        "Ajustar tamanho, resolução e qualidade de imagens para melhor desempenho online.",
-        "Criar gráficos personalizados para campanhas e redes sociais."
-      ]
-    },
-    {
-      "titulo": "Desenvolvimento de Prototipagem e Wireframes",
-      "itens": [
-        "Criar esboços e protótipos para apresentar a estrutura visual antes da implementação.",
-        "Utilizar ferramentas como Figma, Adobe XD ou Sketch."
-      ]
-    },
-    {
-      "titulo": "Criação e Implementação de Interfaces UI/UX",
-      "itens": [
-        "Desenvolver interfaces focadas na melhor experiência do usuário (UX).",
-        "Melhorar navegabilidade e usabilidade de sites e plataformas digitais."
-      ]
-    },
-    {
-      "titulo": "Integração com Equipes de Programação",
-      "itens": [
-        "Trabalhar em conjunto com desenvolvedores para garantir implementação correta do design.",
-        "Fornecer assets e diretrizes para a execução dos projetos."
-      ]
-    },
-    {
-      "titulo": "Otimização de Sites para SEO e Performance",
-      "itens": [
-        "Garantir designs otimizados para carregamento rápido e boa indexação.",
-        "Aplicar técnicas básicas de SEO on-page."
-      ]
-    },
-    {
-      "titulo": "Criação de Materiais para Campanhas Digitais",
-      "itens": [
-        "Desenvolver artes para e-mail marketing, anúncios e banners publicitários.",
-        "Adaptar layouts para diferentes formatos e plataformas."
-      ]
-    },
-    {
-      "titulo": "Manutenção e Atualização de Sites",
-      "itens": [
-        "Atualizar conteúdos visuais e corrigir problemas de design.",
-        "Aprimorar a interface com base em métricas e feedbacks dos clientes."
-      ]
-    },
-    {
-      "titulo": "Pesquisa de Tendências e Inovação",
-      "itens": [
-        "Acompanhar tendências de design web e novas tecnologias.",
-        "Testar ferramentas e técnicas para aprimorar as entregas."
-      ]
-    }
-  ],
-  "parametros": {
-    "REVISOES_QTD": 2,
-    "ACEITE_CRITERIOS": "validação visual e responsiva em breakpoints acordados"
-  },
-  "clausulasEspecificas": [
-    "Revisões inclusas: {{REVISOES_QTD}} rodadas.",
-    "Critérios de aceite: {{ACEITE_CRITERIOS}}."
-  ]
-},
-
     "designer": {
       "titulo": "Designer Gráfico",
       "escopo": [
@@ -165,70 +164,70 @@
       "clausulasEspecificas": []
     },
     "copywriter": {
-  "titulo": "Copywriter",
-  "escopoSecoes": [
-    {
-      "titulo": "Criação de textos persuasivos",
-      "itens": [
-        "Escrever conteúdos que incentivem ações do público, como cliques, compras ou cadastros."
+      "titulo": "Copywriter",
+      "escopoSecoes": [
+        {
+          "titulo": "Criação de textos persuasivos",
+          "itens": [
+            "Escrever conteúdos que incentivem ações do público, como cliques, compras ou cadastros."
+          ]
+        },
+        {
+          "titulo": "Desenvolvimento de campanhas publicitárias",
+          "itens": [
+            "Redigir slogans, anúncios, e-mails e textos para redes sociais."
+          ]
+        },
+        {
+          "titulo": "Ajuste de tom e estilo",
+          "itens": [
+            "Adaptar a linguagem da marca ao público-alvo, garantindo consistência."
+          ]
+        },
+        {
+          "titulo": "Planejamento de conteúdo",
+          "itens": [
+            "Colaborar com a equipe de marketing para definir estratégias de conteúdo alinhadas aos objetivos do cliente."
+          ]
+        },
+        {
+          "titulo": "Pesquisa de mercado e concorrência",
+          "itens": [
+            "Analisar tendências e comportamento do consumidor para criar textos mais relevantes."
+          ]
+        },
+        {
+          "titulo": "Otimização para SEO",
+          "itens": [
+            "Escrever textos que melhorem o posicionamento orgânico nos motores de busca."
+          ]
+        },
+        {
+          "titulo": "Colaboração com designers",
+          "itens": [
+            "Trabalhar em conjunto para alinhar texto e visual em peças publicitárias."
+          ]
+        },
+        {
+          "titulo": "Revisão e aprimoramento",
+          "itens": [
+            "Editar e ajustar conteúdos para garantir clareza, precisão e impacto."
+          ]
+        },
+        {
+          "titulo": "Análise de resultados",
+          "itens": [
+            "Monitorar a performance dos textos e ajustar as estratégias de acordo com dados e métricas."
+          ]
+        }
+      ],
+      "parametros": {
+        "REVISOES_QTD": 2
+      },
+      "clausulasEspecificas": [
+        "Revisões de texto inclusas: {{REVISOES_QTD}} rodadas sem alteração de escopo."
       ]
     },
-    {
-      "titulo": "Desenvolvimento de campanhas publicitárias",
-      "itens": [
-        "Redigir slogans, anúncios, e-mails e textos para redes sociais."
-      ]
-    },
-    {
-      "titulo": "Ajuste de tom e estilo",
-      "itens": [
-        "Adaptar a linguagem da marca ao público-alvo, garantindo consistência."
-      ]
-    },
-    {
-      "titulo": "Planejamento de conteúdo",
-      "itens": [
-        "Colaborar com a equipe de marketing para definir estratégias de conteúdo alinhadas aos objetivos do cliente."
-      ]
-    },
-    {
-      "titulo": "Pesquisa de mercado e concorrência",
-      "itens": [
-        "Analisar tendências e comportamento do consumidor para criar textos mais relevantes."
-      ]
-    },
-    {
-      "titulo": "Otimização para SEO",
-      "itens": [
-        "Escrever textos que melhorem o posicionamento orgânico nos motores de busca."
-      ]
-    },
-    {
-      "titulo": "Colaboração com designers",
-      "itens": [
-        "Trabalhar em conjunto para alinhar texto e visual em peças publicitárias."
-      ]
-    },
-    {
-      "titulo": "Revisão e aprimoramento",
-      "itens": [
-        "Editar e ajustar conteúdos para garantir clareza, precisão e impacto."
-      ]
-    },
-    {
-      "titulo": "Análise de resultados",
-      "itens": [
-        "Monitorar a performance dos textos e ajustar as estratégias de acordo com dados e métricas."
-      ]
-    }
-  ],
-  "parametros": {
-    "REVISOES_QTD": 2
-  },
-  "clausulasEspecificas": [
-    "Revisões de texto inclusas: {{REVISOES_QTD}} rodadas sem alteração de escopo."
-  ]
-},
     "rh": {
       "titulo": "Recursos Humanos",
       "escopo": [
@@ -278,121 +277,117 @@
       "clausulasEspecificas": []
     },
     "vendas": {
-  "titulo": "Consultor Comercial",
-  "escopoSecoes": [
-    {
-      "titulo": "Atendimento ao Cliente",
-      "itens": [
-        "Receber e atender clientes presencialmente ou por telefone.",
-        "Fornecer informações sobre produtos e serviços.",
-        "Compreender as necessidades dos clientes e oferecer soluções adequadas.",
-        "Oferecer suporte pós-venda.",
-        "Cultivar relacionamentos de longo prazo com os clientes.",
-        "Fazer contatos regulares para fidelização."
+      "titulo": "Consultor Comercial",
+      "escopoSecoes": [
+        {
+          "titulo": "Atendimento ao Cliente",
+          "itens": [
+            "Receber e atender clientes presencialmente ou por telefone.",
+            "Fornecer informações sobre produtos e serviços.",
+            "Compreender as necessidades dos clientes e oferecer soluções adequadas.",
+            "Oferecer suporte pós-venda.",
+            "Cultivar relacionamentos de longo prazo com os clientes.",
+            "Fazer contatos regulares para fidelização."
+          ]
+        },
+        {
+          "titulo": "Vendas e Negociação",
+          "itens": [
+            "Promover e vender produtos ou serviços.",
+            "Apresentar propostas comerciais com foco consultivo.",
+            "Negociar contratos e acompanhar o fechamento.",
+            "Realizar follow-up com clientes potenciais."
+          ]
+        },
+        {
+          "titulo": "Prospecção e Qualificação de Leads",
+          "itens": [
+            "Realizar prospecção ativa (cold calls, e-mails, LinkedIn) e leads frios.",
+            "Qualificar leads via e-mail, WhatsApp e telefone.",
+            "Atualizar o CRM com informações básicas dos prospects.",
+            "Alimentar o CRM com dados relevantes do processo."
+          ]
+        },
+        {
+          "titulo": "Gestão de Relacionamento com Clientes (CRM)",
+          "itens": [
+            "Manter registros atualizados sobre clientes e vendas.",
+            "Atualizar e alimentar o CRM com informações relevantes.",
+            "Acompanhar funil e conversões com precisão."
+          ]
+        },
+        {
+          "titulo": "Análise e Relatórios",
+          "itens": [
+            "Elaborar relatórios sobre vendas e atendimento.",
+            "Analisar dados para identificar tendências e oportunidades de melhoria.",
+            "Acompanhar indicadores de conversão."
+          ]
+        }
+      ],
+      "parametros": {},
+      "clausulasEspecificas": [
+        "Remuneração variável conforme metas e anexo específico, quando aplicável."
       ]
     },
-    {
-      "titulo": "Vendas e Negociação",
-      "itens": [
-        "Promover e vender produtos ou serviços.",
-        "Apresentar propostas comerciais com foco consultivo.",
-        "Negociar contratos e acompanhar o fechamento.",
-        "Realizar follow-up com clientes potenciais."
-      ]
-    },
-    {
-      "titulo": "Prospecção e Qualificação de Leads",
-      "itens": [
-        "Realizar prospecção ativa (cold calls, e-mails, LinkedIn) e leads frios.",
-        "Qualificar leads via e-mail, WhatsApp e telefone.",
-        "Atualizar o CRM com informações básicas dos prospects.",
-        "Alimentar o CRM com dados relevantes do processo."
-      ]
-    },
-    {
-      "titulo": "Gestão de Relacionamento com Clientes (CRM)",
-      "itens": [
-        "Manter registros atualizados sobre clientes e vendas.",
-        "Atualizar e alimentar o CRM com informações relevantes.",
-        "Acompanhar funil e conversões com precisão."
-      ]
-    },
-    {
-      "titulo": "Análise e Relatórios",
-      "itens": [
-        "Elaborar relatórios sobre vendas e atendimento.",
-        "Analisar dados para identificar tendências e oportunidades de melhoria.",
-        "Acompanhar indicadores de conversão."
-      ]
-    }
-  ],
-  "parametros": {
-
-  },
-  "clausulasEspecificas": [
-    "Remuneração variável conforme metas e anexo específico, quando aplicável."
-  ]
-},
-
     "social_media": {
-  "titulo": "Social Media",
-  "escopoSecoes": [
-    {
-      "titulo": "Gestão de Redes Sociais",
-      "itens": [
-        "Planejar e criar conteúdo para redes sociais de clientes.",
-        "Programar e acompanhar publicações com consistência.",
-        "Monitorar interações.",
-        "Gerenciar e administrar contas nas principais plataformas (Instagram, Facebook, LinkedIn, entre outras)."
-      ]
+      "titulo": "Social Media",
+      "escopoSecoes": [
+        {
+          "titulo": "Gestão de Redes Sociais",
+          "itens": [
+            "Planejar e criar conteúdo para redes sociais de clientes.",
+            "Programar e acompanhar publicações com consistência.",
+            "Monitorar interações.",
+            "Gerenciar e administrar contas nas principais plataformas (Instagram, Facebook, LinkedIn, entre outras)."
+          ]
+        },
+        {
+          "titulo": "Criação de Conteúdo",
+          "itens": [
+            "Desenvolver materiais criativos (posts, stories, reels, vídeos e outros formatos).",
+            "Apoiar na produção e programação de conteúdos.",
+            "Fazer curadoria de temas, referências e tendências.",
+            "Contribuir com ideias criativas para campanhas e ações."
+          ]
+        },
+        {
+          "titulo": "Planejamento de Calendário Editorial",
+          "itens": [
+            "Elaborar, organizar e programar postagens alinhadas ao posicionamento e objetivos da marca.",
+            "Organizar calendários de postagens.",
+            "Produzir e revisar legendas com base em briefings.",
+            "Programar publicações em diferentes plataformas."
+          ]
+        },
+        {
+          "titulo": "Monitoramento de Interações",
+          "itens": [
+            "Acompanhar e responder comentários, mensagens e menções, fortalecendo o relacionamento com a audiência.",
+            "Monitorar comentários e mensagens.",
+            "Realizar interações com seguidores.",
+            "Desenvolver estratégias de conteúdo alinhadas ao funil de vendas."
+          ]
+        },
+        {
+          "titulo": "Análise de Métricas",
+          "itens": [
+            "Avaliar desempenho usando Google Analytics, Meta Business Suite e insights nativos.",
+            "Criar relatórios de acompanhamento.",
+            "Fazer análises e gerar insights acionáveis."
+          ]
+        },
+        {
+          "titulo": "Captação e Edição",
+          "itens": [
+            "Participar de eventos, deslocar-se ao cliente para captação de imagens.",
+            "Editar e criar conteúdos seguindo o briefing do cliente."
+          ]
+        }
+      ],
+      "parametros": {},
+      "clausulasEspecificas": []
     },
-    {
-      "titulo": "Criação de Conteúdo",
-      "itens": [
-        "Desenvolver materiais criativos (posts, stories, reels, vídeos e outros formatos).",
-        "Apoiar na produção e programação de conteúdos.",
-        "Fazer curadoria de temas, referências e tendências.",
-        "Contribuir com ideias criativas para campanhas e ações."
-      ]
-    },
-    {
-      "titulo": "Planejamento de Calendário Editorial",
-      "itens": [
-        "Elaborar, organizar e programar postagens alinhadas ao posicionamento e objetivos da marca.",
-        "Organizar calendários de postagens.",
-        "Produzir e revisar legendas com base em briefings.",
-        "Programar publicações em diferentes plataformas."
-      ]
-    },
-    {
-      "titulo": "Monitoramento de Interações",
-      "itens": [
-        "Acompanhar e responder comentários, mensagens e menções, fortalecendo o relacionamento com a audiência.",
-        "Monitorar comentários e mensagens.",
-        "Realizar interações com seguidores.",
-        "Desenvolver estratégias de conteúdo alinhadas ao funil de vendas."
-      ]
-    },
-    {
-      "titulo": "Análise de Métricas",
-      "itens": [
-        "Avaliar desempenho usando Google Analytics, Meta Business Suite e insights nativos.",
-        "Criar relatórios de acompanhamento.",
-        "Fazer análises e gerar insights acionáveis."
-      ]
-    },
-    {
-      "titulo": "Captação e Edição",
-      "itens": [
-        "Participar de eventos, deslocar-se ao cliente para captação de imagens.",
-        "Editar e criar conteúdos seguindo o briefing do cliente."
-      ]
-    }
-  ],
-  "parametros": {},
-  "clausulasEspecificas": []
-},
-
     "trafego_pago": {
       "titulo": "Gestão de Tráfego Pago",
       "escopo": [

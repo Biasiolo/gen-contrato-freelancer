@@ -76,9 +76,9 @@ export default function ContractDocument({ form, templates, service, map }: Prop
   const escopoSecoes: Array<{ titulo: string; itens: string[] }> =
     Array.isArray(s?.escopoSecoes)
       ? s.escopoSecoes.map((sec: any) => ({
-          titulo: interpolate(sec.titulo, map),
-          itens: (sec.itens || []).map((i: string) => interpolate(i, map)),
-        }))
+        titulo: interpolate(sec.titulo, map),
+        itens: (sec.itens || []).map((i: string) => interpolate(i, map)),
+      }))
       : [];
 
   // Fallback antigo: lista simples (escopo)
@@ -86,16 +86,16 @@ export default function ContractDocument({ form, templates, service, map }: Prop
     typeof s?.escopo === "string"
       ? [interpolate(s.escopo, map)]
       : Array.isArray(s?.escopo)
-      ? s.escopo.map((t: string) => interpolate(t, map))
-      : [];
+        ? s.escopo.map((t: string) => interpolate(t, map))
+        : [];
 
   // Cláusulas específicas do serviço
   const especificasList: string[] =
     typeof s?.clausulasEspecificas === "string"
       ? [interpolate(s.clausulasEspecificas, map)]
       : Array.isArray(s?.clausulasEspecificas)
-      ? s.clausulasEspecificas.map((t: string) => interpolate(t, map))
-      : [];
+        ? s.clausulasEspecificas.map((t: string) => interpolate(t, map))
+        : [];
 
   return (
     <Document>

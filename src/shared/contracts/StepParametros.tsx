@@ -77,15 +77,15 @@ export default function StepParametros() {
             inputMode="decimal"
           />
           {/* Valor por extenso (opcional) */}
-    <label className="md:col-span-2 flex flex-col gap-1">
-      <span className="text-xs font-medium text-white/90">Valor por extenso (opcional)</span>
-      <input
-        className={input}
-        placeholder="Deixe em branco para preencher automático"
-        value={form.valorTotalExtenso ?? brlPorExtenso(form.valorTotal)}
-        onChange={(e) => dispatch(patchForm({ valorTotalExtenso: e.target.value }))}
-      />
-    </label>
+          <label className="md:col-span-2 flex flex-col gap-1">
+            <span className="text-xs font-medium text-white/90">Valor por extenso (opcional)</span>
+            <input
+              className={input}
+              placeholder="Deixe em branco para preencher automático"
+              value={form.valorTotalExtenso ?? brlPorExtenso(form.valorTotal)}
+              onChange={(e) => dispatch(patchForm({ valorTotalExtenso: e.target.value }))}
+            />
+          </label>
 
           <select
             className={input}

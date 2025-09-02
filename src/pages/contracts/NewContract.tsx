@@ -4,8 +4,8 @@ import StepParametros from "@/shared/contracts/StepParametros";
 import StepServico from "@/shared/contracts/StepServico";
 import StepPreview from "@/shared/contracts/StepPreview";
 import { useAppDispatch, useAppSelector } from "@/store/hooks";
-import { next, prev, goToStep, resetForm } from "@/store"; 
-import voiaLogo from "@/assets/logo-header.png"; 
+import { next, prev, goToStep, resetForm } from "@/store";
+import voiaLogo from "@/assets/logo-header.png";
 
 export default function NewContract() {
   const step = useAppSelector((s) => s.ui.step);
@@ -59,8 +59,8 @@ export default function NewContract() {
                       isActive
                         ? "bg-orange-500 border-orange-500 text-white scale-105 shadow-lg"
                         : isCompleted
-                        ? "bg-teal-600 border-teal-500 text-white"
-                        : "bg-white border-gray-200 text-gray-600",
+                          ? "bg-teal-600 border-teal-500 text-white"
+                          : "bg-white border-gray-200 text-gray-600",
                     ].join(" ")}
                   >
                     {isCompleted ? (
