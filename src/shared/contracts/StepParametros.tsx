@@ -98,12 +98,7 @@ export default function StepParametros() {
             <option>Outro</option>
           </select>
 
-          <input
-            type="date"
-            className={input}
-            value={form.diaVencimento || ""}
-            onChange={(e) => dispatch(patchForm({ diaVencimento: e.target.value }))}
-          />
+
           <input
             className={input}
             placeholder="Banco"
