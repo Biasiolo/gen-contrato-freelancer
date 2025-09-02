@@ -5,6 +5,7 @@ import { ContractFormData, ContractTemplates, ServiceTemplate } from "@/types/co
 import { interpolate } from "@/utils/mergePlaceholders";
 import Watermark from "./Watermark";
 import Footer, { FOOTER_HEIGHT } from "./Footer";
+import "@/pdf/hyphenation";
 
 type Props = {
   form: ContractFormData;
