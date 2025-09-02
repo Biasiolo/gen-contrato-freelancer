@@ -21,8 +21,8 @@ const styles = StyleSheet.create({
     lineHeight: 1.4,
     fontFamily: "Helvetica",
   },
-  h1: { fontSize: 14, textAlign: "center", marginBottom: 20, fontWeight: 700 },
-  h2: { fontSize: 12, marginTop: 10, marginBottom: 10, fontWeight: 700 },
+  h1: { fontSize: 14, textAlign: "center", marginBottom: 30, fontWeight: 700 },
+  h2: { fontSize: 12, marginTop: 10, marginBottom: 14, fontWeight: 700 },
   p: { marginBottom: 6, textAlign: "justify" },
   li: { marginLeft: 12, marginBottom: 4 },
   divider: {
