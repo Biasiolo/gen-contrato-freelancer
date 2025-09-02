@@ -13,6 +13,7 @@
     "@react-pdf/renderer": "^4.3.0",
     "@reduxjs/toolkit": "^2.7.0",
     "@tailwindcss/vite": "^4.1.4",
+    "extenso": "^2.1.0",
     "fontkit": "^2.0.4",
     "html2pdf.js": "^0.10.3",
     "hyphenation.pt": "^0.2.1",

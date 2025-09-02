@@ -3,6 +3,7 @@ import { IMaskInput } from "react-imask";
 import { patchForm } from "@/store";
 import { useAppDispatch, useAppSelector } from "@/store/hooks";
 import templates from "@/templates/index";
+import { brlPorExtenso } from "@/utils/moneyToWordsBRL";
 
 const SERVICE_OPTIONS = [
   { value: "web_designer", label: "Web Designer" },
@@ -230,6 +231,15 @@ export default function StepServico() {
                   inputMode="decimal"
                 />
               </label>
+              <label className="md:col-span-2 flex flex-col gap-1">
+  <span className="text-xs font-medium text-white/90">Valor do acerto por extenso (opcional)</span>
+  <input
+    className={input}
+    placeholder="Deixe em branco para preencher automático"
+    value={form.valorAcertoExtenso ?? brlPorExtenso(form.valorAcerto as any)}
+    onChange={(e) => dispatch(patchForm({ valorAcertoExtenso: e.target.value }))}
+  />
+</label>
 
               {/* Data de pagamento (DATA_ACERTO) */}
               <label className="flex flex-col gap-1">

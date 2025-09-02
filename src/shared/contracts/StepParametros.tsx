@@ -2,6 +2,7 @@
 import { patchForm } from "@/store";
 import { useAppDispatch, useAppSelector } from "@/store/hooks";
 import { IMaskInput } from "react-imask";
+import { brlPorExtenso } from "@/utils/moneyToWordsBRL";
 
 export default function StepParametros() {
   const form = useAppSelector((s) => s.form);
@@ -75,6 +76,16 @@ export default function StepParametros() {
             placeholder="Valor total (R$)"
             inputMode="decimal"
           />
+          {/* Valor por extenso (opcional) */}
+    <label className="md:col-span-2 flex flex-col gap-1">
+      <span className="text-xs font-medium text-white/90">Valor por extenso (opcional)</span>
+      <input
+        className={input}
+        placeholder="Deixe em branco para preencher automático"
+        value={form.valorTotalExtenso ?? brlPorExtenso(form.valorTotal)}
+        onChange={(e) => dispatch(patchForm({ valorTotalExtenso: e.target.value }))}
+      />
+    </label>
 
           <select
             className={input}

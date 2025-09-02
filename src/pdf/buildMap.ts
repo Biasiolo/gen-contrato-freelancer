@@ -1,4 +1,6 @@
+// src/utils/buildPlaceholderMap.ts
 import { ContractFormData, ServiceTemplate } from "@/types/contracts";
+import { brlPorExtenso } from "@/utils/moneyToWordsBRL";
 
 export type PlaceholderMap = Record<string, unknown>;
 
@@ -19,10 +21,7 @@ function formatPrestadorEndereco(form: ContractFormData) {
     form.prestadorEnderecoCep
   );
 
-  if (!hasGranular) {
-    // fallback: campo antigo (livre)
-    return form.prestadorEndereco;
-  }
+  if (!hasGranular) return form.prestadorEndereco;
 
   const linha1 = joinCompact(
     [form.prestadorEnderecoLogradouro, form.prestadorEnderecoNumero],
@@ -39,14 +38,11 @@ function formatPrestadorEndereco(form: ContractFormData) {
     "/"
   );
 
-  // Base: "Rua X, 123 - Centro - São José dos Campos/SP"
   const base = joinCompact([linha1, form.prestadorEnderecoBairro, cidadeUf], " - ");
-
-  // Se houver CEP, acrescenta ao final: " ... - CEP 12345-678"
   return form.prestadorEnderecoCep ? `${base} - CEP ${form.prestadorEnderecoCep}` : base;
 }
 
-// Formata "YYYY-MM-DD" -> "DD/MM/YYYY"
+// "YYYY-MM-DD" -> "DD/MM/YYYY"
 function formatDateBr(iso?: string): string {
   if (!iso) return "";
   const [y, m, d] = iso.split("-");
@@ -100,10 +96,11 @@ export function buildPlaceholderMap(
     SERVICO_TITULO: servicoTitulo,
     DATA_INICIO: form.dataInicio,
     DATA_FIM: form.dataFim,
-    VIGENCIA_DIAS: vigenciaDias,                 // ⬅️ NOVO (sem renomear placeholder)
+    VIGENCIA_DIAS: vigenciaDias,
     VALOR_TOTAL: form.valorTotal,
+    VALOR_TOTAL_EXTENSO: brlPorExtenso(form.valorTotal),   // ⬅️ novo
     FORMA_PAGAMENTO: form.formaPagamento,
-    DATA_VENCIMENTO: formatDateBr(form.diaVencimento), // ⬅️ BR-PT
+    DATA_VENCIMENTO: formatDateBr(form.diaVencimento),
     BANCO: form.banco,
     AGENCIA: form.agencia,
     CONTA: form.conta,
@@ -120,6 +117,7 @@ export function buildPlaceholderMap(
     // distrato
     DATA_DISTRATO: form.dataDistrato,
     VALOR_ACERTO: form.valorAcerto,
+    VALOR_ACERTO_EXTENSO: brlPorExtenso(form.valorAcerto), // ⬅️ novo
     PRAZO_DEVOLUCAO: form.prazoDevolucao,
     DATA_ACERTO: form.dataAcerto,
   };

@@ -127,6 +127,9 @@ export type ContractFormData = {
   dataFim?: string;
   vigenciaDias?: string;
   valorTotal: string; // mantido como string para integração com máscara
+
+  valorTotalExtenso?: string;   // ← opcional (override manual)
+  valorAcertoExtenso?: string; 
   formaPagamento: "PIX" | "Transferência" | "Boleto" | "Outro";
   diaVencimento?: string; // YYYY-MM-DD na UI; formatado no buildMap
   banco?: string;
