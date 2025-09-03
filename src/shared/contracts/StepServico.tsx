@@ -234,8 +234,10 @@ export default function StepServico() {
                 <input
                   className={input}
                   placeholder="Deixe em branco para preencher automático"
-                  value={form.valorAcertoExtenso ?? brlPorExtenso(form.valorAcerto as any)}
+                  value={form.valorAcertoExtenso ?? brlPorExtenso(form.valorAcerto)}
                   onChange={(e) => dispatch(patchForm({ valorAcertoExtenso: e.target.value }))}
+
+
                 />
               </label>
 
