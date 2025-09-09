@@ -4,6 +4,9 @@ import { persistReducer, persistStore } from "redux-persist";
 import storage from "redux-persist/lib/storage";
 import { ContractFormData } from "@/types/contracts";
 
+// ⬇️ importa os slices dos Termos
+import { termoUISlice, termoFormSlice } from "./termo";
+
 type UIState = {
   step: number; // 0..3
 };
@@ -14,9 +17,11 @@ const initialForm: ContractFormData = {
   // contratante (fixo por enquanto)
   contratanteRazao: "D HOUSE AGÊNCIA DE PUBLICIDADE LTDA",
   contratanteCnpj: "18.319.139/0001-68",
-  contratanteEndereco: "Rua Teopompo de Vasconcelos, 161 - ap 22 - Vila Adyana - São José dos Campos/SP, CEP 12.243-830",
+  contratanteEndereco:
+    "Rua Teopompo de Vasconcelos, 161 - ap 22 - Vila Adyana - São José dos Campos/SP, CEP 12.243-830",
   contratanteRepresentanteNome: "Daniele Reily da Silva Souza",
   contratanteRepresentanteCpf: "218.047.008-86",
+
   // prestador
   prestadorNome: "",
   prestadorCpf: "",
@@ -24,12 +29,13 @@ const initialForm: ContractFormData = {
   prestadorEmail: "",
   prestadorTelefone: "",
   prestadorEndereco: "",
-    prestadorEnderecoLogradouro: "",
-    prestadorEnderecoNumero: "",
-    prestadorEnderecoBairro: "",
-    prestadorEnderecoCidade: "",
-    prestadorEnderecoUf: "",
-    prestadorEnderecoCep: "", 
+  prestadorEnderecoLogradouro: "",
+  prestadorEnderecoNumero: "",
+  prestadorEnderecoBairro: "",
+  prestadorEnderecoCidade: "",
+  prestadorEnderecoUf: "",
+  prestadorEnderecoCep: "",
+
   // parâmetros gerais
   dataInicio: "",
   dataFim: "",
@@ -43,6 +49,7 @@ const initialForm: ContractFormData = {
   pix: "",
   foroCidade: "São José dos Campos",
   foroUf: "SP",
+
   // escolha do documento
   tipoDocumento: "contrato",
   servicoChave: undefined,
@@ -50,10 +57,12 @@ const initialForm: ContractFormData = {
   servicoCustomEscopo: "",
   servicoCustomClausulas: "",
   params: {},
+
   // distrato
   dataDistrato: "",
   valorAcerto: "",
-  prazoDevolucao: ""
+  prazoDevolucao: "",
+  dataAcerto: "",
 };
 
 const initialUI: UIState = { step: 0 };
@@ -70,8 +79,8 @@ const uiSlice = createSlice({
     },
     prev(state) {
       state.step = clampStep(state.step - 1);
-    }
-  }
+    },
+  },
 });
 
 const formSlice = createSlice({
@@ -83,13 +92,16 @@ const formSlice = createSlice({
     },
     resetForm() {
       return initialForm;
-    }
-  }
+    },
+  },
 });
 
+// ⬇️ rootReducer agora inclui também os reducers dos Termos
 export const rootReducer = combineReducers({
   ui: uiSlice.reducer,
-  form: formSlice.reducer
+  form: formSlice.reducer,
+  termoUI: termoUISlice.reducer,
+  termoForm: termoFormSlice.reducer,
 });
 
 // Tipos do estado raiz (antes do persist)
@@ -99,7 +111,8 @@ export type RootState = ReturnType<typeof rootReducer>;
 const persistConfig = {
   key: "voia-contracts",
   storage,
-  whitelist: ["form"] as (keyof RootState)[]
+  // ⬇️ persiste contratos e termos
+  whitelist: ["form", "termoForm"] as (keyof RootState)[],
 };
 
 const persistedReducer = persistReducer<RootState>(persistConfig, rootReducer);
@@ -107,14 +120,18 @@ const persistedReducer = persistReducer<RootState>(persistConfig, rootReducer);
 // Store
 export const store = configureStore({
   reducer: persistedReducer,
-  middleware: (gDM) => gDM({ serializableCheck: false })
+  middleware: (gDM) => gDM({ serializableCheck: false }),
 });
 
 export const persistor = persistStore(store);
 
-// Actions
+// Actions (Contratos)
 export const { next, prev, goToStep } = uiSlice.actions;
 export const { patchForm, resetForm } = formSlice.actions;
+
+// Actions (Termos) — reexporta dos slices importados
+export const { nextTermo, prevTermo, goToTermoStep } = termoUISlice.actions;
+export const { patchTermoForm, resetTermoForm } = termoFormSlice.actions;
 
 // Tipos públicos
 export type AppDispatch = typeof store.dispatch;

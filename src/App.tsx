@@ -1,17 +1,26 @@
 // src/App.tsx
+import { BrowserRouter, Routes, Route, Navigate } from "react-router-dom";
+import Home from "./pages/Home";
 import NewContract from "./pages/contracts/NewContract";
-import capa from "./assets/capa.png";
+import NewTermo from "./pages/termos/NewTermo";
+
+import bg from "@/assets/capa.png";
 
 export default function App() {
   return (
     <div
-      className="min-h-screen bg-cover bg-center bg-no-repeat"
-      style={{ backgroundImage: `url(${capa})` }}
+      className="min-h-screen bg-cover bg-center bg-fixed"
+      style={{ backgroundImage: `url(${bg})` }}
     >
-      {/* overlay opcional p/ contraste (ajuste/remoção à vontade) */}
-      <div className="min-h-screen">
-        <NewContract />
-      </div>
+      <BrowserRouter>
+        <Routes>
+          <Route path="/" element={<Home />} />
+          <Route path="/contratos" element={<NewContract />} />
+          <Route path="/termos" element={<NewTermo />} />
+          {/* fallback */}
+          <Route path="*" element={<Navigate to="/" replace />} />
+        </Routes>
+      </BrowserRouter>
     </div>
   );
 }
