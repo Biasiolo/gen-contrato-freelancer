@@ -6,6 +6,7 @@ import StepPreview from "@/shared/contracts/StepPreview";
 import { useAppDispatch, useAppSelector } from "@/store/hooks";
 import { next, prev, goToStep, resetForm } from "@/store";
 import voiaLogo from "@/assets/logo-header.png";
+import { Link } from "react-router-dom";
 
 export default function NewContract() {
   const step = useAppSelector((s) => s.ui.step);
@@ -30,6 +31,12 @@ export default function NewContract() {
             <img src={voiaLogo} alt="Voia" className="h-8 w-auto select-none" draggable={false} />
           </div>
           <span className="text-[11px] text-white/60">Contrato • Distrato</span>
+          <Link
+        to="/"
+        className="text-xs px-3 py-1.5 rounded-lg bg-white/10 border border-white/20 text-white hover:bg-white/20 transition"
+      >
+        ← Início
+      </Link>
         </div>
       </nav>
 

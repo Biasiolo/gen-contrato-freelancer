@@ -3,6 +3,8 @@ import StepParametrosTermo from "@/shared/termos/StepParametrosTermo";
 import StepPreviewTermo from "@/shared/termos/StepPreviewTermo";
 import { useAppDispatch, useAppSelector } from "@/store/hooks";
 import { nextTermo, prevTermo, goToTermoStep } from "@/store/termo";
+import { Link } from "react-router-dom";
+import voiaLogo from "@/assets/logo-header.png";
 
 export default function NewTermo() {
   const step = useAppSelector(s => s.termoUI.step);
@@ -13,6 +15,24 @@ export default function NewTermo() {
   const isLast = step === labels.length - 1;
 
   return (
+    <>
+    <nav className="sticky top-0 z-50 border-b border-white/10 bg-black/30 backdrop-blur">
+  <div className="max-w-8xl mx-auto px-6 py-3 flex items-center justify-between">
+    <div className="flex items-center gap-3">
+      <img src={voiaLogo} alt="Voia" className="h-8 w-auto select-none" draggable={false} />
+    </div>
+
+    <div className="flex items-center gap-4">
+      <span className="text-[11px] text-white/60">Termos • Responsabilidade/Devolução</span>
+      <Link
+        to="/"
+        className="text-xs px-3 py-1.5 rounded-lg bg-white/10 border border-white/20 text-white hover:bg-white/20 transition"
+      >
+        ← Início
+      </Link>
+    </div>
+  </div>
+</nav>
     <div className="max-w-4xl mx-auto p-6 space-y-6">
       <header>
         <h1 className="text-2xl font-semibold text-gray-100">Novo Termo</h1>
@@ -64,5 +84,6 @@ export default function NewTermo() {
         )}
       </footer>
     </div>
+    </>
   );
 }
