@@ -71,47 +71,7 @@ export default function StepPartesTermo() {
           />
         </div>
 
-        <div className="grid md:grid-cols-6 gap-3 mt-3">
-          <input
-            className={`${input} md:col-span-2`}
-            placeholder="Logradouro"
-            value={form.empEndLog || ""}
-            onChange={e => dispatch(patchTermoForm({ empEndLog: e.target.value }))}
-          />
-          <input
-            className={input}
-            placeholder="Número"
-            value={form.empEndNum || ""}
-            onChange={e => dispatch(patchTermoForm({ empEndNum: e.target.value }))}
-          />
-          <input
-            className={input}
-            placeholder="Bairro"
-            value={form.empEndBairro || ""}
-            onChange={e => dispatch(patchTermoForm({ empEndBairro: e.target.value }))}
-          />
-          <input
-            className={input}
-            placeholder="Cidade"
-            value={form.empEndCidade || ""}
-            onChange={e => dispatch(patchTermoForm({ empEndCidade: e.target.value }))}
-          />
-          <input
-            className={input}
-            placeholder="UF"
-            maxLength={2}
-            value={form.empEndUf || ""}
-            onChange={e => dispatch(patchTermoForm({ empEndUf: e.target.value.toUpperCase() }))}
-          />
-          <IMaskInput
-            mask="00000-000"
-            className={input}
-            placeholder="CEP"
-            value={form.empEndCep || ""}
-            onAccept={(v: string) => dispatch(patchTermoForm({ empEndCep: v }))}
-            inputMode="numeric"
-          />
-        </div>
+        
       </fieldset>
     </div>
   );

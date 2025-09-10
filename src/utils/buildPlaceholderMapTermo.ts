@@ -1,9 +1,10 @@
-import { TermoFormData } from "@/types/termos";
+// src/utils/buildPlaceholderMapTermo.ts
+import { TermoFormData, EquipItem, EquipKind } from "@/types/termos";
 
 export type TermoPlaceholderMap = Record<string, unknown>;
 
 function joinCompact(parts: Array<string | undefined>, sep: string) {
-  return parts.map(p => (p ?? "").toString().trim()).filter(Boolean).join(sep);
+  return parts.map((p) => (p ?? "").toString().trim()).filter(Boolean).join(sep);
 }
 
 function formatEndColab(f: TermoFormData) {
@@ -11,14 +12,12 @@ function formatEndColab(f: TermoFormData) {
     f.empEndLog || f.empEndNum || f.empEndBairro || f.empEndCidade || f.empEndUf || f.empEndCep;
   if (!has) return "";
   const l1 = joinCompact([f.empEndLog, f.empEndNum], ", ");
-  const cidadeUf = joinCompact(
-    [f.empEndCidade, f.empEndUf ? f.empEndUf.toUpperCase() : undefined],
-    "/"
-  );
+  const cidadeUf = joinCompact([f.empEndCidade, f.empEndUf ? f.empEndUf.toUpperCase() : undefined], "/");
   const base = joinCompact([l1, f.empEndBairro, cidadeUf], " - ");
   return f.empEndCep ? `${base} - CEP ${f.empEndCep}` : base;
 }
 
+// "YYYY-MM-DD" -> "DD/MM/YYYY"
 function formatDateBr(iso?: string) {
   if (!iso) return "";
   const [y, m, d] = iso.split("-");
@@ -26,7 +25,10 @@ function formatDateBr(iso?: string) {
   return `${d.padStart(2, "0")}/${m.padStart(2, "0")}/${y}`;
 }
 
-const EQUIP_LABEL: Record<string, string> = {
+// --------------------------------------
+// Equipamentos (multi-itens)
+// --------------------------------------
+const EQUIP_LABEL: Record<EquipKind, string> = {
   fone: "Fone de ouvido",
   celular: "Celular/Smartphone",
   notebook: "Notebook",
@@ -36,8 +38,58 @@ const EQUIP_LABEL: Record<string, string> = {
   outro: "Outro",
 };
 
+// Usa lista nova; se não houver, migra 1 item a partir dos campos antigos
+function normalizeItems(form: TermoFormData): EquipItem[] {
+  if (Array.isArray(form.items) && form.items.length > 0) return form.items;
+
+  const legacyHas =
+    form.equipTipo ||
+    form.itemMarca ||
+    form.itemModelo ||
+    form.itemCor ||
+    form.itemSerieId ||
+    form.itemAcessorios ||
+    form.condicoes;
+
+  if (!legacyHas) return [];
+
+  return [
+    {
+      tipo: (form.equipTipo as EquipKind) || "notebook",
+      marca: form.itemMarca,
+      modelo: form.itemModelo,
+      cor: form.itemCor,
+      serieId: form.itemSerieId,
+      acessorios: form.itemAcessorios,
+      condicoes: form.condicoes,
+    },
+  ];
+}
+
+function tipoLabel(it: EquipItem) {
+  return it.tipo === "outro" ? (it.outroRotulo?.trim() || "Outro") : EQUIP_LABEL[it.tipo];
+}
+
+function formatItemLine(it: EquipItem, idx: number): string {
+  const headerDesc = joinCompact([it.marca, it.modelo, it.cor], ", ");
+  const header =
+    headerDesc ? `${tipoLabel(it)} (${headerDesc})` : `${tipoLabel(it)}`;
+
+  const tail = joinCompact(
+    [
+      it.serieId ? `Série/ID: ${it.serieId}` : undefined,
+      it.acessorios ? `Acessórios: ${it.acessorios}` : undefined,
+      it.condicoes ? `Condições: ${it.condicoes}` : undefined,
+    ],
+    " — "
+  );
+
+  return `${idx + 1}. ${header}${tail ? ` — ${tail}` : ""}`;
+}
+
 export function buildPlaceholderMapTermo(form: TermoFormData): TermoPlaceholderMap {
-  const equipLabel = EQUIP_LABEL[form.equipTipo] || form.equipTipo;
+  const items = normalizeItems(form);
+  const first = items[0];
 
   return {
     // empresa
@@ -53,14 +105,20 @@ export function buildPlaceholderMapTermo(form: TermoFormData): TermoPlaceholderM
     EMP_TELEFONE_OPT: form.empTelefone || "—",
     EMP_ENDERECO_OPT: formatEndColab(form),
 
-    // equipamento
-    EQUIP_TIPO_LABEL: equipLabel,
-    ITEM_MARCA_OPT: form.itemMarca || "—",
-    ITEM_MODELO_OPT: form.itemModelo || "—",
-    ITEM_COR_OPT: form.itemCor || "—",
-    ITEM_SERIE_ID_OPT: form.itemSerieId || "—",
-    ITEM_ACESSORIOS_OPT: form.itemAcessorios || "—",
-    CONDICOES_OPT: form.condicoes || "Em perfeito estado.",
+    // equipamentos — NOVO
+    EQUIP_QTD: String(items.length || 0),
+    EQUIP_LISTA_TXT: items.length
+      ? items.map(formatItemLine).join("\n")
+      : "—",
+
+    // compatibilidade com template antigo (usa o 1º item se existir)
+    EQUIP_TIPO_LABEL: first ? tipoLabel(first) : "",
+    ITEM_MARCA_OPT: first?.marca || "—",
+    ITEM_MODELO_OPT: first?.modelo || "—",
+    ITEM_COR_OPT: first?.cor || "—",
+    ITEM_SERIE_ID_OPT: first?.serieId || "—",
+    ITEM_ACESSORIOS_OPT: first?.acessorios || "—",
+    CONDICOES_OPT: first?.condicoes || "Em perfeito estado.",
 
     // gerais
     LOCAL: form.local || "",

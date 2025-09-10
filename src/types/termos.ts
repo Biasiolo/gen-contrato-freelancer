@@ -5,13 +5,24 @@ export type EquipKind = "fone" | "celular" | "notebook" | "mouse" | "uniforme" |
 export type TermoTemplates = {
   version: string;
   base: {
-    recebimento: string; // texto com {{PLACEHOLDERS}}
-    devolucao: string;   // texto com {{PLACEHOLDERS}}
+    recebimento: string;
+    devolucao: string;
   };
 };
 
+export type EquipItem = {
+  tipo: EquipKind;       // inclui "outro"
+  outroRotulo?: string;  // usado quando tipo === "outro"
+  marca?: string;
+  modelo?: string;
+  cor?: string;
+  serieId?: string;
+  acessorios?: string;   // livre (ex.: "carregador, case")
+  condicoes?: string;    // livre (ex.: "em perfeito estado")
+};
+
 export type TermoFormData = {
-  // empresa (fixo como nos contratos)
+  // empresa (fixo)
   empresaRazao: string;
   empresaCnpj: string;
 
@@ -23,7 +34,7 @@ export type TermoFormData = {
   empEmail?: string;
   empTelefone?: string;
 
-  // endereço colaborador (granular como fizemos)
+  // endereço colaborador
   empEndLog?: string;
   empEndNum?: string;
   empEndBairro?: string;
@@ -33,16 +44,21 @@ export type TermoFormData = {
 
   // termo
   tipoTermo: TermoKind;
-  equipTipo: EquipKind;
+
+  // NOVO: lista de equipamentos
+  items: EquipItem[];
+
+  // legado (opcional durante transição) — pode remover depois
+  equipTipo?: EquipKind;
   itemMarca?: string;
   itemModelo?: string;
   itemCor?: string;
   itemSerieId?: string;
-  itemAcessorios?: string; // livre ou lista join
-  condicoes?: string;      // livre (ex.: “em perfeito estado”)
+  itemAcessorios?: string;
+  condicoes?: string;
 
-  local: string;           // ex.: “São José dos Campos/SP”
-  dataIso?: string;        // YYYY-MM-DD
-
+  // meta
+  local: string;
+  dataIso?: string;
   observacoes?: string;
 };
