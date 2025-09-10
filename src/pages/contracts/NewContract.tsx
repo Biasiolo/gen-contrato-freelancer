@@ -33,7 +33,7 @@ export default function NewContract() {
           <span className="text-[11px] text-white/60">Contrato • Distrato</span>
           <Link
         to="/"
-        className="text-xs px-3 py-1.5 rounded-lg bg-white/10 border border-white/20 text-white hover:bg-white/20 transition"
+        className="text-xs px-3 py-1.5 rounded-lg bg-orange-500  text-white hover:bg-white/20 transition"
       >
         ← Início
       </Link>
