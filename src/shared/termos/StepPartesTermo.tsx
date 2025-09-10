@@ -13,7 +13,7 @@ export default function StepPartesTermo() {
   const phoneMasks = [{ mask: "(00) 0000-0000" }, { mask: "(00) 00000-0000" }];
 
   return (
-    <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+    <div className="grid grid-cols-1 md:grid-cols-1 gap-4">
       {/* EMPRESA */}
       <fieldset className={card}>
         <legend className="text-sm font-semibold text-white/90 mb-3">Empresa</legend>

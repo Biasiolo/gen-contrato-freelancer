@@ -6,8 +6,6 @@ const termosTemplates: TermoTemplates = {
   base: {
     // === RECEBIMENTO / RESPONSABILIDADE (multi-itens) ===
     recebimento: `
-TERMO DE RECEBIMENTO E RESPONSABILIDADE
-
 Pelo presente termo de recebimento, responsabilidade, guarda e uso de equipamento(s)/item(ns),
 eu {{EMP_NOME}}, inscrito(a) no CPF {{EMP_CPF}}{{EMP_RG_OPT}}, empregado(a) na função de {{EMP_FUNCAO_OPT}},
 declaro ter ciência das obrigações abaixo estabelecidas:
@@ -33,15 +31,10 @@ em caso de transferência, desligamento ou quando sua utilização se tornar des
 
 {{LOCAL}}, {{DATA_BR}}.
 
-__________________________________________
-EMPREGADO(A): {{EMP_NOME}}
-CPF nº: {{EMP_CPF}}
 `,
 
     // === DEVOLUÇÃO (multi-itens) ===
     devolucao: `
-TERMO DE DEVOLUÇÃO
-
 Eu, {{EMP_NOME}}, inscrito(a) no CPF {{EMP_CPF}}{{EMP_RG_OPT}}, residente e domiciliado(a) no endereço:
 {{EMP_ENDERECO_OPT}}, declaro ter DEVOLVIDO à {{EMPRESA_RAZAO}} (CNPJ {{EMPRESA_CNPJ}})
 o(s) seguinte(s) equipamento(s)/item(ns), {{CONDICOES_OPT}}
@@ -49,12 +42,12 @@ o(s) seguinte(s) equipamento(s)/item(ns), {{CONDICOES_OPT}}
 Itens devolvidos ({{EQUIP_QTD}}):
 {{EQUIP_LISTA_TXT}}
 
+Declaro que o equipamento foi utilizado EXCLUSIVAMENTE para fins profissionais, nas atividades realizadas durante a jornada de trabalho; 
+Estou ciente da obrigação de devolução dos mesmos em perfeitas condições de funcionamento, após a descontinuação do contrato com a VOIA AGENCY. 
+
 {{OBSERVACOES_OPT}}
 
 {{LOCAL}}, {{DATA_BR}}.
-
-__________________________________________
-{{EMP_NOME}} | CPF: {{EMP_CPF}}
 `
   }
 };
