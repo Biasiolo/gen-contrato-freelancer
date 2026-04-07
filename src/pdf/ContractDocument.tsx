@@ -14,6 +14,11 @@ type Props = {
   map: Record<string, unknown>;
 };
 
+type EscopoSecao = {
+  titulo?: string;
+  itens: string[];
+};
+
 const styles = StyleSheet.create({
   page: {
     padding: 32,
@@ -26,7 +31,11 @@ const styles = StyleSheet.create({
   h2: { fontSize: 12, marginTop: 10, marginBottom: 6, fontWeight: 700 },
   p: { marginBottom: 6, textAlign: "justify" },
   li: { marginLeft: 12, marginBottom: 4 },
-  signBlock: { marginTop: 36, flexDirection: "row", justifyContent: "space-between" },
+  signBlock: {
+    marginTop: 36,
+    flexDirection: "row",
+    justifyContent: "space-between",
+  },
   signCol: { width: "48%" },
   signLine: {
     marginTop: 28,
@@ -37,15 +46,28 @@ const styles = StyleSheet.create({
     textAlign: "center",
   },
   meta: { fontSize: 9, textAlign: "center", color: "#444", marginTop: 2 },
+  witnessBlock: {
+    marginTop: 24,
+    flexDirection: "row",
+    justifyContent: "space-between",
+  },
   witnessCol: { width: "48%" },
 });
 
+function cleanText(value?: string | null) {
+  return (value ?? "").trim();
+}
+
+function cleanList(items?: Array<string | undefined | null>) {
+  return (items || []).map((t) => cleanText(t)).filter(Boolean);
+}
+
 function List({ items }: { items?: string[] }) {
-  const clean = (items || []).map((t) => t?.trim()).filter(Boolean);
+  const clean = cleanList(items);
   if (!clean.length) return null;
 
   return (
-    <View style={{ marginTop: 2, marginBottom: 6 }}>
+    <View style={{ marginTop: 2, marginBottom: 6 }} wrap>
       {clean.map((it, i) => (
         <Text key={i} style={styles.li}>
           • {it}
@@ -58,7 +80,6 @@ function List({ items }: { items?: string[] }) {
 export default function ContractDocument({ form, templates, service, map }: Props) {
   const b = templates.base;
 
-  // ✅ FIX: fallback correto para serviço custom
   const isCustom = form.servicoChave === "custom";
 
   const s: any = isCustom
@@ -69,88 +90,60 @@ export default function ContractDocument({ form, templates, service, map }: Prop
       }
     : service || {};
 
-  // =========================
-  // TEXTOS BASE
-  // =========================
   const identificacao = interpolate(b.identificacaoPartes, map);
   const objeto = interpolate(b.objeto, map);
 
-  const objetoParagrafos = (b.objetoParagrafos || [])
-    .map((t) => interpolate(t, map)?.trim())
-    .filter(Boolean);
+  const objetoParagrafos = cleanList(
+    (b.objetoParagrafos || []).map((t) => interpolate(t, map))
+  );
 
   const vigencia = interpolate(b.vigencia, map);
   const pagamento = interpolate(b.pagamento, map);
 
-  const obrigacoesContratada = (b.obrigacoesContratada || [])
-    .map((t) => interpolate(t, map)?.trim())
-    .filter(Boolean);
+  const obrigacoesContratada = cleanList(
+    (b.obrigacoesContratada || []).map((t) => interpolate(t, map))
+  );
 
-  const obrigacoesContratante = (b.obrigacoesContratante || [])
-    .map((t) => interpolate(t, map)?.trim())
-    .filter(Boolean);
+  const obrigacoesContratante = cleanList(
+    (b.obrigacoesContratante || []).map((t) => interpolate(t, map))
+  );
 
-  const forcaMaior = b.forcaMaior ? interpolate(b.forcaMaior, map)?.trim() : null;
+  const forcaMaior = b.forcaMaior ? cleanText(interpolate(b.forcaMaior, map)) : "";
   const confidencialidade = interpolate(b.confidencialidadeLgpd, map);
-  const usoImagemVoz = b.usoImagemVoz ? interpolate(b.usoImagemVoz, map)?.trim() : null;
+  const usoImagemVoz = b.usoImagemVoz ? cleanText(interpolate(b.usoImagemVoz, map)) : "";
   const propriedadeIntelectual = interpolate(b.propriedadeIntelectual, map);
   const naoConcorrencia = interpolate(b.naoConcorrencia, map);
   const rescisao = interpolate(b.rescisao, map);
 
-  const extincao = (b.extincao || [])
-    .map((t) => interpolate(t, map)?.trim())
-    .filter(Boolean);
-
-  const multa = b.multa ? interpolate(b.multa, map)?.trim() : null;
-
-  const disposicoesGerais = (b.disposicoesGerais || [])
-    .map((t) => interpolate(t, map)?.trim())
-    .filter(Boolean);
-
+  const extincao = cleanList((b.extincao || []).map((t) => interpolate(t, map)));
+  const multa = b.multa ? cleanText(interpolate(b.multa, map)) : "";
+  const disposicoesGerais = cleanList(
+    (b.disposicoesGerais || []).map((t) => interpolate(t, map))
+  );
   const foro = interpolate(b.foro, map);
 
-  // =========================
-  // ESCOPO DO SERVIÇO
-  // =========================
+  const escopoSecoes: EscopoSecao[] = Array.isArray(s?.escopoSecoes)
+    ? s.escopoSecoes
+        .map((sec: any) => ({
+          titulo: cleanText(interpolate(sec?.titulo || "", map)),
+          itens: cleanList((sec?.itens || []).map((i: string) => interpolate(i, map))),
+        }))
+        .filter((sec: { titulo: any; itens: string | any[]; }) => sec.titulo || sec.itens.length > 0)
+    : [];
 
-  const escopoSecoes: Array<{ titulo: string; itens: string[] }> =
-    Array.isArray(s?.escopoSecoes)
-      ? s.escopoSecoes
-          .map((sec: any) => ({
-            titulo: interpolate(sec.titulo, map)?.trim(),
-            itens: (sec.itens || [])
-              .map((i: string) => interpolate(i, map)?.trim())
-              .filter(Boolean),
-          }))
-          .filter((sec: { titulo: any; itens: string | any[]; }) => sec.titulo || sec.itens.length > 0)
-      : [];
-
-  const escopoList: string[] =
+  const escopoListClean: string[] =
     typeof s?.escopo === "string"
-      ? [interpolate(s.escopo, map)]
+      ? cleanList([interpolate(s.escopo, map)])
       : Array.isArray(s?.escopo)
-      ? s.escopo.map((t: string) => interpolate(t, map))
+      ? cleanList(s.escopo.map((t: string) => interpolate(t, map)))
       : [];
 
-  const escopoListClean = escopoList.map((t) => t?.trim()).filter(Boolean);
-
-  // =========================
-  // CLÁUSULAS ESPECÍFICAS
-  // =========================
-
-  const especificasList: string[] = (
+  const especificasList: string[] =
     typeof s?.clausulasEspecificas === "string"
-      ? [interpolate(s.clausulasEspecificas, map)]
+      ? cleanList([interpolate(s.clausulasEspecificas, map)])
       : Array.isArray(s?.clausulasEspecificas)
-      ? s.clausulasEspecificas.map((t: string) => interpolate(t, map))
-      : []
-  )
-    .map((t: string) => t?.trim())
-    .filter(Boolean);
-
-  // =========================
-  // RENDER
-  // =========================
+      ? cleanList(s.clausulasEspecificas.map((t: string) => interpolate(t, map)))
+      : [];
 
   return (
     <Document>
@@ -161,7 +154,9 @@ export default function ContractDocument({ form, templates, service, map }: Prop
 
         <Text style={styles.p}>{identificacao}</Text>
 
-        <Text style={styles.h2}>Cláusula 1ª — DO OBJETO</Text>
+        <Text style={styles.h2} minPresenceAhead={24}>
+          Cláusula 1ª — DO OBJETO
+        </Text>
         <Text style={styles.p}>{objeto}</Text>
 
         {objetoParagrafos.map((p, i) => (
@@ -172,15 +167,17 @@ export default function ContractDocument({ form, templates, service, map }: Prop
 
         {(escopoSecoes.length > 0 || escopoListClean.length > 0) && (
           <>
-            <Text style={styles.h2}>Escopo do Serviço</Text>
+            <Text style={styles.h2} minPresenceAhead={24}>
+              Escopo do Serviço
+            </Text>
 
             {escopoSecoes.length > 0 ? (
-              <View style={{ marginTop: 2 }}>
+              <View style={{ marginTop: 2 }} wrap>
                 {escopoSecoes.map((sec, idx) => (
-                  <View key={idx} style={{ marginBottom: 8 }}>
+                  <View key={idx} style={{ marginBottom: 8 }} wrap>
                     {sec.titulo && (
                       <Text style={{ ...styles.p, fontWeight: 700 }}>
-                        {idx + 1} {sec.titulo}
+                        {idx + 1}. {sec.titulo}
                       </Text>
                     )}
                     {sec.itens.map((it, i) => (
@@ -197,84 +194,114 @@ export default function ContractDocument({ form, templates, service, map }: Prop
           </>
         )}
 
-        <Text style={styles.h2}>Cláusula 2ª — DA VIGÊNCIA</Text>
+        <Text style={styles.h2} minPresenceAhead={24}>
+          Cláusula 2ª — DA VIGÊNCIA
+        </Text>
         <Text style={styles.p}>{vigencia}</Text>
 
-        <Text style={styles.h2}>Cláusula 3ª — DO PAGAMENTO</Text>
+        <Text style={styles.h2} minPresenceAhead={24}>
+          Cláusula 3ª — DO PAGAMENTO
+        </Text>
         <Text style={styles.p}>{pagamento}</Text>
 
         {obrigacoesContratada.length > 0 && (
           <>
-            <Text style={styles.h2}>Cláusula 4ª — DAS OBRIGAÇÕES DA CONTRATADA</Text>
+            <Text style={styles.h2} minPresenceAhead={24}>
+              Cláusula 4ª — DAS OBRIGAÇÕES DA CONTRATADA
+            </Text>
             <List items={obrigacoesContratada} />
           </>
         )}
 
         {obrigacoesContratante.length > 0 && (
           <>
-            <Text style={styles.h2}>Cláusula 5ª — DAS OBRIGAÇÕES DA CONTRATANTE</Text>
+            <Text style={styles.h2} minPresenceAhead={24}>
+              Cláusula 5ª — DAS OBRIGAÇÕES DA CONTRATANTE
+            </Text>
             <List items={obrigacoesContratante} />
           </>
         )}
 
         {forcaMaior && (
           <>
-            <Text style={styles.h2}>Cláusula 6ª — DO CASO FORTUITO E FORÇA MAIOR</Text>
+            <Text style={styles.h2} minPresenceAhead={24}>
+              Cláusula 6ª — DO CASO FORTUITO E FORÇA MAIOR
+            </Text>
             <Text style={styles.p}>{forcaMaior}</Text>
           </>
         )}
 
-        <Text style={styles.h2}>Cláusula 7ª — DA CONFIDENCIALIDADE E PROTEÇÃO DE DADOS</Text>
+        <Text style={styles.h2} minPresenceAhead={24}>
+          Cláusula 7ª — DA CONFIDENCIALIDADE E PROTEÇÃO DE DADOS
+        </Text>
         <Text style={styles.p}>{confidencialidade}</Text>
 
         {usoImagemVoz && (
           <>
-            <Text style={styles.h2}>Cláusula 8ª — DA AUTORIZAÇÃO DE USO DE IMAGEM E VOZ</Text>
+            <Text style={styles.h2} minPresenceAhead={24}>
+              Cláusula 8ª — DA AUTORIZAÇÃO DE USO DE IMAGEM E VOZ
+            </Text>
             <Text style={styles.p}>{usoImagemVoz}</Text>
           </>
         )}
 
-        <Text style={styles.h2}>Cláusula 9ª — DOS DIREITOS DE PROPRIEDADE INTELECTUAL</Text>
+        <Text style={styles.h2} minPresenceAhead={24}>
+          Cláusula 9ª — DOS DIREITOS DE PROPRIEDADE INTELECTUAL
+        </Text>
         <Text style={styles.p}>{propriedadeIntelectual}</Text>
 
-        <Text style={styles.h2}>Cláusula 10ª — NÃO CONCORRÊNCIA</Text>
+        <Text style={styles.h2} minPresenceAhead={24}>
+          Cláusula 10ª — NÃO CONCORRÊNCIA
+        </Text>
         <Text style={styles.p}>{naoConcorrencia}</Text>
 
-        <Text style={styles.h2}>Cláusula 11ª — DA RESCISÃO</Text>
+        <Text style={styles.h2} minPresenceAhead={24}>
+          Cláusula 11ª — DA RESCISÃO
+        </Text>
         <Text style={styles.p}>{rescisao}</Text>
 
         {extincao.length > 0 && (
           <>
-            <Text style={styles.h2}>Cláusula 12ª — DA EXTINÇÃO</Text>
+            <Text style={styles.h2} minPresenceAhead={24}>
+              Cláusula 12ª — DA EXTINÇÃO
+            </Text>
             <List items={extincao} />
           </>
         )}
 
         {multa && (
           <>
-            <Text style={styles.h2}>Cláusula 13ª — DA MULTA</Text>
+            <Text style={styles.h2} minPresenceAhead={24}>
+              Cláusula 13ª — DA MULTA
+            </Text>
             <Text style={styles.p}>{multa}</Text>
           </>
         )}
 
         {disposicoesGerais.length > 0 && (
           <>
-            <Text style={styles.h2}>Cláusula 14ª — DAS DISPOSIÇÕES GERAIS</Text>
+            <Text style={styles.h2} minPresenceAhead={24}>
+              Cláusula 14ª — DAS DISPOSIÇÕES GERAIS
+            </Text>
             <List items={disposicoesGerais} />
           </>
         )}
 
         {especificasList.length > 0 && (
           <>
-            <Text style={styles.h2}>Cláusulas Específicas do Serviço</Text>
+            <Text style={styles.h2} minPresenceAhead={24}>
+              Cláusulas Específicas do Serviço
+            </Text>
             <List items={especificasList} />
           </>
         )}
 
-        <Text style={styles.h2}>Cláusula 15ª — DO FORO</Text>
+        <Text style={styles.h2} minPresenceAhead={40}>
+          Cláusula 15ª — DO FORO
+        </Text>
         <Text style={styles.p}>{foro}</Text>
 
-        <View style={styles.signBlock}>
+        <View style={styles.signBlock} wrap={false}>
           <View style={styles.signCol}>
             <Text style={styles.signLine}> </Text>
             <Text style={{ textAlign: "center", fontWeight: 700 }}>
@@ -301,7 +328,7 @@ export default function ContractDocument({ form, templates, service, map }: Prop
           </View>
         </View>
 
-        <View style={{ marginTop: 24, flexDirection: "row", justifyContent: "space-between" }}>
+        <View style={styles.witnessBlock} wrap={false}>
           <View style={styles.witnessCol}>
             <Text style={styles.signLine}> </Text>
             <Text style={{ textAlign: "center" }}>Testemunha 1</Text>
