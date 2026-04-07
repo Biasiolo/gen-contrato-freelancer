@@ -15,7 +15,7 @@
     "@tailwindcss/vite": "^4.1.4",
     "extenso": "^2.1.0",
     "fontkit": "^2.0.4",
-    "html2pdf.js": "^0.10.3",
+    "html2pdf.js": "^0.14.0",
     "hyphenation.pt": "^0.2.1",
     "hypher": "^0.2.5",
     "lucide-react": "^0.503.0",

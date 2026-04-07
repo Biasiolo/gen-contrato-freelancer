@@ -256,10 +256,13 @@ export default function StepServico() {
               <label className="md:col-span-2 flex flex-col gap-1">
                 <span className="text-xs font-medium text-white/90">Prazo de devolução de materiais/acessos</span>
                 <input
+                  type="number"
+                  min={1}
+                  step={1}
                   className={input}
                   value={form.prazoDevolucao || ""}
                   onChange={(e) => dispatch(patchForm({ prazoDevolucao: e.target.value }))}
-                  placeholder="Ex.: até 5 dias úteis"
+                  placeholder="Ex.: número de dias para devolução"
                 />
               </label>
             </div>

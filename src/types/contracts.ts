@@ -96,6 +96,7 @@ export type ContractTemplates = {
 
 /** Dados coletados no formulário (wizard) */
 export type ContractFormData = {
+  servicoCustomEscopoSecoes: any;
   // partes (contratante fixo)
   contratanteRazao: string;
   contratanteCnpj: string;
@@ -127,6 +128,8 @@ export type ContractFormData = {
   dataFim?: string;
   vigenciaDias?: string;
   valorTotal: string; // mantido como string para integração com máscara
+  vigenciaTipo?: "dias" | "meses";
+vigenciaValor?: string;
 
   valorTotalExtenso?: string;   // ← opcional (override manual)
   valorAcertoExtenso?: string;

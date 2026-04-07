@@ -1,4 +1,3 @@
-// src/utils/buildPlaceholderMap.ts
 import { ContractFormData, ServiceTemplate } from "@/types/contracts";
 import { brlPorExtenso } from "@/utils/moneyToWordsBRL";
 
@@ -42,7 +41,6 @@ function formatPrestadorEndereco(form: ContractFormData) {
   return form.prestadorEnderecoCep ? `${base} - CEP ${form.prestadorEnderecoCep}` : base;
 }
 
-// "YYYY-MM-DD" -> "DD/MM/YYYY"
 function formatDateBr(iso?: string): string {
   if (!iso) return "";
   const [y, m, d] = iso.split("-");
@@ -50,15 +48,17 @@ function formatDateBr(iso?: string): string {
   return `${d.padStart(2, "0")}/${m.padStart(2, "0")}/${y}`;
 }
 
-// Diferença de dias inclusiva entre duas datas "YYYY-MM-DD"
 function diffDaysInclusive(isoStart?: string, isoEnd?: string): string {
   if (!isoStart || !isoEnd) return "";
   const [ys, ms, ds] = isoStart.split("-").map(Number);
   const [ye, me, de] = isoEnd.split("-").map(Number);
+
   const start = new Date(ys, (ms || 1) - 1, ds || 1);
   const end = new Date(ye, (me || 1) - 1, de || 1);
+
   const msPerDay = 24 * 60 * 60 * 1000;
   const diff = Math.round((end.getTime() - start.getTime()) / msPerDay) + 1;
+
   return Number.isFinite(diff) && diff > 0 ? String(diff) : "";
 }
 
@@ -71,14 +71,34 @@ export function buildPlaceholderMap(
       ? form.servicoCustomTitulo || "Serviço Customizado"
       : (service as any)?.titulo || "";
 
-  // VIGENCIA_DIAS: usa o preenchido; se vazio, calcula
-  const vigenciaDias =
-    (form as any).vigenciaDias && String((form as any).vigenciaDias).trim()
-      ? String((form as any).vigenciaDias).trim()
-      : diffDaysInclusive(form.dataInicio, form.dataFim);
+  const vigenciaTipo = form.vigenciaTipo ?? "dias";
+
+  let vigenciaValor = "";
+  let vigenciaTexto = "";
+
+  if (vigenciaTipo === "meses") {
+    const meses = String(form.vigenciaValor || "").trim();
+
+    if (meses) {
+      vigenciaValor = meses;
+      vigenciaTexto = `${meses} ${meses === "1" ? "mês" : "meses"}`;
+    }
+  } else {
+    const diasInformados = String(form.vigenciaValor || "").trim();
+    const diasCalculados = diffDaysInclusive(form.dataInicio, form.dataFim);
+    const dias = diasInformados || diasCalculados;
+
+    if (dias) {
+      vigenciaValor = dias;
+      vigenciaTexto = `${dias} ${dias === "1" ? "dia" : "dias"}`;
+    }
+  }
+
+  if (!vigenciaTexto) {
+    vigenciaTexto = "não definido";
+  }
 
   return {
-    // partes
     CONTRATANTE_RAZAO: form.contratanteRazao,
     CONTRATANTE_CNPJ: form.contratanteCnpj,
     CONTRATANTE_ENDERECO: form.contratanteEndereco,
@@ -92,32 +112,35 @@ export function buildPlaceholderMap(
     PRESTADOR_ENDERECO: formatPrestadorEndereco(form),
     PRESTADOR_TELEFONE: form.prestadorTelefone,
 
-    // parâmetros gerais
     SERVICO_TITULO: servicoTitulo,
     DATA_INICIO: form.dataInicio,
     DATA_FIM: form.dataFim,
-    VIGENCIA_DIAS: vigenciaDias,
+
+    VIGENCIA_DIAS: vigenciaValor,
+    VIGENCIA_TEXTO: vigenciaTexto,
+    VIGENCIA_TIPO: vigenciaTipo,
+
     VALOR_TOTAL: form.valorTotal,
-    VALOR_TOTAL_EXTENSO: brlPorExtenso(form.valorTotal),   // ⬅️ novo
+    VALOR_TOTAL_EXTENSO: brlPorExtenso(form.valorTotal),
+
     FORMA_PAGAMENTO: form.formaPagamento,
     DATA_VENCIMENTO: formatDateBr(form.diaVencimento),
+
     BANCO: form.banco,
     AGENCIA: form.agencia,
     CONTA: form.conta,
     PIX: form.pix,
+
     FORO_CIDADE: form.foroCidade,
     FORO_UF: form.foroUf,
 
-    // parâmetros específicos
     ...(form.params || {}),
 
-    // defaults
     NAO_CONCORRENCIA_MESES: 6,
 
-    // distrato
     DATA_DISTRATO: form.dataDistrato,
     VALOR_ACERTO: form.valorAcerto,
-    VALOR_ACERTO_EXTENSO: brlPorExtenso(form.valorAcerto), // ⬅️ novo
+    VALOR_ACERTO_EXTENSO: brlPorExtenso(form.valorAcerto),
     PRAZO_DEVOLUCAO: form.prazoDevolucao,
     DATA_ACERTO: form.dataAcerto,
   };

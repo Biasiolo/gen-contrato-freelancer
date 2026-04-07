@@ -35,8 +35,7 @@ em caso de transferência, desligamento ou quando sua utilização se tornar des
 
     // === DEVOLUÇÃO (multi-itens) ===
     devolucao: `
-Eu, {{EMP_NOME}}, inscrito(a) no CPF {{EMP_CPF}}{{EMP_RG_OPT}}, residente e domiciliado(a) no endereço:
-{{EMP_ENDERECO_OPT}}, declaro ter DEVOLVIDO à {{EMPRESA_RAZAO}} (CNPJ {{EMPRESA_CNPJ}})
+Eu, {{EMP_NOME}}, inscrito(a) no CPF {{EMP_CPF}}{{EMP_RG_OPT}}, declaro ter DEVOLVIDO à {{EMPRESA_RAZAO}} (CNPJ {{EMPRESA_CNPJ}})
 o(s) seguinte(s) equipamento(s)/item(ns), {{CONDICOES_OPT}}
 
 Itens devolvidos ({{EQUIP_QTD}}):

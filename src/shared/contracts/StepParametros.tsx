@@ -1,4 +1,3 @@
-// src/shared/contracts/StepParametros.tsx
 import { patchForm } from "@/store";
 import { useAppDispatch, useAppSelector } from "@/store/hooks";
 import { IMaskInput } from "react-imask";
@@ -12,13 +11,13 @@ export default function StepParametros() {
   const input =
     "w-full min-w-0 border border-white/30 bg-white/90 focus:bg-white rounded px-3 py-2 outline-none focus:ring-2 focus:ring-orange-500/50 transition";
 
+  const vigenciaTipo = form.vigenciaTipo ?? "dias";
+
   return (
     <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-      {/* === VIGÊNCIA === */}
       <fieldset className={card}>
         <legend className="text-sm font-semibold text-white/90 mb-3">Vigência</legend>
 
-        {/* Linha 1: datas */}
         <div className="grid md:grid-cols-2 gap-3">
           <input
             type="date"
@@ -34,26 +33,40 @@ export default function StepParametros() {
           />
         </div>
 
-        {/* Linha 2: dias de vigência */}
         <div className="grid md:grid-cols-2 gap-3 mt-3">
-          <label className="flex flex-col gap-1">
-            <span className="text-xs font-medium text-white/90">Vigência (dias)</span>
-            <input
-              type="number"
-              min={1}
-              step={1}
-              className={input}
-              placeholder="Ex.: 30"
-              value={form.vigenciaDias || ""}
-              onChange={(e) => dispatch(patchForm({ vigenciaDias: e.target.value }))}
-              inputMode="numeric"
-            />
-          </label>
-          <div />
+          <select
+            className={input}
+            value={vigenciaTipo}
+            onChange={(e) =>
+              dispatch(
+                patchForm({
+                  vigenciaTipo: e.target.value as "dias" | "meses",
+                  vigenciaValor: "",
+                })
+              )
+            }
+          >
+            <option value="dias">Dias</option>
+            <option value="meses">Meses</option>
+          </select>
+
+          <input
+            type="number"
+            min={1}
+            step={1}
+            className={input}
+            placeholder={vigenciaTipo === "meses" ? "Ex.: 6 meses" : "Ex.: 30 dias"}
+            value={form.vigenciaValor || ""}
+            onChange={(e) => dispatch(patchForm({ vigenciaValor: e.target.value }))}
+            inputMode="numeric"
+          />
         </div>
+
+        <p className="text-xs text-white/70 mt-2">
+          Se não preencher, será calculado automaticamente pelas datas.
+        </p>
       </fieldset>
 
-      {/* === PAGAMENTO === */}
       <fieldset className={card}>
         <legend className="text-sm font-semibold text-white/90 mb-3">Pagamento</legend>
         <div className="grid md:grid-cols-2 gap-3">
@@ -69,16 +82,19 @@ export default function StepParametros() {
             unmask={true}
             value={(form.valorTotal ?? "").toString()}
             onAccept={(val) => {
-              const str = typeof val === "number" ? String(val).replace(".", ",") : (val ?? "");
+              const str =
+                typeof val === "number" ? String(val).replace(".", ",") : val ?? "";
               dispatch(patchForm({ valorTotal: str }));
             }}
             className={input}
             placeholder="Valor total (R$)"
             inputMode="decimal"
           />
-          {/* Valor por extenso (opcional) */}
+
           <label className="md:col-span-2 flex flex-col gap-1">
-            <span className="text-xs font-medium text-white/90">Valor por extenso (opcional)</span>
+            <span className="text-xs font-medium text-white/90">
+              Valor por extenso (opcional)
+            </span>
             <input
               className={input}
               placeholder="Deixe em branco para preencher automático"
@@ -90,14 +106,15 @@ export default function StepParametros() {
           <select
             className={input}
             value={form.formaPagamento}
-            onChange={(e) => dispatch(patchForm({ formaPagamento: e.target.value as any }))}
+            onChange={(e) =>
+              dispatch(patchForm({ formaPagamento: e.target.value as any }))
+            }
           >
             <option>PIX</option>
             <option>Transferência</option>
             <option>Boleto</option>
             <option>Outro</option>
           </select>
-
 
           <input
             className={input}
@@ -126,7 +143,6 @@ export default function StepParametros() {
         </div>
       </fieldset>
 
-      {/* === FORO === */}
       <fieldset className={`${card} md:col-span-2`}>
         <legend className="text-sm font-semibold text-white/90 mb-3">Foro</legend>
         <div className="grid md:grid-cols-2 gap-3">

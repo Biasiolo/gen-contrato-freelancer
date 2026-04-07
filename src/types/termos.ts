@@ -1,6 +1,6 @@
 // src/types/termos.ts
 export type TermoKind = "recebimento" | "devolucao";
-export type EquipKind = "fone" | "celular" | "notebook" | "mouse" | "uniforme" | "tag" | "outro";
+export type EquipKind = "fone" | "celular" | "notebook" | "mouse" | "teclado" |"uniforme" | "tag" | "outro";
 
 export type TermoTemplates = {
   version: string;

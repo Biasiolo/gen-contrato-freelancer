@@ -33,6 +33,7 @@ const EQUIP_LABEL: Record<EquipKind, string> = {
   celular: "Celular/Smartphone",
   notebook: "Notebook",
   mouse: "Mouse",
+  teclado: "Teclado",
   uniforme: "Uniforme",
   tag: "Tag/Cartão de acesso",
   outro: "Outro",

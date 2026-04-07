@@ -9,6 +9,7 @@ const EQUIP_OPTIONS: { value: EquipKind; label: string }[] = [
   { value: "celular",  label: "Celular/Smartphone" },
   { value: "fone",     label: "Fone de ouvido" },
   { value: "mouse",    label: "Mouse" },
+  { value: "teclado",    label: "Teclado" },
   { value: "uniforme", label: "Uniforme" },
   { value: "tag",      label: "Tag/Cartão" },
   { value: "outro",    label: "Outro (especifique)" },
